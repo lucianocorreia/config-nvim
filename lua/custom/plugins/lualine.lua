@@ -48,6 +48,14 @@ return {
         lualine_x = {
           {
             function()
+              return require('copilot_status').status_string()
+            end,
+            cnd = function()
+              return require('copilot_status').enabled()
+            end,
+          },
+          {
+            function()
               return require('noice').api.status.command.get()
             end,
             cond = function()
