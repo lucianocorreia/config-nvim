@@ -421,6 +421,14 @@ return {
       desc = 'Toggle Terminal',
     },
     {
+      '<c-/>',
+      function()
+        Snacks.terminal()
+      end,
+      desc = 'Toggle Terminal',
+      mode = { 't' },
+    },
+    {
       '<c-_>',
       function()
         Snacks.terminal()
