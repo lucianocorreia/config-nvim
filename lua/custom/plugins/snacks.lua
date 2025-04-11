@@ -65,7 +65,7 @@ return {
     {
       '<leader>ff',
       function()
-        Snacks.picker.files()
+        Snacks.picker.files { layout = { preview = { enabled = false } } }
       end,
       desc = 'Find Files',
     },
