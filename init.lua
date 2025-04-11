@@ -136,6 +136,10 @@ vim.keymap.set('n', 'L', '2<C-W><', { desc = 'Resize [L]eft' })
 -- Paste in visual mode
 vim.keymap.set('n', '<leader>p', 'viwP', { desc = 'Paste in world', silent = true })
 
+-- replace
+vim.keymap.set('n', '<leader>rp', ':%s/\\<<C-r><C-w>\\>//gI<Left><Left><Left>', { desc = 'Replace [P]attern' })
+-- vim.keymap.set('n', '<leader>ww', '<Cmd>w<CR>', { desc = 'Save [W]rite' })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
