@@ -149,7 +149,8 @@ vim.keymap.set('v', '<C-f>', ':fold<CR>', { desc = 'Fold', silent = true })
 vim.keymap.set('n', '<C-f>', '<Cmd>foldopen<CR>', { desc = 'Fold [O]pen', silent = true })
 
 -- custom key maps
-vim.keymap.set('n', '<leader>lp', require('funcs').log_variable, { desc = 'Log PHP variable', noremap = true })
+vim.keymap.set('n', '<leader>lj', require('funcs').log_variable_json, { desc = 'Log PHP variable with json_encode', noremap = true })
+vim.keymap.set('n', '<leader>ll', require('funcs').log_variable, { desc = 'Log PHP variable', noremap = true })
 vim.keymap.set('n', '<leader>ld', require('funcs').insert_data_get, { desc = "Insert data_get($ , '')" })
 
 -- [[ Basic Autocommands ]]
