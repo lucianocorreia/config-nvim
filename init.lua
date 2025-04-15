@@ -138,7 +138,9 @@ vim.keymap.set('n', 'H', '2<C-W>>', { desc = 'Resize [H]orizontal' })
 vim.keymap.set('n', 'L', '2<C-W><', { desc = 'Resize [L]eft' })
 
 -- Paste in visual mode
+vim.keymap.set('n', '<leader>P', '"*p', { desc = 'Paste [P]aste' })
 vim.keymap.set('n', '<leader>p', 'viwP', { desc = 'Paste in world', silent = true })
+vim.keymap.set('n', '<leader>y', 'viwy', { desc = 'Copy [Y]ank' })
 
 -- replace
 vim.keymap.set('n', '<leader>rp', ':%s/\\<<C-r><C-w>\\>//gI<Left><Left><Left>', { desc = 'Replace [P]attern' })
