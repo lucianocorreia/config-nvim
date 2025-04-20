@@ -60,6 +60,12 @@ return {
             'filetype',
             icon_only = true,
           },
+          {
+            function()
+              return vim.api.nvim_get_current_buf()
+            end,
+            color = { fg = '#f9e2af' },
+          },
         },
         lualine_y = {
           {
