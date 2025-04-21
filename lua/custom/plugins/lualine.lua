@@ -48,6 +48,12 @@ return {
         lualine_x = {
           {
             function()
+              return vim.api.nvim_get_current_buf()
+            end,
+            color = { fg = '#f9e2af' },
+          },
+          {
+            function()
               return require('noice').api.status.command.get()
             end,
             cond = function()
@@ -59,12 +65,6 @@ return {
           {
             'filetype',
             icon_only = true,
-          },
-          {
-            function()
-              return vim.api.nvim_get_current_buf()
-            end,
-            color = { fg = '#f9e2af' },
           },
         },
         lualine_y = {
