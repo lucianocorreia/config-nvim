@@ -22,7 +22,7 @@ return {
               modified = { fg = '#f9e2af' },
               removed = { fg = '#f38ba8' },
             },
-            symbols = { added = '+', modified = '~', removed = '-' }, -- Changes the symbols used by the diff.
+            symbols = { added = '⊕ ', modified = '⊙ ', removed = '⊖ ' }, -- Changes the symbols used by the diff.
           },
           {
             'filename',
