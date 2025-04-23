@@ -168,6 +168,10 @@ vim.keymap.set('n', '<leader>lt', function()
   require('corr3ia.laravel').tinker()
 end, { desc = 'Laravel: tinker' })
 
+vim.keymap.set('n', '<leader>lm', function()
+  require('corr3ia.laravel').create_migration_klingo()
+end, { desc = 'Laravel: Criar migration klingo' })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 

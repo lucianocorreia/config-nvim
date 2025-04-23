@@ -17,6 +17,14 @@ local function run_and_notify(cmd, title)
         vim.notify(formatted, vim.log.levels.INFO, { title = title or table.concat(cmd, ' ') })
       end
     end,
+    on_stderr = function(_, err)
+      if err and err[1] ~= '' then
+        local message = table.concat(err, '\n')
+        vim.notify(message, vim.log.levels.ERROR, {
+          title = 'Erro: ' .. (title or table.concat(cmd, ' ')),
+        })
+      end
+    end,
   })
 end
 
@@ -40,6 +48,33 @@ end
 M.tinker = function()
   M.artisant 'tinker'
   vim.cmd 'startinsert'
+end
+
+M.create_migration_klingo = function()
+  vim.ui.input({ prompt = 'Nome da migration: ' }, function(migration_name)
+    if not migration_name or migration_name == '' then
+      return
+    end
+
+    vim.ui.input({ prompt = 'Nome da tabela: ' }, function(table_name)
+      if not table_name or table_name == '' then
+        return
+      end
+
+      table_name = string.upper(table_name) -- 👈 converte para maiúsculas
+
+      local cmd = {
+        'php',
+        'artisan',
+        'make:migration',
+        migration_name,
+        '--table=' .. table_name,
+        '--path=database/azure',
+      }
+
+      run_and_notify(cmd, 'Criando migration')
+    end)
+  end)
 end
 
 return M
