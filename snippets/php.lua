@@ -22,7 +22,7 @@ return {
   }),
 
   -- Log JSON 2
-  s({ trig = 'ljj', name = 'Log JSON 2', dscr = 'Logger JSON with label' }, {
+  s({ trig = 'ljn', name = 'Log JSON 2', dscr = 'Logger JSON with name' }, {
     t "logger('",
     i(1, 'label'),
     t ": ' .  json_encode(",

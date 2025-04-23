@@ -155,6 +155,19 @@ vim.keymap.set('n', '<leader>lj', require('funcs').log_variable_json, { desc = '
 vim.keymap.set('n', '<leader>ll', require('funcs').log_variable, { desc = 'Log PHP variable', noremap = true })
 vim.keymap.set('n', '<leader>ld', require('funcs').insert_data_get, { desc = "Insert data_get($ , '')" })
 
+-- laravel commands
+vim.keymap.set('n', '<leader>lc', function()
+  require('corr3ia.laravel').clear_cache()
+end, { desc = 'Laravel: config:cache' })
+
+vim.keymap.set('n', '<leader>lo', function()
+  require('corr3ia.laravel').optimize_clear()
+end, { desc = 'Laravel: optimize:clear' })
+
+vim.keymap.set('n', '<leader>lt', function()
+  require('corr3ia.laravel').tinker()
+end, { desc = 'Laravel: tinker' })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
