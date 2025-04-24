@@ -150,6 +150,10 @@ vim.keymap.set('n', '<leader>rp', ':%s/\\<<C-r><C-w>\\>//gI<Left><Left><Left>', 
 vim.keymap.set('v', '<C-f>', ':fold<CR>', { desc = 'Fold', silent = true })
 vim.keymap.set('n', '<C-f>', '<Cmd>foldopen<CR>', { desc = 'Fold [O]pen', silent = true })
 
+-- buffers (next and previous)
+vim.keymap.set('n', '<leader>bn', '<Cmd>bn<CR>', { desc = '[B]uffer [N]ext' })
+vim.keymap.set('n', '<leader>bp', '<Cmd>bp<CR>', { desc = '[B]uffer [P]revious' })
+
 -- custom key maps
 vim.keymap.set('n', '<leader>lj', require('funcs').log_variable_json, { desc = 'Log PHP variable with json_encode', noremap = true })
 vim.keymap.set('n', '<leader>ll', require('funcs').log_variable, { desc = 'Log PHP variable', noremap = true })
