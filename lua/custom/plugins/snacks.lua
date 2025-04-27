@@ -1,6 +1,9 @@
 return {
   'folke/snacks.nvim',
   priority = 1000,
+  dependencies = {
+    'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
+  },
   lazy = false,
   ---@type snacks.Config
   opts = {
