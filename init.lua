@@ -176,6 +176,23 @@ vim.keymap.set('n', '<leader>lm', function()
   require('corr3ia.laravel').create_migration_klingo()
 end, { desc = 'Laravel: Criar migration klingo' })
 
+-- corr3ia-todo commands
+vim.keymap.set('n', '<leader>td', function()
+  require('corr3ia.todo').open()
+end, { desc = 'Corr3ia-todo: Abrir TODO list' })
+
+vim.keymap.set('n', '<leader>tt', function()
+  require('corr3ia.todo').toggle()
+end, { desc = 'Corr3ia-todo: Toggle TODO list' })
+
+vim.keymap.set('n', '<leader>ta', function()
+  require('corr3ia.todo').add()
+end, { desc = 'Corr3ia-todo: Add TODO' })
+
+vim.keymap.set('n', '<leader>th', function()
+  require('corr3ia.todo').header()
+end, { desc = 'Corr3ia-todo: Add Section' })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
