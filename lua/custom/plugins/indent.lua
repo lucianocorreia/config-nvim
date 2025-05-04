@@ -1,13 +1,36 @@
+-- return {
+--   { --indentation guides even on blank lines
+--     'lukas-reineke/indent-blankline.nvim',
+--     -- Enable `lukas-reineke/indent-blankline.nvim`
+--     -- See `:help ibl`
+--     main = 'ibl',
+--     opts = {
+--       -- indent = { char = '│', highlight = { 'LineNr' } },
+--       indent = { char = '│', highlight = { 'IndentLine' } },
+--       scope = { enabled = false },
+--     },
+--     config = function()
+--       -- vim.api.nvim_set_hl(0, 'IndentLine', { fg = '#5c6a72', nocombine = true })
+--       vim.api.nvim_set_hl(0, 'IndentLine', { fg = '#886a72', nocombine = true })
+--     end,
+--   },
+-- }
 return {
-  { --indentation guides even on blank lines
+  {
     'lukas-reineke/indent-blankline.nvim',
-    -- Enable `lukas-reineke/indent-blankline.nvim`
-    -- See `:help ibl`
     main = 'ibl',
-    opts = {
-      -- indent = { char = "┊", highlight = "LineNr" },
-      indent = { char = '│', highlight = { 'LineNr' } },
-      scope = { enabled = false },
-    },
+    config = function()
+      -- Define o highlight
+      vim.api.nvim_set_hl(0, 'IndentLine', { fg = '#2e383c', nocombine = true })
+
+      -- Configura o plugin manualmente
+      require('ibl').setup {
+        indent = {
+          char = '│',
+          highlight = { 'IndentLine' },
+        },
+        scope = { enabled = false },
+      }
+    end,
   },
 }

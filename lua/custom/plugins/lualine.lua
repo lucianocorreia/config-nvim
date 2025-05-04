@@ -6,7 +6,8 @@ return {
       -- sections = {lualine_c = {"filename", {getWords}}, lualine_x = {{getGuiFont}, 'filetype'}},
       options = {
         icons_enabled = true,
-        theme = 'catppuccin',
+        -- theme = 'catppuccin',
+        theme = 'everforest',
         component_separators = '|',
         section_separators = '',
       },
