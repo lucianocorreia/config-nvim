@@ -7,7 +7,8 @@ return {
       options = {
         icons_enabled = true,
         -- theme = 'catppuccin',
-        theme = 'everforest',
+        -- theme = 'everforest',
+        theme = 'kanagawa',
         component_separators = '|',
         section_separators = '',
       },
