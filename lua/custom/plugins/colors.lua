@@ -1,106 +1,106 @@
 -- Colorscheme configuration for Neovim using Catppuccin theme
-return {
-  'catppuccin/nvim',
-  name = 'catppuccin',
-  config = function()
-    require('catppuccin').setup {
-      flavour = 'mocha', -- latte, frappe, macchiato, mocha
-      background = { -- :h background
-        light = 'latte',
-        dark = 'mocha',
-      },
-      transparent_background = false, -- disables setting the background color.
-      show_end_of_buffer = false, -- shows the '~' characters after the end of buffers
-      term_colors = false, -- sets terminal colors (e.g. `g:terminal_color_0`)
-      dim_inactive = {
-        enabled = false, -- dims the background color of inactive window
-        shade = 'dark',
-        percentage = 0.15, -- percentage of the shade to apply to the inactive window
-      },
-      no_italic = false, -- Force no italic
-      no_bold = true, -- Force no bold
-      no_underline = true, -- Force no underline
-      styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
-        comments = { 'italic' }, -- Change the style of comments
-        conditionals = { 'italic' },
-        loops = {},
-        functions = {},
-        keywords = {},
-        strings = {},
-        variables = {},
-        numbers = {},
-        booleans = {},
-        properties = {},
-        types = {},
-        operators = {},
-        -- miscs = {}, -- Uncomment to turn off hard-coded styles
-      },
-      color_overrides = {},
-      custom_highlights = function(colors)
-        return {
-          DiagnosticVirtualTextWarn = { fg = colors.overlay1, bg = colors.none, italic = true },
-        }
-      end,
-      default_integrations = true,
-      integrations = {
-        blink_cmp = true,
-        gitsigns = true,
-        nvimtree = true,
-        treesitter = true,
-        notify = true,
-        noice = true,
-        harpoon = true,
-        mason = true,
-        mini = {
-          enabled = true,
-          indentscope_color = '',
-        },
-        dropbar = {
-          enabled = true,
-          color_mode = false, -- enable color for kind's texts, not just kind's icons
-        },
-        indent_blankline = {
-          enabled = true,
-          scope_color = '', -- catppuccin color (eg. `lavender`) Default: text
-          colored_indent_levels = false,
-        },
-        copilot_vim = true,
-        snacks = {
-          enabled = true,
-          indent_scope_color = '', -- catppuccin color (eg. `lavender`) Default: text
-        },
-        nvim_surround = true,
-        flash = true,
-        lsp_trouble = true,
-        native_lsp = {
-          enabled = true,
-          virtual_text = {
-            errors = { 'italic' },
-            hints = { 'italic' },
-            warnings = { 'italic' },
-            information = { 'italic' },
-            ok = { 'italic' },
-          },
-          underlines = {
-            errors = { 'underline' },
-            hints = { 'underline' },
-            warnings = { 'underline' },
-            information = { 'underline' },
-            ok = { 'underline' },
-          },
-          inlay_hints = {
-            background = true,
-          },
-        },
-        which_key = true,
-        -- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
-      },
-    }
-
-    -- setup must be called before loading
-    vim.cmd.colorscheme 'catppuccin'
-  end,
-}
+-- return {
+--   'catppuccin/nvim',
+--   name = 'catppuccin',
+--   config = function()
+--     require('catppuccin').setup {
+--       flavour = 'mocha', -- latte, frappe, macchiato, mocha
+--       background = { -- :h background
+--         light = 'latte',
+--         dark = 'mocha',
+--       },
+--       transparent_background = false, -- disables setting the background color.
+--       show_end_of_buffer = false, -- shows the '~' characters after the end of buffers
+--       term_colors = false, -- sets terminal colors (e.g. `g:terminal_color_0`)
+--       dim_inactive = {
+--         enabled = false, -- dims the background color of inactive window
+--         shade = 'dark',
+--         percentage = 0.15, -- percentage of the shade to apply to the inactive window
+--       },
+--       no_italic = false, -- Force no italic
+--       no_bold = true, -- Force no bold
+--       no_underline = true, -- Force no underline
+--       styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
+--         comments = { 'italic' }, -- Change the style of comments
+--         conditionals = { 'italic' },
+--         loops = {},
+--         functions = {},
+--         keywords = {},
+--         strings = {},
+--         variables = {},
+--         numbers = {},
+--         booleans = {},
+--         properties = {},
+--         types = {},
+--         operators = {},
+--         -- miscs = {}, -- Uncomment to turn off hard-coded styles
+--       },
+--       color_overrides = {},
+--       custom_highlights = function(colors)
+--         return {
+--           DiagnosticVirtualTextWarn = { fg = colors.overlay1, bg = colors.none, italic = true },
+--         }
+--       end,
+--       default_integrations = true,
+--       integrations = {
+--         blink_cmp = true,
+--         gitsigns = true,
+--         nvimtree = true,
+--         treesitter = true,
+--         notify = true,
+--         noice = true,
+--         harpoon = true,
+--         mason = true,
+--         mini = {
+--           enabled = true,
+--           indentscope_color = '',
+--         },
+--         dropbar = {
+--           enabled = true,
+--           color_mode = false, -- enable color for kind's texts, not just kind's icons
+--         },
+--         indent_blankline = {
+--           enabled = true,
+--           scope_color = '', -- catppuccin color (eg. `lavender`) Default: text
+--           colored_indent_levels = false,
+--         },
+--         copilot_vim = true,
+--         snacks = {
+--           enabled = true,
+--           indent_scope_color = '', -- catppuccin color (eg. `lavender`) Default: text
+--         },
+--         nvim_surround = true,
+--         flash = true,
+--         lsp_trouble = true,
+--         native_lsp = {
+--           enabled = true,
+--           virtual_text = {
+--             errors = { 'italic' },
+--             hints = { 'italic' },
+--             warnings = { 'italic' },
+--             information = { 'italic' },
+--             ok = { 'italic' },
+--           },
+--           underlines = {
+--             errors = { 'underline' },
+--             hints = { 'underline' },
+--             warnings = { 'underline' },
+--             information = { 'underline' },
+--             ok = { 'underline' },
+--           },
+--           inlay_hints = {
+--             background = true,
+--           },
+--         },
+--         which_key = true,
+--         -- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
+--       },
+--     }
+--
+--     -- setup must be called before loading
+--     vim.cmd.colorscheme 'catppuccin'
+--   end,
+-- }
 
 -- *****************************************************************************************
 -- Everforest
@@ -187,7 +187,7 @@ return {
 --     vim.cmd [[colorscheme everforest]]
 --   end,
 -- }
-
+--
 -- *****************************************************************************************
 
 --  Rose pine
@@ -277,3 +277,44 @@ return {
 --     vim.cmd 'colorscheme rose-pine'
 --   end,
 -- }
+--
+return {
+  'rebelot/kanagawa.nvim',
+  config = function()
+    require('kanagawa').setup {
+      compile = false, -- enable compiling the colorscheme
+      undercurl = false, -- enable undercurls
+      commentStyle = { italic = true },
+      functionStyle = {},
+      keywordStyle = { italic = true, bold = false },
+      statementStyle = { bold = false },
+      typeStyle = {},
+      transparent = false, -- do not set background color
+      dimInactive = false, -- dim inactive window `:h hl-NormalNC`
+      terminalColors = true, -- define vim.g.terminal_color_{0,17}
+      colors = { -- add/modify theme and palette colors
+        palette = {},
+        theme = { wave = {}, lotus = {}, dragon = {}, all = {
+          ui = {
+            bg_gutter = 'none',
+          },
+        } },
+      },
+      overrides = function(colors) -- add/modify highlights
+        return {
+          -- LineNr = {
+          --   fg = colors.palette.bg or colors.theme[vim.g.kanagawa_theme or 'dragon'].bg,
+          --   bg = colors.palette.bg or colors.theme[vim.g.kanagawa_theme or 'dragon'].bg,
+          -- },
+        }
+      end,
+      theme = 'dragon', -- Load "wave" theme
+      background = { -- map the value of 'background' option to a theme
+        dark = 'dragon', -- try "dragon" !
+        light = 'lotus',
+      },
+    }
+
+    vim.cmd.colorscheme 'kanagawa'
+  end,
+}
