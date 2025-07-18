@@ -591,6 +591,7 @@ require('lazy').setup({
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
+        'vuels',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -617,6 +618,24 @@ require('lazy').setup({
 
             require('lspconfig')[server_name].setup(server)
           end,
+        },
+      }
+
+      require('lspconfig').vuels.setup {
+        filetypes = { 'vue' },
+        settings = {
+          vetur = {
+            ignoreProjectWarning = true,
+            validation = {
+              template = true,
+              script = true,
+              style = true,
+            },
+            completion = {
+              autoImport = true,
+              tagCasing = 'kebab',
+            },
+          },
         },
       }
     end,
