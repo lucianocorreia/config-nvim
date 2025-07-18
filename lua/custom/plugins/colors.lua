@@ -172,15 +172,27 @@ return {
       ---This function will be called with the highlights and colour palette tables.
       ---@param highlight_groups Highlights
       ---@param palette Palette
-      on_highlights = function(highlight_groups, palette) end,
+      on_highlights = function(highlight_groups, palette)
+        highlight_groups.DiagnosticVirtualTextError = { fg = '#b86466', bg = 'NONE' }
+        highlight_groups.DiagnosticVirtualTextWarn = { fg = '#e69875', bg = 'NONE' }
+        highlight_groups.DiagnosticVirtualTextInfo = { fg = '#7fbbb3', bg = 'NONE' }
+        highlight_groups.DiagnosticVirtualTextHint = { fg = '#c9c6bf', bg = 'NONE' }
+
+        -- highlight_groups.DiagnosticVirtualLineError = { fg = '#b86466', bg = 'NONE' }
+        -- highlight_groups.DiagnosticVirtualLineWarn = { fg = '#e69875', bg = 'NONE' }
+        -- highlight_groups.DiagnosticVirtualLineInfo = { fg = '#7fbbb3', bg = 'NONE' }
+        -- highlight_groups.DiagnosticVirtualLineHint = { fg = '#c9c6bf', bg = 'NONE' }
+
+        highlight_groups.Visual = { bg = palette.bg_visual, bold = false }
+      end,
       ---You can override colours in the palette to use different hex colours.
       ---This function will be called once the base and background colours have
       ---been mixed on the palette.
       ---@param palette Palette
       colours_override = function(palette)
         -- palette.red = '#b86466'
-        palette.red = '#b86466'
-        -- palette.red = '#ffa198'
+        -- palette.red = '#E67E80'
+        palette.red = '#ffa198'
       end,
     }
 
