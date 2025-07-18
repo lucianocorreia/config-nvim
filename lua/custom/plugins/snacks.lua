@@ -40,7 +40,7 @@ return {
     {
       '<leader><leader>',
       function()
-        Snacks.picker.buffers()
+        Snacks.picker.buffers { layout = { preview = { enabled = false } } }
       end,
       desc = 'Buffers',
     },
@@ -219,14 +219,14 @@ return {
     {
       '<leader>sd',
       function()
-        Snacks.picker.diagnostics()
+        Snacks.picker.diagnostics { layout = { preview = { enabled = false } } }
       end,
       desc = 'Diagnostics',
     },
     {
       '<leader>sD',
       function()
-        Snacks.picker.diagnostics_buffer()
+        Snacks.picker.diagnostics_buffer { layout = { preview = { enabled = false } } }
       end,
       desc = 'Buffer Diagnostics',
     },
@@ -361,7 +361,7 @@ return {
     {
       'gro',
       function()
-        Snacks.picker.lsp_symbols()
+        Snacks.picker.lsp_symbols { layout = { preview = { enabled = false } } }
       end,
       desc = 'LSP Symbols',
     },
