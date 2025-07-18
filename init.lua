@@ -27,6 +27,9 @@ vim.opt.showmode = false
 -- disable line wrapping
 vim.opt.wrap = false
 
+-- lsp borders
+vim.o.winborder = 'rounded'
+
 -- Sync clipboard between OS and Neovim.
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
 --  Remove this option if you want your OS clipboard to remain independent.
@@ -501,7 +504,7 @@ require('lazy').setup({
       -- See :help vim.diagnostic.Opts
       vim.diagnostic.config {
         severity_sort = true,
-        -- virtual_lines = true,
+        virtual_lines = { current_line = true },
         float = { border = 'rounded', source = 'if_many' },
         underline = { severity = vim.diagnostic.severity.ERROR },
         signs = vim.g.have_nerd_font and {
