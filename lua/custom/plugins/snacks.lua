@@ -261,7 +261,7 @@ return {
     {
       '<leader>sk',
       function()
-        Snacks.picker.keymaps()
+        Snacks.picker.keymaps { layout = { preview = { enabled = false } } }
       end,
       desc = 'Keymaps',
     },
