@@ -108,7 +108,7 @@ return {
         highlight_groups.Visual = { bg = palette.bg_visual, bold = false }
 
         -- change the background color of the terminal window
-        -- highlight_groups.Terminal = { bg = palette.red }
+        highlight_groups.Terminal = { bg = palette.red }
       end,
       ---You can override colours in the palette to use different hex colours.
       ---This function will be called once the base and background colours have
