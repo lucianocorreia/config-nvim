@@ -41,7 +41,7 @@ return {
       ---components be transparent (e.g. status line background)
       transparent_background_level = 0,
       ---Whether italics should be used for keywords and more.
-      italics = false,
+      italics = true,
       ---Disable italic fonts for comments. Comments are in italics by default, set
       ---this to `true` to make them _not_ italic!
       disable_italic_comments = false,
@@ -50,7 +50,7 @@ return {
       sign_column_background = 'none',
       ---The contrast of line numbers, indent lines, etc. Options are `"high"` or
       ---`"low"` (default).
-      ui_contrast = 'high',
+      ui_contrast = 'low',
       ---Dim inactive windows. Only works in Neovim. Can look a bit weird with Telescope.
       ---
       ---When this option is used in conjunction with show_eob set to `false`, the
@@ -61,18 +61,18 @@ return {
       ---Some plugins support highlighting error/warning/info/hint texts, by
       ---default these texts are only underlined, but you can use this option to
       ---also highlight the background of them.
-      diagnostic_text_highlight = false,
+      diagnostic_text_highlight = true,
       ---Which colour the diagnostic text should be. Options are `"grey"` or `"coloured"` (default)
       diagnostic_virtual_text = 'coloured',
       ---Some plugins support highlighting error/warning/info/hint lines, but this
       ---feature is disabled by default in this colour scheme.
-      diagnostic_line_highlight = false,
+      diagnostic_line_highlight = true,
       ---By default, this color scheme won't colour the foreground of |spell|, instead
       ---colored under curls will be used. If you also want to colour the foreground,
       ---set this option to `true`.
-      spell_foreground = false,
+      spell_foreground = true,
       ---Whether to show the EndOfBuffer highlight.
-      show_eob = true,
+      show_eob = false,
       ---Style used to make floating windows stand out from other windows. `"bright"`
       ---makes the background of these windows lighter than |hl-Normal|, whereas
       ---`"dim"` makes it darker.
@@ -83,7 +83,7 @@ return {
       ---
       ---NB: This is only significant for dark backgrounds as the light palettes
       ---have the same colour for both values in the switch.
-      float_style = 'bright',
+      float_style = 'dim',
       ---Inlay hints are special markers that are displayed inline with the code to
       ---provide you with additional information. You can use this option to customize
       ---the background color of inlay hints.
@@ -106,6 +106,9 @@ return {
         -- highlight_groups.DiagnosticVirtualLineHint = { fg = '#c9c6bf', bg = 'NONE' }
 
         highlight_groups.Visual = { bg = palette.bg_visual, bold = false }
+
+        -- change the background color of the terminal window
+        -- highlight_groups.Terminal = { bg = palette.red }
       end,
       ---You can override colours in the palette to use different hex colours.
       ---This function will be called once the base and background colours have
