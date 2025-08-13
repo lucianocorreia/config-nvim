@@ -1,29 +1,38 @@
 return {
-  'sainnhe/gruvbox-material',
+  'Mofiqul/vscode.nvim',
   lazy = false,
-  priority = 1000,
+  priority = 1000, -- make sure to load this before all the other start plugins
   config = function()
-    -- Optionally configure and load the colorscheme
-    -- directly inside the plugin declaration.
-    vim.g.gruvbox_material_enable_italic = false
-    vim.g.gruvbox_material_background = 'hard' -- 'soft', 'medium', or 'hard'
-    vim.g.gruvbox_material_ui_contrast = 'high' -- 'low' or 'highkj
-    vim.g.gruvbox_material_diagnostic_text_highlight = true
-    vim.g.gruvbox_material_diagnostic_line_highlight = true
-    vim.g.gruvbox_material_diagnostic_virtual_text = 'coloured' -- 'grey' or 'coloured'
-    vim.g.gruvbox_material_transparent_background = false
-    vim.g.gruvbox_material_better_performance = true
-    vim.g.gruvbox_material_dim_inactive_windows = false
-    vim.g.gruvbox_material_sign_column_background = 'none' -- 'grey' or 'none'
-    vim.g.gruvbox_material_spell_foreground = false
-    vim.g.gruvbox_material_show_eob = false
-    vim.g.gruvbox_material_float_style = 'dim' -- 'bright' or 'dim'
-    vim.g.gruvbox_material_inlay_hints_background = 'dimmed' -- 'none' or 'dimmed'
-    vim.g.gruvbox_material_current_word = 'bold'
-
-    vim.cmd.colorscheme 'gruvbox-material'
+    -- Load the colorscheme
+    vim.cmd.colorscheme 'vscode'
   end,
 }
+-- return {
+--   'sainnhe/gruvbox-material',
+--   lazy = false,
+--   priority = 1000,
+--   config = function()
+--     -- Optionally configure and load the colorscheme
+--     -- directly inside the plugin declaration.
+--     vim.g.gruvbox_material_enable_italic = false
+--     vim.g.gruvbox_material_background = 'hard' -- 'soft', 'medium', or 'hard'
+--     vim.g.gruvbox_material_ui_contrast = 'high' -- 'low' or 'highkj
+--     vim.g.gruvbox_material_diagnostic_text_highlight = true
+--     vim.g.gruvbox_material_diagnostic_line_highlight = true
+--     vim.g.gruvbox_material_diagnostic_virtual_text = 'coloured' -- 'grey' or 'coloured'
+--     vim.g.gruvbox_material_transparent_background = false
+--     vim.g.gruvbox_material_better_performance = true
+--     vim.g.gruvbox_material_dim_inactive_windows = false
+--     vim.g.gruvbox_material_sign_column_background = 'none' -- 'grey' or 'none'
+--     vim.g.gruvbox_material_spell_foreground = false
+--     vim.g.gruvbox_material_show_eob = false
+--     vim.g.gruvbox_material_float_style = 'dim' -- 'bright' or 'dim'
+--     vim.g.gruvbox_material_inlay_hints_background = 'dimmed' -- 'none' or 'dimmed'
+--     vim.g.gruvbox_material_current_word = 'bold'
+--
+--     vim.cmd.colorscheme 'gruvbox-material'
+--   end,
+-- }
 
 -- *****************************************************************************************
 -- Everforest

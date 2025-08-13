@@ -7,8 +7,9 @@ return {
       options = {
         icons_enabled = true,
         -- theme = 'catppuccin',
-        theme = 'gruvbox-material',
+        -- theme = 'gruvbox-material',
         -- theme = 'kanagawa',
+        theme = 'vscode',
         component_separators = '|',
         section_separators = '',
       },
