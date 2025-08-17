@@ -6,10 +6,10 @@ return {
       -- sections = {lualine_c = {"filename", {getWords}}, lualine_x = {{getGuiFont}, 'filetype'}},
       options = {
         icons_enabled = true,
-        -- theme = 'catppuccin',
+        theme = 'everforest',
         -- theme = 'gruvbox-material',
         -- theme = 'kanagawa',
-        theme = 'vscode',
+        -- theme = 'vscode',
         component_separators = '|',
         section_separators = '',
       },
