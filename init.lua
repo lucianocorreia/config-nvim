@@ -616,12 +616,14 @@ require('lazy').setup({
               }
             end
 
-            require('lspconfig')[server_name].setup(server)
+            -- require('lspconfig')[server_name].setup(server)
+            vim.lsp.enable(server_name)
+            vim.lsp.config(server_name, server)
           end,
         },
       }
 
-      require('lspconfig').vuels.setup {
+      vim.lsp.config('vulels', {
         filetypes = { 'vue' },
         settings = {
           vetur = {
@@ -637,7 +639,25 @@ require('lazy').setup({
             },
           },
         },
-      }
+      })
+
+      -- require('lspconfig').vuels.setup {
+      --   filetypes = { 'vue' },
+      --   settings = {
+      --     vetur = {
+      --       ignoreProjectWarning = true,
+      --       validation = {
+      --         template = true,
+      --         script = true,
+      --         style = true,
+      --       },
+      --       completion = {
+      --         autoImport = true,
+      --         tagCasing = 'kebab',
+      --       },
+      --     },
+      --   },
+      -- }
     end,
   },
 
