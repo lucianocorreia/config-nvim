@@ -504,7 +504,7 @@ require('lazy').setup({
       -- See :help vim.diagnostic.Opts
       vim.diagnostic.config {
         severity_sort = true,
-        virtual_lines = { current_line = true },
+        -- virtual_lines = { current_line = true },
         float = { border = 'rounded', source = 'if_many' },
         underline = { severity = vim.diagnostic.severity.ERROR },
         signs = vim.g.have_nerd_font and {
@@ -612,6 +612,15 @@ require('lazy').setup({
               server.settings = {
                 vetur = {
                   ignoreProjectWarning = true,
+                  validation = {
+                    template = true,
+                    script = true,
+                    style = true,
+                  },
+                  completion = {
+                    autoImport = true,
+                    tagCasing = 'kebab',
+                  },
                 },
               }
             end
@@ -623,23 +632,23 @@ require('lazy').setup({
         },
       }
 
-      vim.lsp.config('vulels', {
-        filetypes = { 'vue' },
-        settings = {
-          vetur = {
-            ignoreProjectWarning = true,
-            validation = {
-              template = true,
-              script = true,
-              style = true,
-            },
-            completion = {
-              autoImport = true,
-              tagCasing = 'kebab',
-            },
-          },
-        },
-      })
+      -- vim.lsp.config('vuels', {
+      --   filetypes = { 'vue' },
+      --   settings = {
+      --     vetur = {
+      --       ignoreProjectWarning = true,
+      --       validation = {
+      --         template = true,
+      --         script = true,
+      --         style = true,
+      --       },
+      --       completion = {
+      --         autoImport = true,
+      --         tagCasing = 'kebab',
+      --       },
+      --     },
+      --   },
+      -- })
 
       -- require('lspconfig').vuels.setup {
       --   filetypes = { 'vue' },
