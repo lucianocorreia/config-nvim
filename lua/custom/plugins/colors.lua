@@ -130,12 +130,20 @@ return {
         highlight_groups.DiagnosticVirtualTextInfo = { fg = '#7fbbb3', bg = 'NONE' }
         highlight_groups.DiagnosticVirtualTextHint = { fg = '#c9c6bf', bg = 'NONE' }
 
-        -- highlight_groups.DiagnosticVirtualLineError = { fg = '#b86466', bg = 'NONE' }
-        -- highlight_groups.DiagnosticVirtualLineWarn = { fg = '#e69875', bg = 'NONE' }
-        -- highlight_groups.DiagnosticVirtualLineInfo = { fg = '#7fbbb3', bg = 'NONE' }
-        -- highlight_groups.DiagnosticVirtualLineHint = { fg = '#c9c6bf', bg = 'NONE' }
+        -- 🎨 Customização de cores de seleção e yank
+        -- Cor de seleção visual (quando você seleciona texto)
+        highlight_groups.Visual = {
+          bg = '#5A6B44', -- Verde escuro mais suave
+          fg = 'NONE',    -- Mantém a cor do texto original
+          bold = false
+        }
 
-        highlight_groups.Visual = { bg = palette.bg_visual, bold = false }
+        -- Cor quando você faz yank (cópia) - IncSearch é usado para highlight do yank
+        highlight_groups.IncSearch = {
+          bg = '#dbbc7f', -- Cor clara/amarelada
+          fg = '#343F44', -- Texto escuro para contraste
+          bold = false
+        }
 
         -- change the background color of the terminal window
         highlight_groups.Terminal = { bg = palette.red }

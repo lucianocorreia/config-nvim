@@ -140,7 +140,10 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
   callback = function()
-    vim.highlight.on_yank()
+    vim.highlight.on_yank({
+      higroup = 'IncSearch',  -- Usa o grupo IncSearch que personalizamos
+      timeout = 200,          -- Duração do highlight em ms (padrão: 150)
+    })
   end,
 })
 
@@ -368,6 +371,20 @@ vim.api.nvim_create_user_command('LspConfigs', function()
   end
   print('\nUse :checkhealth vim.lsp for detailed diagnostics')
 end, { desc = 'Show LSP configuration status' })
+
+-- 🎨 Comandos para testar cores personalizadas
+vim.api.nvim_create_user_command('TestColors', function()
+  -- Testa a cor de seleção
+  print('🎨 Testando cores personalizadas:')
+  print('1. Selecione algum texto (modo visual) para ver a cor de seleção')
+  print('2. Copie algum texto (yy ou y{motion}) para ver o highlight do yank')
+  print('3. Use :ReloadColors para recarregar o tema após mudanças')
+end, { desc = 'Testa as cores personalizadas' })
+
+vim.api.nvim_create_user_command('ReloadColors', function()
+  vim.cmd('colorscheme everforest')
+  print('🎨 Tema Everforest recarregado!')
+end, { desc = 'Recarrega o tema Everforest' })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
