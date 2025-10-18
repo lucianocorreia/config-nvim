@@ -1,14 +1,4 @@
 -- return {
---   'Mofiqul/vscode.nvim',
---   lazy = false,
---   priority = 1000, -- make sure to load this before all the other start plugins
---   config = function()
---     -- Load the colorscheme
---     vim.cmd.colorscheme 'vscode'
---   end,
--- }
---
--- return {
 --   'sainnhe/gruvbox-material',
 --   lazy = false,
 --   priority = 1000,
@@ -16,8 +6,8 @@
 --     -- Optionally configure and load the colorscheme
 --     -- directly inside the plugin declaration.
 --     vim.g.gruvbox_material_enable_italic = false
---     vim.g.gruvbox_material_background = 'hard' -- 'soft', 'medium', or 'hard'
---     vim.g.gruvbox_material_ui_contrast = 'high' -- 'low' or 'highkj
+--     vim.g.gruvbox_material_background = 'medium' -- 'soft', 'medium', or 'hard'
+--     vim.g.gruvbox_material_ui_contrast = 'low' -- 'low' or 'highkj
 --     vim.g.gruvbox_material_diagnostic_text_highlight = true
 --     vim.g.gruvbox_material_diagnostic_line_highlight = true
 --     vim.g.gruvbox_material_diagnostic_virtual_text = 'coloured' -- 'grey' or 'coloured'
@@ -30,8 +20,37 @@
 --     vim.g.gruvbox_material_float_style = 'dim' -- 'bright' or 'dim'
 --     vim.g.gruvbox_material_inlay_hints_background = 'dimmed' -- 'none' or 'dimmed'
 --     vim.g.gruvbox_material_current_word = 'bold'
+--     vim.g.gruvbox_material_inlay_hints_background = 'none'
 --
 --     vim.cmd.colorscheme 'gruvbox-material'
+--
+--     -- ⚡ Ajustes de cor personalizados
+--     -- Substitui o vermelho padrão
+--     local red = '#ffa198'
+--
+--     -- Função helper para definir highlights
+--     local function set_hl(group, opts)
+--       vim.api.nvim_set_hl(0, group, opts)
+--     end
+--
+--     -- Substitui o vermelho padrão
+--     set_hl('Error', { fg = red })
+--     set_hl('ErrorMsg', { fg = red })
+--     set_hl('DiagnosticError', { fg = red })
+--     set_hl('DiffDelete', { fg = red })
+--     set_hl('DiagnosticVirtualTextError', { fg = red, bg = 'NONE' })
+--
+--     -- Diagnostic virtual text
+--     set_hl('DiagnosticVirtualTextError', { fg = '#b86466', bg = 'NONE' })
+--     set_hl('DiagnosticVirtualTextWarn', { fg = '#e69875', bg = 'NONE' })
+--     set_hl('DiagnosticVirtualTextInfo', { fg = '#7fbbb3', bg = 'NONE' })
+--     set_hl('DiagnosticVirtualTextHint', { fg = '#c9c6bf', bg = 'NONE' })
+--
+--     -- Visual selection (remove negrito)
+--     set_hl('Visual', { bg = '#504945', bold = false })
+--
+--     -- Janela de terminal
+--     -- set_hl('Terminal', { bg = red })
 --   end,
 -- }
 
@@ -61,7 +80,7 @@ return {
       sign_column_background = 'none',
       ---The contrast of line numbers, indent lines, etc. Options are `"high"` or
       ---`"low"` (default).
-      ui_contrast = 'high',
+      ui_contrast = 'low',
       ---Dim inactive windows. Only works in Neovim. Can look a bit weird with Telescope.
       ---
       ---When this option is used in conjunction with show_eob set to `false`, the
@@ -138,156 +157,16 @@ return {
 --
 -- *****************************************************************************************
 
---  Rose pine
--- return {
---   'rose-pine/neovim',
---   name = 'rose-pine',
---   config = function()
---     require('rose-pine').setup {
---       variant = 'auto', -- auto, main, moon, or dawn
---       dark_variant = 'main', -- main, moon, or dawn
---       dim_inactive_windows = false,
---       extend_background_behind_borders = true,
---
---       enable = {
---         terminal = true,
---         legacy_highlights = true, -- Improve compatibility for previous versions of Neovim
---         migrations = true, -- Handle deprecated options automatically
---       },
---
---       styles = {
---         bold = true,
---         italic = true,
---         transparency = false,
---       },
---
---       groups = {
---         border = 'muted',
---         link = 'iris',
---         panel = 'surface',
---
---         error = 'love',
---         hint = 'iris',
---         info = 'foam',
---         note = 'pine',
---         todo = 'rose',
---         warn = 'gold',
---
---         git_add = 'foam',
---         git_change = 'rose',
---         git_delete = 'love',
---         git_dirty = 'rose',
---         git_ignore = 'muted',
---         git_merge = 'iris',
---         git_rename = 'pine',
---         git_stage = 'iris',
---         git_text = 'rose',
---         git_untracked = 'subtle',
---
---         h1 = 'iris',
---         h2 = 'foam',
---         h3 = 'rose',
---         h4 = 'gold',
---         h5 = 'pine',
---         h6 = 'foam',
---       },
---
---       palette = {
---         -- Override the builtin palette per variant
---         -- moon = {
---         --     base = '#18191a',
---         --     overlay = '#363738',
---         -- },
---       },
---
---       -- NOTE: Highlight groups are extended (merged) by default. Disable this
---       -- per group via `inherit = false`
---       highlight_groups = {
---         -- Comment = { fg = "foam" },
---         -- StatusLine = { fg = "love", bg = "love", blend = 15 },
---         -- VertSplit = { fg = "muted", bg = "muted" },
---         -- Visual = { fg = "base", bg = "text", inherit = false },
---       },
---
---       before_highlight = function(group, highlight, palette)
---         -- Disable all undercurls
---         -- if highlight.undercurl then
---         --     highlight.undercurl = false
---         -- end
---         --
---         -- Change palette colour
---         -- if highlight.fg == palette.pine then
---         --     highlight.fg = palette.foam
---         -- end
---       end,
---     }
---
---     vim.cmd 'colorscheme rose-pine'
---   end,
--- }
---
--- return {
---   'rebelot/kanagawa.nvim',
---   config = function()
---     require('kanagawa').setup {
---       compile = false, -- enable compiling the colorscheme
---       undercurl = false, -- enable undercurls
---       commentStyle = { italic = true, bold = false },
---       functionStyle = { bold = false },
---       keywordStyle = { italic = false, bold = false },
---       statementStyle = { bold = false },
---       typeStyle = { bold = false },
---       transparent = false, -- do not set background color
---       dimInactive = false, -- dim inactive window `:h hl-NormalNC`
---       terminalColors = true, -- define vim.g.terminal_color_{0,17}
---       colors = { -- add/modify theme and palette colors
---         palette = {
---           samuraiRed = '#C34043',
---         },
---         theme = {
---           wave = {},
---           lotus = {},
---           dragon = {},
---           all = {
---             ui = {
---               bg_gutter = 'none',
---               underline = 'none',
---               italic = false,
---               bold = false,
---             },
---           },
---         },
---       },
---       overrides = function(colors) -- add/modify highlights
---         return {
---           Boolean = { bold = false },
---           -- LineNr = {
---           --   fg = colors.palette.bg or colors.theme[vim.g.kanagawa_theme or 'dragon'].bg,
---           --   bg = colors.palette.bg or colors.theme[vim.g.kanagawa_theme or 'dragon'].bg,
---           -- },
---         }
---       end,
---       theme = 'wave', -- Load "wave" theme
---       background = { -- map the value of 'background' option to a theme
---         dark = 'wave', -- try "dragon" !
---         light = 'lotus',
---       },
---     }
---
---     vim.cmd.colorscheme 'kanagawa'
---   end,
--- }
-
 -- Colorscheme configuration for Neovim using Catppuccin theme
 -- return {
 --   'catppuccin/nvim',
 --   name = 'catppuccin',
 --   config = function()
 --     require('catppuccin').setup {
---       flavour = 'mocha', -- latte, frappe, macchiato, mocha
+--       flavour = 'macchiato', -- latte, frappe, macchiato, mocha
 --       background = { -- :h background
 --         light = 'latte',
---         dark = 'mocha',
+--         dark = 'macchiato',
 --       },
 --       transparent_background = false, -- disables setting the background color.
 --       show_end_of_buffer = false, -- shows the '~' characters after the end of buffers

@@ -9,7 +9,7 @@ return {
         theme = 'everforest',
         -- theme = 'gruvbox-material',
         -- theme = 'kanagawa',
-        -- theme = 'vscode',
+        -- theme = 'catppuccin',
         component_separators = '|',
         section_separators = '',
       },
