@@ -1,0 +1,22 @@
+-- Volar (Vue Language Server oficial) - melhor para Vue 3
+-- Para usar este em vez do VLS, renomeie este arquivo para volar.lua
+-- e atualize o vim.lsp.enable() no init.lua
+return {
+  cmd = { 'vue-language-server', '--stdio' },
+  filetypes = { 'vue' },
+  root_markers = { 'package.json', '.git' },
+  init_options = {
+    vue = {
+      hybridMode = false,
+    },
+  },
+  settings = {
+    vue = {
+      inlayHints = {
+        missingProps = true,
+        optionsWrapper = true,
+        inlineHandlerLeading = true,
+      },
+    },
+  },
+}

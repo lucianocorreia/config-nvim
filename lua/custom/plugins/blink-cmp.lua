@@ -31,7 +31,16 @@ return {
       },
       opts = {},
     },
-    'folke/lazydev.nvim',
+    -- Optional lazydev integration for Lua development
+    {
+      'folke/lazydev.nvim',
+      ft = 'lua',
+      opts = {
+        library = {
+          { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
+        },
+      },
+    },
   },
   --- @module 'blink.cmp'
   --- @type blink.cmp.Config
@@ -85,7 +94,11 @@ return {
     sources = {
       default = { 'lsp', 'buffer', 'path', 'snippets', 'lazydev' },
       providers = {
-        lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
+        lazydev = { 
+          module = 'lazydev.integrations.blink', 
+          score_offset = 100,
+          fallbacks = { 'lsp' },
+        },
       },
     },
 
