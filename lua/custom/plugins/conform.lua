@@ -32,7 +32,14 @@ return {
       -- Disable "format_on_save lsp_fallback" for languages that don't
       -- have a well standardized coding style. You can add additional
       -- languages here or re-enable it for the disabled ones.
-      local disable_filetypes = { c = true, cpp = true, php = true, vue = true, js = true }
+      local disable_filetypes = { 
+        c = true, 
+        cpp = true, 
+        php = true, 
+        vue = true,
+        -- JSON e XML são habilitados para format_on_save
+        -- javascript/typescript são habilitados para format_on_save 
+      }
       if disable_filetypes[vim.bo[bufnr].filetype] then
         return nil
       else
@@ -44,11 +51,25 @@ return {
     end,
     formatters_by_ft = {
       lua = { 'stylua' },
-      -- Conform can also run multiple formatters sequentially
-      -- python = { "isort", "black" },
-      --
-      -- You can use 'stop_after_first' to run the first available formatter from the list
+      
+      -- 📄 JSON formatting
+      json = { 'prettierd', 'prettier', stop_after_first = true },
+      jsonc = { 'prettierd', 'prettier', stop_after_first = true },
+      
+      -- 📋 XML formatting  
+      xml = { 'xmllint' },
+      
+      -- 🌐 Web development
       javascript = { 'prettierd', 'prettier', stop_after_first = true },
+      typescript = { 'prettierd', 'prettier', stop_after_first = true },
+      html = { 'prettierd', 'prettier', stop_after_first = true },
+      css = { 'prettierd', 'prettier', stop_after_first = true },
+      scss = { 'prettierd', 'prettier', stop_after_first = true },
+      yaml = { 'prettierd', 'prettier', stop_after_first = true },
+      yml = { 'prettierd', 'prettier', stop_after_first = true },
+      
+      -- 🐍 Python (exemplo commented)
+      -- python = { "isort", "black" },
     },
   },
 }

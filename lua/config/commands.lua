@@ -182,3 +182,146 @@ end, {
     }
   end
 })
+
+-- 🎨 Format Commands
+vim.api.nvim_create_user_command('FormatInfo', function()
+  -- Verificar conform.nvim
+  local conform_ok, conform = pcall(require, 'conform')
+  if not conform_ok then
+    print('❌ Plugin conform.nvim não encontrado')
+    return
+  end
+  
+  local filetype = vim.bo.filetype
+  print('🎨 Informações de Formatação:')
+  print('============================')
+  print('Tipo de arquivo: ' .. filetype)
+  
+  -- Verificar formatadores disponíveis para o tipo de arquivo
+  local formatters = conform.list_formatters(0)
+  if #formatters == 0 then
+    print('❌ Nenhum formatador configurado para este tipo de arquivo')
+  else
+    print('✅ Formatadores disponíveis:')
+    for _, formatter in ipairs(formatters) do
+      local status = formatter.available and '✅' or '❌'
+      print('  ' .. status .. ' ' .. formatter.name)
+    end
+  end
+  
+  print('')
+  print('💡 Comandos úteis:')
+  print('  :ConformInfo - Informações detalhadas do conform')
+  print('  <leader>cf - Formatar buffer atual')
+  print('  (visual) <leader>cf - Formatar seleção')
+end, { desc = 'Informações sobre formatação' })
+
+vim.api.nvim_create_user_command('FormatTest', function()
+  -- Criar arquivo de teste com diferentes formatos
+  local test_files = {
+    ['test.json'] = '{"name":"test","value":123,"array":[1,2,3],"nested":{"key":"value"}}',
+    ['test.xml'] = '<?xml version="1.0"?><root><item id="1"><name>Test</name><value>123</value></item></root>',
+  }
+  
+  print('🧪 Criando arquivos de teste para formatação...')
+  for filename, content in pairs(test_files) do
+    local file = io.open(filename, 'w')
+    if file then
+      file:write(content)
+      file:close()
+      print('✅ Criado: ' .. filename)
+    end
+  end
+  
+  print('')
+  print('💡 Para testar:')
+  print('1. Abra os arquivos: :e test.json | :e test.xml')
+  print('2. Use <leader>cf para formatar')
+  print('3. Delete os arquivos quando terminar: :!rm test.json test.xml')
+end, { desc = 'Criar arquivos de teste para formatação' })
+
+-- 🎨 PHP Theme Commands
+vim.api.nvim_create_user_command('PhpThemeTest', function()
+  -- Criar arquivo PHP de teste com variáveis
+  local php_content = [[<?php
+
+class ExampleClass {
+    public $publicVar = 'public';
+    private $privateVar = 'private';
+    protected $protectedVar = 'protected';
+    
+    public static function testMethod($parameter) {
+        $localVar = 'local';
+        $anotherVar = $parameter;
+        
+        echo $localVar . $anotherVar;
+        
+        return $this->publicVar;
+    }
+    
+    private function anotherMethod() {
+        $result = $this->privateVar;
+        return $result;
+    }
+}
+
+$instance = new ExampleClass();
+$test = $instance->testMethod('test');
+$globalVar = 'global';
+
+function globalFunction($param1, $param2) {
+    $local1 = $param1;
+    $local2 = $param2;
+    
+    return $local1 . $local2;
+}
+
+echo $globalVar;
+?>]]
+  
+  local file = io.open('php_theme_test.php', 'w')
+  if file then
+    file:write(php_content)
+    file:close()
+    print('🐘 Arquivo PHP de teste criado: php_theme_test.php')
+    print('')
+    print('💡 Para testar:')
+    print('1. Abra o arquivo: :e php_theme_test.php')
+    print('2. Observe as cores do $ (deve ser igual a public/static)')
+    print('3. Delete quando terminar: :!rm php_theme_test.php')
+  else
+    print('❌ Erro ao criar arquivo de teste')
+  end
+end, { desc = 'Criar arquivo PHP de teste para verificar cores' })
+
+vim.api.nvim_create_user_command('ThemeInfo', function()
+  print('🎨 Informações do Tema:')
+  print('======================')
+  
+  -- Verificar tema atual
+  local colorscheme = vim.g.colors_name or 'unknown'
+  print('Tema atual: ' .. colorscheme)
+  
+  if vim.bo.filetype == 'php' then
+    print('')
+    print('🐘 Highlights PHP:')
+    
+    -- Função para obter informações de highlight
+    local function get_hl_info(group)
+      local hl = vim.api.nvim_get_hl(0, { name = group })
+      if hl and hl.fg then
+        return string.format('#%06x', hl.fg)
+      end
+      return 'N/A'
+    end
+    
+    print('  • Keyword (public/static): ' .. get_hl_info('Keyword'))
+    print('  • phpVarSelector ($): ' .. get_hl_info('phpVarSelector'))
+    print('  • @variable.builtin.php: ' .. get_hl_info('@variable.builtin.php'))
+    print('  • phpIdentifier: ' .. get_hl_info('phpIdentifier'))
+  else
+    print('')
+    print('💡 Abra um arquivo PHP para ver highlights específicos')
+    print('Use :PhpThemeTest para criar arquivo de teste')
+  end
+end, { desc = 'Informações sobre o tema atual' })

@@ -145,6 +145,24 @@ return {
           bold = false
         }
 
+        -- 🐘 PHP: Destacar caractere $ com cor de keywords
+        -- Usar a mesma cor de public, static, class, function, etc.
+        highlight_groups.phpVarSelector = {
+          fg = palette.purple,  -- Mesma cor das palavras-chave (public, static, etc.)
+          bold = false
+        }
+        
+        -- Alternativa mais específica para treesitter (caso use)
+        highlight_groups['@variable.builtin.php'] = {
+          fg = palette.purple,
+          bold = false
+        }
+        
+        -- Para syntax highlighting tradicional
+        highlight_groups.phpIdentifier = {
+          fg = palette.fg,  -- Cor normal para o nome da variável
+        }
+
         -- change the background color of the terminal window
         highlight_groups.Terminal = { bg = palette.red }
       end,

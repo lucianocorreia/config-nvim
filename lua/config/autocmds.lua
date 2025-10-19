@@ -55,3 +55,41 @@ vim.api.nvim_create_autocmd('BufReadPost', {
     end
   end,
 })
+
+-- 🐘 PHP: Configurações específicas e highlight do $
+vim.api.nvim_create_autocmd('FileType', {
+  desc = 'PHP specific configurations and $ highlighting',
+  group = vim.api.nvim_create_augroup('corr3ia-php-config', { clear = true }),
+  pattern = 'php',
+  callback = function()
+    -- Garantir que o highlight do $ seja aplicado
+    vim.schedule(function()
+      -- Obter a cor das keywords (como public, static)
+      local keyword_color = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID('Keyword')), 'fg#')
+      
+      -- Se não conseguir pegar a cor do Keyword, usar purple do Everforest
+      if keyword_color == '' or keyword_color == -1 then
+        keyword_color = '#d699b6' -- Purple do Everforest
+      end
+      
+      -- Aplicar highlight específico para PHP
+      vim.api.nvim_set_hl(0, 'phpVarSelector', { 
+        fg = keyword_color,
+        bold = false 
+      })
+      
+      -- Para treesitter
+      vim.api.nvim_set_hl(0, '@variable.builtin.php', { 
+        fg = keyword_color,
+        bold = false 
+      })
+      
+      -- Para syntax highlighting tradicional
+      vim.api.nvim_set_hl(0, 'phpIdentifier', { 
+        fg = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID('Normal')), 'fg#') or '#d3c6aa'
+      })
+      
+      print('🐘 PHP highlights aplicados - $ agora tem cor de keyword!')
+    end)
+  end,
+})

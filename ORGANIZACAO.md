@@ -120,17 +120,45 @@ nvim lua/config/lsp.lua
 :LspStatus          " Status dos clientes LSP
 :DiagnosticInfo     " Informações sobre diagnósticos do buffer
 :DiagnosticToggle   " Ativar/desativar virtual text
+:FormatInfo         " Informações sobre formatação do arquivo atual
+:FormatTest         " Criar arquivos de teste para formatação
+:PhpThemeTest       " Criar arquivo PHP de teste para verificar cores
+:ThemeInfo          " Informações sobre o tema atual e highlights
+:ConformInfo        " Informações detalhadas do conform.nvim
 :ConfigInfo         " Informações da configuração
 :ReloadConfig       " Recarregar configuração
 :checkhealth        " Verificar saúde da configuração
 ```
 
-### ⌨️ **Keymaps de Diagnósticos:**
+### ⌨️ **Keymaps Importantes:**
 ```vim
+-- Diagnósticos LSP
 <leader>e    " Mostrar erro em float window
 [d           " Ir para diagnóstico anterior
 ]d           " Ir para próximo diagnóstico
 <leader>q    " Abrir quickfix list com diagnósticos
+
+-- Formatação
+<leader>cf   " Formatar buffer atual (normal mode)
+<leader>cf   " Formatar seleção (visual mode)
+```
+
+### 🎨 **Formatação de Arquivos:**
+```
+✅ JSON/JSONC → prettier/prettierd
+✅ XML        → xmllint  
+✅ JavaScript → prettier/prettierd
+✅ TypeScript → prettier/prettierd
+✅ HTML/CSS   → prettier/prettierd
+✅ YAML/YML   → prettier/prettierd
+✅ Lua        → stylua
+```
+
+### 🐘 **PHP Theme Customization:**
+```
+✅ $ (variáveis) → Mesma cor das keywords (public, static, etc.)
+✅ Auto-aplicação → Carrega automaticamente em arquivos .php
+✅ Treesitter support → Compatível com syntax highlighting moderno
 ```
 
 ## 📦 Backup
