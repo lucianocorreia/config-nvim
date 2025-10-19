@@ -177,8 +177,8 @@ nvim lua/config/lsp.lua
 
 #### **Keymaps do Copilot:**
 ```vim
--- Chat Principal
-<leader>zc   " Toggle chat (com buffer atual automático)
+-- Chat Principal (padrão <leader>z... sem zc para evitar conflito)
+<leader>zh   " Toggle chat (com buffer atual automático)
 <leader>zq   " Pergunta rápida (com contexto)
 
 -- Visual Mode (seleção)  

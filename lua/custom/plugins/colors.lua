@@ -71,10 +71,10 @@ return {
       ---components be transparent (e.g. status line background)
       transparent_background_level = 0,
       ---Whether italics should be used for keywords and more.
-      italics = true,
+      italics = false,
       ---Disable italic fonts for comments. Comments are in italics by default, set
       ---this to `true` to make them _not_ italic!
-      disable_italic_comments = false,
+      disable_italic_comments = true,
       ---By default, the colour of the sign column background is the same as the as normal text
       ---background, but you can use a grey background by setting this to `"grey"`.
       sign_column_background = 'none',
@@ -162,6 +162,21 @@ return {
         highlight_groups.phpIdentifier = {
           fg = palette.fg,  -- Cor normal para o nome da variável
         }
+
+        -- 🔷 C#: Remover itálicos de classes, tipos e namespaces
+        highlight_groups['@type.cs'] = { fg = palette.blue, italic = false }
+        highlight_groups['@type.builtin.cs'] = { fg = palette.blue, italic = false }
+        highlight_groups['@namespace.cs'] = { fg = palette.yellow, italic = false }
+        highlight_groups['@property.cs'] = { fg = palette.fg, italic = false }
+        highlight_groups['@method.cs'] = { fg = palette.green, italic = false }
+        highlight_groups['@keyword.cs'] = { fg = palette.purple, italic = false }
+        highlight_groups['@attribute.cs'] = { fg = palette.orange, italic = false }
+        
+        -- Para syntax highlighting tradicional (fallback)
+        highlight_groups.csType = { fg = palette.blue, italic = false }
+        highlight_groups.csClass = { fg = palette.blue, italic = false }
+        highlight_groups.csClassType = { fg = palette.blue, italic = false }
+        highlight_groups.csStorage = { fg = palette.purple, italic = false }
 
         -- change the background color of the terminal window
         highlight_groups.Terminal = { bg = palette.red }

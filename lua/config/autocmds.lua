@@ -113,5 +113,23 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.bo.softtabstop = 4
     vim.bo.shiftwidth = 4
     vim.bo.expandtab = true
+    
+    -- Remover itálicos de elementos específicos do C#
+    vim.schedule(function()
+      -- Treesitter highlights para C#
+      vim.api.nvim_set_hl(0, '@type.cs', { fg = '#7fbbb3', italic = false })
+      vim.api.nvim_set_hl(0, '@type.builtin.cs', { fg = '#7fbbb3', italic = false })
+      vim.api.nvim_set_hl(0, '@namespace.cs', { fg = '#dbbc7f', italic = false })
+      vim.api.nvim_set_hl(0, '@property.cs', { fg = '#d3c6aa', italic = false })
+      vim.api.nvim_set_hl(0, '@method.cs', { fg = '#a7c080', italic = false })
+      vim.api.nvim_set_hl(0, '@keyword.cs', { fg = '#d699b6', italic = false })
+      vim.api.nvim_set_hl(0, '@attribute.cs', { fg = '#e69875', italic = false })
+      
+      -- Syntax highlighting tradicional
+      vim.api.nvim_set_hl(0, 'csType', { fg = '#7fbbb3', italic = false })
+      vim.api.nvim_set_hl(0, 'csClass', { fg = '#7fbbb3', italic = false })
+      vim.api.nvim_set_hl(0, 'csClassType', { fg = '#7fbbb3', italic = false })
+      vim.api.nvim_set_hl(0, 'csStorage', { fg = '#d699b6', italic = false })
+    end)
   end,
 })
