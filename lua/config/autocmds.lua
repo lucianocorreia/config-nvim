@@ -20,18 +20,18 @@ vim.api.nvim_create_autocmd('VimResized', {
 })
 
 -- 🧹 Remover trailing spaces automaticamente ao salvar
-vim.api.nvim_create_autocmd('BufWritePre', {
-  desc = 'Remove trailing whitespace on save',
-  group = vim.api.nvim_create_augroup('corr3ia-trim-whitespace', { clear = true }),
-  callback = function()
-    -- Salvar posição do cursor
-    local save_cursor = vim.fn.getpos('.')
-    -- Remover trailing spaces
-    vim.cmd([[%s/\s\+$//e]])
-    -- Restaurar posição do cursor
-    vim.fn.setpos('.', save_cursor)
-  end,
-})
+-- vim.api.nvim_create_autocmd('BufWritePre', {
+--   desc = 'Remove trailing whitespace on save',
+--   group = vim.api.nvim_create_augroup('corr3ia-trim-whitespace', { clear = true }),
+--   callback = function()
+--     -- Salvar posição do cursor
+--     local save_cursor = vim.fn.getpos('.')
+--     -- Remover trailing spaces
+--     vim.cmd([[%s/\s\+$//e]])
+--     -- Restaurar posição do cursor
+--     vim.fn.setpos('.', save_cursor)
+--   end,
+-- })
 
 -- 🎯 Entrar automaticamente no modo Insert ao abrir terminal
 vim.api.nvim_create_autocmd('TermOpen', {
@@ -66,29 +66,29 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.schedule(function()
       -- Obter a cor das keywords (como public, static)
       local keyword_color = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID('Keyword')), 'fg#')
-      
+
       -- Se não conseguir pegar a cor do Keyword, usar purple do Everforest
       if keyword_color == '' or keyword_color == -1 then
         keyword_color = '#d699b6' -- Purple do Everforest
       end
-      
+
       -- Aplicar highlight específico para PHP
-      vim.api.nvim_set_hl(0, 'phpVarSelector', { 
+      vim.api.nvim_set_hl(0, 'phpVarSelector', {
         fg = keyword_color,
-        bold = false 
+        bold = false
       })
-      
+
       -- Para treesitter
-      vim.api.nvim_set_hl(0, '@variable.builtin.php', { 
+      vim.api.nvim_set_hl(0, '@variable.builtin.php', {
         fg = keyword_color,
-        bold = false 
+        bold = false
       })
-      
+
       -- Para syntax highlighting tradicional
-      vim.api.nvim_set_hl(0, 'phpIdentifier', { 
+      vim.api.nvim_set_hl(0, 'phpIdentifier', {
         fg = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID('Normal')), 'fg#') or '#d3c6aa'
       })
-      
+
       print('🐘 PHP highlights aplicados - $ agora tem cor de keyword!')
     end)
   end,
