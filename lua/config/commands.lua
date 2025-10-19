@@ -325,3 +325,72 @@ vim.api.nvim_create_user_command('ThemeInfo', function()
     print('Use :PhpThemeTest para criar arquivo de teste')
   end
 end, { desc = 'Informações sobre o tema atual' })
+
+-- 🤖 Copilot Chat Commands
+vim.api.nvim_create_user_command('CopilotInfo', function()
+  print('🤖 Informações do Copilot Chat:')
+  print('===============================')
+  
+  -- Verificar se Copilot está disponível
+  local copilot_ok, copilot = pcall(require, 'CopilotChat')
+  if not copilot_ok then
+    print('❌ CopilotChat não encontrado')
+    return
+  end
+  
+  print('✅ CopilotChat disponível')
+  
+  -- Verificar status do chat
+  local chat_open = vim.fn.bufname():match('copilot%-chat') ~= nil
+  print('Chat aberto: ' .. (chat_open and '✅ Sim' or '❌ Não'))
+  
+  print('')
+  print('⌨️ Keymaps principais:')
+  print('  <leader>zc - Toggle chat (com buffer atual)')
+  print('  <leader>zq - Pergunta rápida (com contexto)')
+  print('  <leader>ze - Explicar código (visual)')
+  print('  <leader>zr - Revisar código (visual)')
+  print('  <leader>zf - Corrigir código (visual)')
+  print('  <leader>zm - Gerar commit message')
+  print('  <leader>zx - Limpar chat')
+  
+  print('')
+  print('💡 Dica: Agora o chat já inclui automaticamente o buffer atual!')
+end, { desc = 'Informações sobre Copilot Chat' })
+
+vim.api.nvim_create_user_command('CopilotHelp', function()
+  print('🤖 Guia Rápido do Copilot Chat:')
+  print('===============================')
+  print('')
+  print('🎯 CONTEXTO AUTOMÁTICO:')
+  print('• <leader>zc - Abre chat COM buffer atual já incluído')
+  print('• <leader>zq - Pergunta rápida COM contexto automático')
+  print('• Não precisa mais usar #buffer!')
+  print('')
+  print('📝 COMANDOS POR MODO:')
+  print('Normal mode (arquivo inteiro):')
+  print('  <leader>zc  - Chat com buffer completo')
+  print('  <leader>zeb - Explicar arquivo inteiro')
+  print('  <leader>zrb - Revisar arquivo inteiro')
+  print('  <leader>zfb - Corrigir arquivo inteiro')
+  print('')
+  print('Visual mode (seleção):')
+  print('  <leader>zc - Chat com código selecionado')
+  print('  <leader>ze - Explicar seleção')
+  print('  <leader>zr - Revisar seleção')
+  print('  <leader>zf - Corrigir seleção')
+  print('  <leader>zo - Otimizar seleção')
+  print('  <leader>zd - Documentar seleção')
+  print('  <leader>zt - Gerar testes')
+  print('')
+  print('🚀 UTILITÁRIOS:')
+  print('  <leader>zm - Gerar commit message')
+  print('  <leader>zs - Commit para staged files')
+  print('  <leader>zx - Limpar chat')
+  print('  <leader>zv - Toggle janela')
+  print('')
+  print('💡 DICAS:')
+  print('• O contexto agora é automático!')
+  print('• Use visual mode para código específico')
+  print('• Use normal mode para arquivo inteiro')
+end, { desc = 'Guia completo do Copilot Chat' })

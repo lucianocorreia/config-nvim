@@ -164,3 +164,45 @@ nvim lua/config/lsp.lua
 ## 📦 Backup
 - `init_backup.lua`: Backup da configuração original
 - Pode ser removido após confirmar que tudo funciona
+
+
+### 🤖 **Copilot Chat (Melhorado):**
+```
+✅ Contexto automático → Buffer atual incluído automaticamente  
+✅ Não precisa #buffer → Contexto detectado automaticamente
+✅ Quick chat → <leader>zq para perguntas rápidas
+✅ Comandos específicos → Explain, Review, Fix, Optimize por seleção
+✅ Interface melhorada → Chat com configurações otimizadas
+```
+
+#### **Keymaps do Copilot:**
+```vim
+-- Chat Principal
+<leader>zc   " Toggle chat (com buffer atual automático)
+<leader>zq   " Pergunta rápida (com contexto)
+
+-- Visual Mode (seleção)  
+<leader>ze   " Explicar código selecionado
+<leader>zr   " Revisar código selecionado
+<leader>zf   " Corrigir código selecionado
+<leader>zo   " Otimizar código selecionado
+<leader>zd   " Documentar código selecionado
+<leader>zt   " Gerar testes para seleção
+
+-- Normal Mode (arquivo inteiro)
+<leader>zeb  " Explicar buffer inteiro
+<leader>zrb  " Revisar buffer inteiro  
+<leader>zfb  " Corrigir buffer inteiro
+
+-- Utilitários
+<leader>zm   " Gerar commit message
+<leader>zs   " Commit para staged files
+<leader>zx   " Limpar chat
+<leader>zv   " Toggle janela chat
+```
+
+#### **Comandos Úteis:**
+```vim
+:CopilotInfo    " Informações sobre status do Copilot
+:CopilotHelp    " Guia completo de uso
+```
