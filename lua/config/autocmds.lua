@@ -93,3 +93,25 @@ vim.api.nvim_create_autocmd('FileType', {
     end)
   end,
 })
+
+-- ⚙️ C#: Configurações específicas para indentação
+vim.api.nvim_create_autocmd('FileType', {
+  desc = 'C# specific tab and indentation settings',
+  group = vim.api.nvim_create_augroup('corr3ia-csharp-config', { clear = true }),
+  pattern = 'cs',
+  callback = function()
+    -- Configurações específicas para C#
+    vim.opt_local.tabstop = 4
+    vim.opt_local.softtabstop = 4
+    vim.opt_local.shiftwidth = 4
+    vim.opt_local.expandtab = true
+    vim.opt_local.autoindent = true
+    vim.opt_local.smartindent = true
+    
+    -- Garantir que o C# use 4 espaços consistentemente
+    vim.bo.tabstop = 4
+    vim.bo.softtabstop = 4
+    vim.bo.shiftwidth = 4
+    vim.bo.expandtab = true
+  end,
+})

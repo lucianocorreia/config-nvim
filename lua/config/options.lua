@@ -26,6 +26,14 @@ vim.schedule(function()
   vim.opt.clipboard = 'unnamedplus' -- Usar clipboard do sistema
 end)
 
+-- 📑 Indentação e Tabs
+vim.opt.tabstop = 4        -- Largura do tab visual
+vim.opt.softtabstop = 4    -- Largura do tab ao editar
+vim.opt.shiftwidth = 4     -- Largura da indentação
+vim.opt.expandtab = true   -- Converter tabs em espaços
+vim.opt.autoindent = true  -- Auto indentação
+vim.opt.smartindent = true -- Indentação inteligente
+
 -- 🔤 Texto e Edição
 vim.opt.breakindent = true         -- Manter indentação em quebras
 vim.opt.undofile = true            -- Arquivo de undo persistente

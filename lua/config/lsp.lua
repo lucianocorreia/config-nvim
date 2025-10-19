@@ -148,7 +148,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
--- 📡 Ativar Language Servers
+-- Enable Language Servers
 vim.lsp.enable({
   'lua_ls',
   'intelephense',
