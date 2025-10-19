@@ -132,35 +132,35 @@ return {
 
         -- 🎨 Customização de cores de seleção e yank
         -- Cor de seleção visual (quando você seleciona texto)
-        highlight_groups.Visual = {
-          bg = '#5A6B44', -- Verde escuro mais suave
-          fg = 'NONE',    -- Mantém a cor do texto original
-          bold = false
-        }
-
-        -- Cor quando você faz yank (cópia) - IncSearch é usado para highlight do yank
-        highlight_groups.IncSearch = {
-          bg = '#dbbc7f', -- Cor clara/amarelada
-          fg = '#343F44', -- Texto escuro para contraste
-          bold = false
-        }
+        -- highlight_groups.Visual = {
+        --   bg = '#5A6B44', -- Verde escuro mais suave
+        --   fg = 'NONE',    -- Mantém a cor do texto original
+        --   bold = false
+        -- }
+        --
+        -- -- Cor quando você faz yank (cópia) - IncSearch é usado para highlight do yank
+        -- highlight_groups.IncSearch = {
+        --   bg = '#dbbc7f', -- Cor clara/amarelada
+        --   fg = '#343F44', -- Texto escuro para contraste
+        --   bold = false
+        -- }
 
         -- 🐘 PHP: Destacar caractere $ com cor de keywords
         -- Usar a mesma cor de public, static, class, function, etc.
         highlight_groups.phpVarSelector = {
-          fg = palette.purple,  -- Mesma cor das palavras-chave (public, static, etc.)
-          bold = false
+          fg = palette.purple, -- Mesma cor das palavras-chave (public, static, etc.)
+          bold = false,
         }
-        
+
         -- Alternativa mais específica para treesitter (caso use)
         highlight_groups['@variable.builtin.php'] = {
           fg = palette.purple,
-          bold = false
+          bold = false,
         }
-        
+
         -- Para syntax highlighting tradicional
         highlight_groups.phpIdentifier = {
-          fg = palette.fg,  -- Cor normal para o nome da variável
+          fg = palette.fg, -- Cor normal para o nome da variável
         }
 
         -- 🔷 C#: Remover itálicos de classes, tipos e namespaces
@@ -171,7 +171,7 @@ return {
         highlight_groups['@method.cs'] = { fg = palette.green, italic = false }
         highlight_groups['@keyword.cs'] = { fg = palette.purple, italic = false }
         highlight_groups['@attribute.cs'] = { fg = palette.orange, italic = false }
-        
+
         -- Para syntax highlighting tradicional (fallback)
         highlight_groups.csType = { fg = palette.blue, italic = false }
         highlight_groups.csClass = { fg = palette.blue, italic = false }
