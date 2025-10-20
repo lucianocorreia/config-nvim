@@ -15,7 +15,7 @@ vim.api.nvim_create_autocmd('VimResized', {
   desc = 'Auto-resize windows when Neovim is resized',
   group = vim.api.nvim_create_augroup('corr3ia-auto-resize', { clear = true }),
   callback = function()
-    vim.cmd('wincmd =')
+    vim.cmd 'wincmd ='
   end,
 })
 
@@ -38,7 +38,7 @@ vim.api.nvim_create_autocmd('TermOpen', {
   desc = 'Enter insert mode when opening terminal',
   group = vim.api.nvim_create_augroup('corr3ia-terminal-insert', { clear = true }),
   callback = function()
-    vim.cmd('startinsert')
+    vim.cmd 'startinsert'
   end,
 })
 
@@ -51,7 +51,7 @@ vim.api.nvim_create_autocmd('BufReadPost', {
     local lcount = vim.api.nvim_buf_line_count(0)
     if mark[1] > 0 and mark[1] <= lcount then
       pcall(vim.api.nvim_win_set_cursor, 0, mark)
-      vim.cmd('normal! zz')
+      vim.cmd 'normal! zz'
     end
   end,
 })
@@ -65,7 +65,7 @@ vim.api.nvim_create_autocmd('FileType', {
     -- Garantir que o highlight do $ seja aplicado
     vim.schedule(function()
       -- Obter a cor das keywords (como public, static)
-      local keyword_color = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID('Keyword')), 'fg#')
+      local keyword_color = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID 'Keyword'), 'fg#')
 
       -- Se não conseguir pegar a cor do Keyword, usar purple do Everforest
       if keyword_color == '' or keyword_color == -1 then
@@ -75,21 +75,19 @@ vim.api.nvim_create_autocmd('FileType', {
       -- Aplicar highlight específico para PHP
       vim.api.nvim_set_hl(0, 'phpVarSelector', {
         fg = keyword_color,
-        bold = false
+        bold = false,
       })
 
       -- Para treesitter
       vim.api.nvim_set_hl(0, '@variable.builtin.php', {
         fg = keyword_color,
-        bold = false
+        bold = false,
       })
 
       -- Para syntax highlighting tradicional
       vim.api.nvim_set_hl(0, 'phpIdentifier', {
-        fg = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID('Normal')), 'fg#') or '#d3c6aa'
+        fg = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID 'Normal'), 'fg#') or '#d3c6aa',
       })
-
-      print('🐘 PHP highlights aplicados - $ agora tem cor de keyword!')
     end)
   end,
 })
@@ -107,13 +105,13 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.opt_local.expandtab = true
     vim.opt_local.autoindent = true
     vim.opt_local.smartindent = true
-    
+
     -- Garantir que o C# use 4 espaços consistentemente
     vim.bo.tabstop = 4
     vim.bo.softtabstop = 4
     vim.bo.shiftwidth = 4
     vim.bo.expandtab = true
-    
+
     -- Remover itálicos de elementos específicos do C#
     vim.schedule(function()
       -- Treesitter highlights para C#
@@ -124,7 +122,7 @@ vim.api.nvim_create_autocmd('FileType', {
       vim.api.nvim_set_hl(0, '@method.cs', { fg = '#a7c080', italic = false })
       vim.api.nvim_set_hl(0, '@keyword.cs', { fg = '#d699b6', italic = false })
       vim.api.nvim_set_hl(0, '@attribute.cs', { fg = '#e69875', italic = false })
-      
+
       -- Syntax highlighting tradicional
       vim.api.nvim_set_hl(0, 'csType', { fg = '#7fbbb3', italic = false })
       vim.api.nvim_set_hl(0, 'csClass', { fg = '#7fbbb3', italic = false })
