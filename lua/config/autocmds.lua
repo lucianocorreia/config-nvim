@@ -131,3 +131,23 @@ vim.api.nvim_create_autocmd('FileType', {
     end)
   end,
 })
+
+-- 🎮 GDScript: Configurações específicas para Godot
+vim.api.nvim_create_autocmd('FileType', {
+  desc = 'GDScript specific tab settings (uses real tabs like Godot)',
+  group = vim.api.nvim_create_augroup('corr3ia-gdscript-config', { clear = true }),
+  pattern = 'gdscript',
+  callback = function()
+    -- Godot usa tabs reais (não espaços)
+    vim.opt_local.tabstop = 4
+    vim.opt_local.softtabstop = 4
+    vim.opt_local.shiftwidth = 4
+    vim.opt_local.expandtab = false -- Usar tabs reais
+    vim.opt_local.autoindent = true
+    vim.opt_local.smartindent = true
+    
+    -- Mostrar caracteres de tab
+    vim.opt_local.list = true
+    vim.opt_local.listchars = { tab = '→ ', trail = '·', nbsp = '␣' }
+  end,
+})
