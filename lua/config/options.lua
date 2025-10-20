@@ -45,7 +45,7 @@ vim.opt.smartcase = true -- Case sensitive se contém maiúscula
 vim.opt.inccommand = 'split' -- Preview de substituições
 
 -- ⏱️ Timing
-vim.opt.updatetime = 500 -- Tempo para salvar swap file
+vim.opt.updatetime = 250 -- Tempo para salvar swap file
 vim.opt.timeoutlen = 300 -- Tempo para combos de teclas
 
 -- 🪟 Janelas
