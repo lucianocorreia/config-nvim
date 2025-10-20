@@ -29,7 +29,7 @@ vim.opt.smartcase = true
 
 vim.opt.signcolumn = 'yes'
 
-vim.opt.updatetime = 250
+vim.opt.updatetime = 300
 
 vim.opt.timeoutlen = 300
 
@@ -97,8 +97,7 @@ vim.keymap.set('n', '<leader>bn', '<Cmd>bn<CR>', { desc = '[B]uffer [N]ext' })
 vim.keymap.set('n', '<leader>bp', '<Cmd>bp<CR>', { desc = '[B]uffer [P]revious' })
 
 -- custom key maps
-vim.keymap.set('n', '<leader>lj', require('funcs').log_variable_json,
-  { desc = 'Log PHP variable with json_encode', noremap = true })
+vim.keymap.set('n', '<leader>lj', require('funcs').log_variable_json, { desc = 'Log PHP variable with json_encode', noremap = true })
 vim.keymap.set('n', '<leader>ll', require('funcs').log_variable, { desc = 'Log PHP variable', noremap = true })
 vim.keymap.set('n', '<leader>ld', require('funcs').insert_data_get, { desc = "Insert data_get($ , '')" })
 
@@ -140,10 +139,10 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
   callback = function()
-    vim.highlight.on_yank({
-      higroup = 'IncSearch',  -- Usa o grupo IncSearch que personalizamos
-      timeout = 200,          -- Duração do highlight em ms (padrão: 150)
-    })
+    vim.highlight.on_yank {
+      higroup = 'IncSearch', -- Usa o grupo IncSearch que personalizamos
+      timeout = 200, -- Duração do highlight em ms (padrão: 150)
+    }
   end,
 })
 
@@ -201,7 +200,7 @@ require('lazy').setup({
 
 -- LSP Configuration using Neovim 0.11 native LSP
 -- Configure diagnostics
-vim.diagnostic.config({
+vim.diagnostic.config {
   severity_sort = true,
   float = { border = 'rounded', source = 'if_many' },
   underline = { severity = vim.diagnostic.severity.ERROR },
@@ -226,7 +225,7 @@ vim.diagnostic.config({
       return diagnostic_message[diagnostic.severity]
     end,
   },
-})
+}
 
 -- LSP Attach autocommand for keymaps and features
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -246,7 +245,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     if client then
       -- Function to check if client supports method (compatible with 0.10 and 0.11)
       local function client_supports_method(method, bufnr)
-        if vim.fn.has('nvim-0.11') == 1 then
+        if vim.fn.has 'nvim-0.11' == 1 then
           return client:supports_method(method, bufnr)
         else
           return client.supports_method and client.supports_method(method, { bufnr = bufnr })
@@ -272,7 +271,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
           group = vim.api.nvim_create_augroup('lsp-detach', { clear = true }),
           callback = function(event2)
             vim.lsp.buf.clear_references()
-            vim.api.nvim_clear_autocmds({ group = 'lsp-highlight', buffer = event2.buf })
+            vim.api.nvim_clear_autocmds { group = 'lsp-highlight', buffer = event2.buf }
           end,
         })
       end
@@ -280,7 +279,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
       -- Inlay hints toggle
       if client_supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf) then
         map('<leader>th', function()
-          vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
+          vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
         end, '[T]oggle Inlay [H]ints')
       end
     end
@@ -288,7 +287,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 })
 
 -- Enable language servers
-vim.lsp.enable({
+vim.lsp.enable {
   'lua_ls',
   'intelephense',
   'vls',
@@ -296,33 +295,43 @@ vim.lsp.enable({
   'html',
   'cssls',
   'jsonls',
-})
+}
 
 -- LSP Status and Debugging Commands
 -- Command to show LSP clients attached to current buffer
 vim.api.nvim_create_user_command('LspStatus', function()
-  local clients = vim.lsp.get_clients({ bufnr = 0 })
+  local clients = vim.lsp.get_clients { bufnr = 0 }
   if #clients == 0 then
-    print('No LSP clients attached to current buffer')
+    print 'No LSP clients attached to current buffer'
     return
   end
 
-  print('LSP Clients attached to current buffer:')
-  print('=====================================')
+  print 'LSP Clients attached to current buffer:'
+  print '====================================='
   for _, client in pairs(clients) do
     print(string.format('• %s (id: %d)', client.name, client.id))
     print(string.format('  Root dir: %s', client.root_dir or 'N/A'))
     print(string.format('  Filetypes: %s', table.concat(client.config.filetypes or {}, ', ')))
     if client.server_capabilities then
       local caps = {}
-      if client.server_capabilities.completionProvider then table.insert(caps, 'completion') end
-      if client.server_capabilities.hoverProvider then table.insert(caps, 'hover') end
-      if client.server_capabilities.definitionProvider then table.insert(caps, 'definition') end
-      if client.server_capabilities.referencesProvider then table.insert(caps, 'references') end
-      if client.server_capabilities.renameProvider then table.insert(caps, 'rename') end
+      if client.server_capabilities.completionProvider then
+        table.insert(caps, 'completion')
+      end
+      if client.server_capabilities.hoverProvider then
+        table.insert(caps, 'hover')
+      end
+      if client.server_capabilities.definitionProvider then
+        table.insert(caps, 'definition')
+      end
+      if client.server_capabilities.referencesProvider then
+        table.insert(caps, 'references')
+      end
+      if client.server_capabilities.renameProvider then
+        table.insert(caps, 'rename')
+      end
       print(string.format('  Capabilities: %s', table.concat(caps, ', ')))
     end
-    print('')
+    print ''
   end
 end, { desc = 'Show LSP status for current buffer' })
 
@@ -330,29 +339,28 @@ end, { desc = 'Show LSP status for current buffer' })
 vim.api.nvim_create_user_command('LspClients', function()
   local clients = vim.lsp.get_clients()
   if #clients == 0 then
-    print('No LSP clients running')
+    print 'No LSP clients running'
     return
   end
 
-  print('All LSP Clients:')
-  print('================')
+  print 'All LSP Clients:'
+  print '================'
   for _, client in pairs(clients) do
-    print(string.format('• %s (id: %d) - %s', client.name, client.id,
-      #client.attached_buffers > 0 and 'Active' or 'Inactive'))
+    print(string.format('• %s (id: %d) - %s', client.name, client.id, #client.attached_buffers > 0 and 'Active' or 'Inactive'))
   end
 end, { desc = 'List all LSP clients' })
 
 -- Command to restart LSP for current buffer
 vim.api.nvim_create_user_command('LspRestart', function()
-  local clients = vim.lsp.get_clients({ bufnr = 0 })
+  local clients = vim.lsp.get_clients { bufnr = 0 }
   if #clients == 0 then
-    print('No LSP clients to restart')
+    print 'No LSP clients to restart'
     return
   end
 
   for _, client in pairs(clients) do
     print('Restarting LSP client: ' .. client.name)
-    vim.lsp.enable(client.name, false)  -- Disable
+    vim.lsp.enable(client.name, false) -- Disable
     vim.schedule(function()
       vim.lsp.enable(client.name, true) -- Re-enable
     end)
@@ -362,28 +370,28 @@ end, { desc = 'Restart LSP clients for current buffer' })
 -- Command to show enabled LSP configurations
 vim.api.nvim_create_user_command('LspConfigs', function()
   local configs = { 'lua_ls', 'intelephense', 'vls', 'ts_ls', 'html', 'cssls', 'jsonls' }
-  print('LSP Configurations:')
-  print('===================')
+  print 'LSP Configurations:'
+  print '==================='
   for _, config in ipairs(configs) do
     local enabled = vim.lsp.is_enabled(config)
     local status = enabled and '✅ Enabled' or '❌ Disabled'
     print(string.format('• %s: %s', config, status))
   end
-  print('\nUse :checkhealth vim.lsp for detailed diagnostics')
+  print '\nUse :checkhealth vim.lsp for detailed diagnostics'
 end, { desc = 'Show LSP configuration status' })
 
 -- 🎨 Comandos para testar cores personalizadas
 vim.api.nvim_create_user_command('TestColors', function()
   -- Testa a cor de seleção
-  print('🎨 Testando cores personalizadas:')
-  print('1. Selecione algum texto (modo visual) para ver a cor de seleção')
-  print('2. Copie algum texto (yy ou y{motion}) para ver o highlight do yank')
-  print('3. Use :ReloadColors para recarregar o tema após mudanças')
+  print '🎨 Testando cores personalizadas:'
+  print '1. Selecione algum texto (modo visual) para ver a cor de seleção'
+  print '2. Copie algum texto (yy ou y{motion}) para ver o highlight do yank'
+  print '3. Use :ReloadColors para recarregar o tema após mudanças'
 end, { desc = 'Testa as cores personalizadas' })
 
 vim.api.nvim_create_user_command('ReloadColors', function()
-  vim.cmd('colorscheme everforest')
-  print('🎨 Tema Everforest recarregado!')
+  vim.cmd 'colorscheme everforest'
+  print '🎨 Tema Everforest recarregado!'
 end, { desc = 'Recarrega o tema Everforest' })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
