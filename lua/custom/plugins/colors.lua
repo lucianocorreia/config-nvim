@@ -1,59 +1,63 @@
 -- return {
---   'sainnhe/gruvbox-material',
+--   'gbprod/nord.nvim',
+--   version = false,
 --   lazy = false,
---   priority = 1000,
+--   priority = 1000, -- make sure to load this before all the other start plugins
+--   -- Optional; default configuration will be used if setup isn't called.
 --   config = function()
---     -- Optionally configure and load the colorscheme
---     -- directly inside the plugin declaration.
---     vim.g.gruvbox_material_enable_italic = false
---     vim.g.gruvbox_material_background = 'medium' -- 'soft', 'medium', or 'hard'
---     vim.g.gruvbox_material_ui_contrast = 'low' -- 'low' or 'highkj
---     vim.g.gruvbox_material_diagnostic_text_highlight = true
---     vim.g.gruvbox_material_diagnostic_line_highlight = true
---     vim.g.gruvbox_material_diagnostic_virtual_text = 'coloured' -- 'grey' or 'coloured'
---     vim.g.gruvbox_material_transparent_background = false
---     vim.g.gruvbox_material_better_performance = true
---     vim.g.gruvbox_material_dim_inactive_windows = false
---     vim.g.gruvbox_material_sign_column_background = 'none' -- 'grey' or 'none'
---     vim.g.gruvbox_material_spell_foreground = false
---     vim.g.gruvbox_material_show_eob = false
---     vim.g.gruvbox_material_float_style = 'dim' -- 'bright' or 'dim'
---     vim.g.gruvbox_material_inlay_hints_background = 'dimmed' -- 'none' or 'dimmed'
---     vim.g.gruvbox_material_current_word = 'bold'
---     vim.g.gruvbox_material_inlay_hints_background = 'none'
+--     require('nord').setup {
+--       -- your configuration comes here
+--       -- or leave it empty to use the default settings
+--       transparent = false, -- Enable this to disable setting the background color
+--       terminal_colors = true, -- Configure the colors used when opening a `:terminal` in Neovim
+--       diff = { mode = 'bg' }, -- enables/disables colorful backgrounds when used in diff mode. values : [bg|fg]
+--       borders = true, -- Enable the border between verticaly split windows visible
+--       errors = { mode = 'bg' }, -- Display mode for errors and diagnostics
+--       -- values : [bg|fg|none]
+--       search = { theme = 'vim' }, -- theme for highlighting search results
+--       -- values : [vim|vscode]
+--       styles = {
+--         -- Style to be applied to different syntax groups
+--         -- Value is any valid attr-list value for `:help nvim_set_hl`
+--         comments = { italic = true },
+--         keywords = {},
+--         functions = {},
+--         variables = {},
 --
---     vim.cmd.colorscheme 'gruvbox-material'
+--         -- To customize lualine/bufferline
+--         bufferline = {
+--           current = {},
+--           modified = { italic = true },
+--         },
 --
---     -- ⚡ Ajustes de cor personalizados
---     -- Substitui o vermelho padrão
---     local red = '#ffa198'
+--         lualine_bold = false, -- When `true`, section headers in the lualine theme will be bold
+--       },
 --
---     -- Função helper para definir highlights
---     local function set_hl(group, opts)
---       vim.api.nvim_set_hl(0, group, opts)
---     end
+--       -- colorblind mode
+--       -- see https://github.com/EdenEast/nightfox.nvim#colorblind
+--       -- simulation mode has not been implemented yet.
+--       colorblind = {
+--         enable = false,
+--         preserve_background = false,
+--         severity = {
+--           protan = 0.0,
+--           deutan = 0.0,
+--           tritan = 0.0,
+--         },
+--       },
 --
---     -- Substitui o vermelho padrão
---     set_hl('Error', { fg = red })
---     set_hl('ErrorMsg', { fg = red })
---     set_hl('DiagnosticError', { fg = red })
---     set_hl('DiffDelete', { fg = red })
---     set_hl('DiagnosticVirtualTextError', { fg = red, bg = 'NONE' })
+--       -- Override the default colors
+--       ---@param colors Nord.Palette
+--       on_colors = function(colors) end,
 --
---     -- Diagnostic virtual text
---     set_hl('DiagnosticVirtualTextError', { fg = '#b86466', bg = 'NONE' })
---     set_hl('DiagnosticVirtualTextWarn', { fg = '#e69875', bg = 'NONE' })
---     set_hl('DiagnosticVirtualTextInfo', { fg = '#7fbbb3', bg = 'NONE' })
---     set_hl('DiagnosticVirtualTextHint', { fg = '#c9c6bf', bg = 'NONE' })
---
---     -- Visual selection (remove negrito)
---     set_hl('Visual', { bg = '#504945', bold = false })
---
---     -- Janela de terminal
---     -- set_hl('Terminal', { bg = red })
+--       --- You can override specific highlights to use other groups or a hex color
+--       --- function will be called with all highlights and the colorScheme table
+--       ---@param colors Nord.Palette
+--       on_highlights = function(highlights, colors) end,
+--     }
+--     vim.cmd [[colorscheme nord]]
 --   end,
 -- }
-
 -- *****************************************************************************************
 -- Everforest
 return {

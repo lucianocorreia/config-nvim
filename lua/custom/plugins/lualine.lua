@@ -8,7 +8,7 @@ return {
         icons_enabled = true,
         theme = 'everforest',
         -- theme = 'gruvbox-material',
-        -- theme = 'kanagawa',
+        -- theme = 'nord',
         -- theme = 'catppuccin',
         component_separators = '|',
         section_separators = '',
