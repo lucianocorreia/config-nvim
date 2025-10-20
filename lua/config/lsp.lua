@@ -116,4 +116,5 @@ vim.lsp.enable({
   'html',
   'cssls',
   'jsonls',
+  'gdscript',
 })
