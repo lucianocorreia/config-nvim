@@ -65,6 +65,10 @@ return {
         'wordpress-globals',
         'wp-cli',
         'openssl',
+        'random',
+      },
+      environment = {
+        phpVersion = '8.4',
       },
       files = {
         maxSize = 1000000,
