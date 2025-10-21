@@ -1,63 +1,3 @@
--- return {
---   'gbprod/nord.nvim',
---   version = false,
---   lazy = false,
---   priority = 1000, -- make sure to load this before all the other start plugins
---   -- Optional; default configuration will be used if setup isn't called.
---   config = function()
---     require('nord').setup {
---       -- your configuration comes here
---       -- or leave it empty to use the default settings
---       transparent = false, -- Enable this to disable setting the background color
---       terminal_colors = true, -- Configure the colors used when opening a `:terminal` in Neovim
---       diff = { mode = 'bg' }, -- enables/disables colorful backgrounds when used in diff mode. values : [bg|fg]
---       borders = true, -- Enable the border between verticaly split windows visible
---       errors = { mode = 'bg' }, -- Display mode for errors and diagnostics
---       -- values : [bg|fg|none]
---       search = { theme = 'vim' }, -- theme for highlighting search results
---       -- values : [vim|vscode]
---       styles = {
---         -- Style to be applied to different syntax groups
---         -- Value is any valid attr-list value for `:help nvim_set_hl`
---         comments = { italic = true },
---         keywords = {},
---         functions = {},
---         variables = {},
---
---         -- To customize lualine/bufferline
---         bufferline = {
---           current = {},
---           modified = { italic = true },
---         },
---
---         lualine_bold = false, -- When `true`, section headers in the lualine theme will be bold
---       },
---
---       -- colorblind mode
---       -- see https://github.com/EdenEast/nightfox.nvim#colorblind
---       -- simulation mode has not been implemented yet.
---       colorblind = {
---         enable = false,
---         preserve_background = false,
---         severity = {
---           protan = 0.0,
---           deutan = 0.0,
---           tritan = 0.0,
---         },
---       },
---
---       -- Override the default colors
---       ---@param colors Nord.Palette
---       on_colors = function(colors) end,
---
---       --- You can override specific highlights to use other groups or a hex color
---       --- function will be called with all highlights and the colorScheme table
---       ---@param colors Nord.Palette
---       on_highlights = function(highlights, colors) end,
---     }
---     vim.cmd [[colorscheme nord]]
---   end,
--- }
 -- *****************************************************************************************
 -- Everforest
 return {
@@ -200,6 +140,95 @@ return {
   end,
 }
 --
+-- *****************************************************************************************
+-- Colorscheme rose-pine
+-- return {
+--   'rose-pine/neovim',
+--   name = 'rose-pine',
+--   config = function()
+--     require('rose-pine').setup {
+--       variant = 'auto', -- auto, main, moon, or dawn
+--       dark_variant = 'moon', -- main, moon, or dawn
+--       dim_inactive_windows = false,
+--       extend_background_behind_borders = true,
+--
+--       enable = {
+--         terminal = true,
+--         legacy_highlights = true, -- Improve compatibility for previous versions of Neovim
+--         migrations = true, -- Handle deprecated options automatically
+--       },
+--
+--       styles = {
+--         bold = false,
+--         italic = false,
+--         transparency = false,
+--       },
+--
+--       groups = {
+--         border = 'muted',
+--         link = 'iris',
+--         panel = 'surface',
+--
+--         error = 'love',
+--         hint = 'iris',
+--         info = 'foam',
+--         note = 'pine',
+--         todo = 'rose',
+--         warn = 'gold',
+--
+--         git_add = 'foam',
+--         git_change = 'rose',
+--         git_delete = 'love',
+--         git_dirty = 'rose',
+--         git_ignore = 'muted',
+--         git_merge = 'iris',
+--         git_rename = 'pine',
+--         git_stage = 'iris',
+--         git_text = 'rose',
+--         git_untracked = 'subtle',
+--
+--         h1 = 'iris',
+--         h2 = 'foam',
+--         h3 = 'rose',
+--         h4 = 'gold',
+--         h5 = 'pine',
+--         h6 = 'foam',
+--       },
+--
+--       palette = {
+--         -- Override the builtin palette per variant
+--         -- moon = {
+--         --     base = '#18191a',
+--         --     overlay = '#363738',
+--         -- },
+--       },
+--
+--       -- NOTE: Highlight groups are extended (merged) by default. Disable this
+--       -- per group via `inherit = false`
+--       highlight_groups = {
+--         -- Comment = { fg = 'iris' },
+--         -- StatusLine = { fg = "love", bg = "love", blend = 15 },
+--         -- VertSplit = { fg = "muted", bg = "muted" },
+--         -- Visual = { fg = 'base', bg = 'text', inherit = false },
+--       },
+--
+--       before_highlight = function(group, highlight, palette)
+--         -- Disable all undercurls
+--         -- if highlight.undercurl then
+--         --     highlight.undercurl = false
+--         -- end
+--         --
+--         -- Change palette colour
+--         -- if highlight.fg == palette.pine then
+--         --     highlight.fg = palette.foam
+--         -- end
+--       end,
+--     }
+--
+--     vim.cmd 'colorscheme rose-pine'
+--   end,
+-- }
+
 -- *****************************************************************************************
 
 -- Colorscheme configuration for Neovim using Catppuccin theme

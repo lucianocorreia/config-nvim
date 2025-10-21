@@ -7,7 +7,7 @@ return {
       options = {
         icons_enabled = true,
         theme = 'everforest',
-        -- theme = 'gruvbox-material',
+        -- theme = 'rose-pine',
         -- theme = 'nord',
         -- theme = 'catppuccin',
         component_separators = '|',
