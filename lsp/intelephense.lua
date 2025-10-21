@@ -64,6 +64,7 @@ return {
         'acf-pro',
         'wordpress-globals',
         'wp-cli',
+        'openssl',
       },
       files = {
         maxSize = 1000000,
