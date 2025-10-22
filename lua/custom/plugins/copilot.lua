@@ -4,8 +4,8 @@ return {
   event = 'InsertEnter',
   config = function()
     -- ⚙️ Configurações básicas
-    vim.g.copilot_no_tab_map = false        -- Permitir Tab para aceitar
-    vim.g.copilot_assume_mapped = false     -- Não assumir mapeamentos
+    vim.g.copilot_no_tab_map = true         -- Desabilitar Tab padrão (vamos mapear manualmente)
+    vim.g.copilot_assume_mapped = true      -- Assumir mapeamentos customizados
     vim.g.copilot_tab_fallback = ""         -- Fallback vazio para Tab
     
     -- 🎨 Configurações visuais
@@ -17,6 +17,21 @@ return {
     }
     
     -- ⌨️ Keymaps personalizados para navegação
+    -- Tab para aceitar sugestão do Copilot
+    vim.keymap.set('i', '<Tab>', function()
+      local copilot_suggestion = vim.fn['copilot#Accept']('')
+      if copilot_suggestion ~= '' then
+        return copilot_suggestion
+      else
+        return vim.api.nvim_replace_termcodes('<Tab>', true, true, true)
+      end
+    end, { 
+      expr = true,
+      replace_keycodes = false,
+      desc = '✅ Aceitar sugestão Copilot ou Tab normal',
+      silent = true 
+    })
+    
     vim.keymap.set('i', '<C-J>', '<Plug>(copilot-accept)', { 
       desc = '✅ Aceitar sugestão Copilot',
       silent = true 
