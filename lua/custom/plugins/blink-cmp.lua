@@ -29,7 +29,23 @@ return {
           end,
         },
       },
-      opts = {},
+      config = function()
+        local luasnip = require('luasnip')
+        
+        -- Configuração para desativar o snippet quando sair da região
+        luasnip.config.setup({
+          region_check_events = 'CursorMoved,CursorHold,InsertEnter',
+          delete_check_events = 'TextChanged,InsertLeave',
+        })
+        
+        -- Mapeamento para limpar o snippet ao pressionar ESC
+        vim.keymap.set({'i', 's'}, '<Esc>', function()
+          if luasnip.in_snippet() then
+            luasnip.unlink_current()
+          end
+          return '<Esc>'
+        end, { expr = true, silent = true })
+      end,
     },
     -- Optional lazydev integration for Lua development
     {
