@@ -12,6 +12,9 @@ return {
     proxy = nil,
     allow_insecure = false,
     
+    -- ✨ Autocomplete no chat
+    chat_autocomplete = true,
+    
     -- 💬 Sistema de mensagens
     system_prompt = 'Você é um assistente de programação útil e preciso. Responda sempre em português brasileiro.',
     temperature = 0.1,
@@ -62,10 +65,22 @@ return {
     
     -- ⌨️ Mapeamentos dentro do chat
     mappings = {
-      complete = { insert = '<Tab>' },
-      close = { normal = 'q' },
-      reset = { normal = '<C-r>' },
-      submit_prompt = { normal = '<CR>' },
+      complete = {
+        detail = 'Use @<plugin> to tag workspace, /<command> for prompts, $<model> to change model, #<resource> to use resource',
+        insert = '<Tab>',
+      },
+      close = {
+        normal = 'q',
+        insert = '<C-c>'
+      },
+      reset = {
+        normal = '<C-l>',
+        insert = '<C-l>'
+      },
+      submit_prompt = {
+        normal = '<CR>',
+        insert = '<C-CR>'
+      },
     },
   },
   
@@ -131,7 +146,7 @@ return {
     end, { desc = 'Testar se o Copilot Chat está funcionando' })
     
     -- 🔧 Configurar buffer do chat quando aberto
-    vim.api.nvim_create_autocmd('FileType', {
+    vim.api.nvim_create_autocmd({'FileType', 'BufEnter'}, {
       pattern = 'copilot-chat',
       callback = function(event)
         local buf = event.buf
@@ -144,6 +159,32 @@ return {
           buffer = buf, 
           desc = 'Fechar Copilot Chat',
           silent = true 
+        })
+        
+        -- Tab e Ctrl+J: remapear para usar a mesma função global
+        -- Isso garante que funcione igual aos outros buffers
+        vim.keymap.set('i', '<Tab>', function()
+          local copilot_keys = vim.fn['copilot#Accept']("")
+          if copilot_keys ~= '' then
+            vim.api.nvim_feedkeys(copilot_keys, 'n', true)
+          else
+            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Tab>', true, false, true), 'n', false)
+          end
+        end, {
+          buffer = buf,
+          desc = 'Aceitar sugestão Copilot',
+          silent = true,
+        })
+        
+        vim.keymap.set('i', '<C-J>', function()
+          local copilot_keys = vim.fn['copilot#Accept']("")
+          if copilot_keys ~= '' then
+            vim.api.nvim_feedkeys(copilot_keys, 'n', true)
+          end
+        end, {
+          buffer = buf,
+          desc = 'Aceitar sugestão Copilot',
+          silent = true,
         })
       end,
     })
