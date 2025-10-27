@@ -68,14 +68,14 @@ return {
     {
       '<leader>ff',
       function()
-        Snacks.picker.files { layout = { preview = { enabled = false } } }
+        Snacks.picker.git_files { layout = { preview = { enabled = false } } }
       end,
       desc = 'Find Files',
     },
     {
       '<leader>fg',
       function()
-        Snacks.picker.git_files()
+        Snacks.picker.files { layout = { preview = { enabled = false } } }
       end,
       desc = 'Find Git Files',
     },
