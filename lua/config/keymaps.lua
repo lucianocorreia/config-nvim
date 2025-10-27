@@ -49,6 +49,9 @@ vim.keymap.set('n', '<leader>y', 'viwy', { desc = 'Copy word to clipboard' })
 -- 🔄 Substituição
 vim.keymap.set('n', '<leader>rp', ':%s/\\<<C-r><C-w>\\>//gI<Left><Left><Left>', { desc = 'Replace word under cursor' })
 
+-- 💾 Salvar arquivo
+vim.keymap.set('n', '<leader>ww', '<Cmd>w<CR>', { desc = '[W]rite/Save file' })
+
 -- 📁 Folding
 vim.keymap.set('v', '<C-f>', ':fold<CR>', { desc = 'Create fold', silent = true })
 vim.keymap.set('n', '<C-f>', '<Cmd>foldopen<CR>', { desc = 'Open fold', silent = true })
