@@ -33,7 +33,7 @@ return {
     {
       '<leader>sf',
       function()
-        Snacks.picker.smart()
+        Snacks.picker.smart { layout = { preview = { enabled = false } } }
       end,
       desc = 'Smart Find Files',
     },
