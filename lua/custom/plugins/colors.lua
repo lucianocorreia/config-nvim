@@ -132,7 +132,8 @@ return {
       colours_override = function(palette)
         -- palette.red = '#b86466'
         -- palette.red = '#E67E80'
-        palette.red = '#ffa198'
+        -- palette.red = '#ffa198'
+        palette.red = '#E67E80'
       end,
     }
 
