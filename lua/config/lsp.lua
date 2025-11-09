@@ -7,13 +7,27 @@ vim.diagnostic.config({
 
   -- 📝 Virtual Text (inline messages)
   virtual_text = {
-    enabled = true, -- Ativar virtual text
-    severity = nil, -- Mostrar todos os níveis (nil = todos)
-    source = "if_many", -- Mostrar source se houver múltiplos
-    format = nil, -- Função customizada de formatação (nil = padrão)
-    prefix = "●", -- Prefixo antes da mensagem
-    suffix = "", -- Sufixo após a mensagem
-    spacing = 4, -- Espaços entre código e virtual text
+    spacing = 4,
+    prefix = function(diagnostic)
+      -- Usar setas como o tiny-inline-diagnostic
+      local icons = {
+        [vim.diagnostic.severity.ERROR] = '➤',
+        [vim.diagnostic.severity.WARN] = '➤',
+        [vim.diagnostic.severity.INFO] = '➤',
+        [vim.diagnostic.severity.HINT] = '➤',
+      }
+      return icons[diagnostic.severity] or '➤'
+    end,
+    suffix = '',
+    format = function(diagnostic)
+      -- Limitar tamanho da mensagem
+      local message = diagnostic.message
+      local max_width = 80
+      if #message > max_width then
+        return message:sub(1, max_width - 3) .. '...'
+      end
+      return message
+    end,
   },
 
   -- 📊 Signs (ícones na lateral)

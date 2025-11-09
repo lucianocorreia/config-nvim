@@ -31,7 +31,7 @@ return {
       suggestion = {
         enabled = true,
         auto_trigger = true, -- Sugestões automáticas (como no VS Code)
-        hide_during_completion = true,
+        hide_during_completion = false,
         debounce = 75, -- Delay em ms (VS Code usa ~75ms)
         keymap = {
           accept = '<Tab>',

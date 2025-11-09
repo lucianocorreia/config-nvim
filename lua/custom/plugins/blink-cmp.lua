@@ -4,9 +4,8 @@ return {
   event = 'VimEnter',
   version = '1.*',
   dependencies = {
-    -- Copilot integration
-    'zbirenbaum/copilot-cmp',
-    { 'saghen/blink.compat', opts = { impersonate_nvim_cmp = true } },
+    -- Copilot integration via blink-copilot
+    'fang2hou/blink-copilot',
     -- Snippet Engine
     {
       'L3MON4D3/LuaSnip',
@@ -97,7 +96,7 @@ return {
       ghost_text = { enabled = false },
       menu = {
         draw = {
-          columns = { { 'label', 'label_description', gap = 1 }, { 'kind_icon', 'kind', gap = 2 } },
+          columns = { { 'kind_icon', 'label', 'label_description', gap = 1 }, { 'kind' } },
         },
       },
     },
@@ -106,7 +105,7 @@ return {
       default = { 'copilot', 'lsp', 'buffer', 'path', 'snippets', 'lazydev' },
       providers = {
         copilot = {
-          module = 'blink.compat.source',
+          module = 'blink-copilot',
           name = 'copilot',
           score_offset = 100,
           async = true,

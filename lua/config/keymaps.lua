@@ -7,6 +7,9 @@ vim.keymap.set('i', 'jj', '<ESC>', { desc = 'Exit insert mode with jj' })
 
 -- 🏥 Diagnósticos
 vim.keymap.set('n', '<leader>qq', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('n', 'gl', vim.diagnostic.open_float, { desc = 'Show diagnostic in float window' })
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic' })
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic' })
 
 -- 💻 Terminal
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
@@ -50,7 +53,10 @@ vim.keymap.set('n', '<leader>y', 'viwy', { desc = 'Copy word to clipboard' })
 vim.keymap.set('n', '<leader>rp', ':%s/\\<<C-r><C-w>\\>//gI<Left><Left><Left>', { desc = 'Replace word under cursor' })
 
 -- 💾 Salvar arquivo
-vim.keymap.set('n', '<leader>ww', '<Cmd>w<CR>', { desc = '[W]rite/Save file' })
+vim.keymap.set('n', '<leader>ww', function()
+  vim.cmd('write')
+  require('fidget').notify('✓ saved', vim.log.levels.INFO, { annote = vim.fn.expand('%:t'), key = 'save' })
+end, { desc = '[W]rite/Save file' })
 
 -- 📁 Folding
 vim.keymap.set('v', '<C-f>', ':fold<CR>', { desc = 'Create fold', silent = true })

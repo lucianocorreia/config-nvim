@@ -1,6 +1,9 @@
 return {
   'nvim-lualine/lualine.nvim',
-  dependencies = { 'nvim-tree/nvim-web-devicons' },
+  dependencies = { 
+    'nvim-tree/nvim-web-devicons',
+    'AndreM222/copilot-lualine',
+  },
   config = function()
     require('lualine').setup {
       -- sections = {lualine_c = {"filename", {getWords}}, lualine_x = {{getGuiFont}, 'filetype'}},
@@ -28,27 +31,29 @@ return {
             symbols = { added = '⊕ ', modified = '⊙ ', removed = '⊖ ' }, -- Changes the symbols used by the diff.
           },
           {
+            'filetype',
+            icon_only = true,
+            padding = { left = 1, right = 0 },
+          },
+          {
             'filename',
-            file_status = true, -- Displays file status (readonly status, modified status)
-            newfile_status = true, -- Display new file status (new file means no write after created)
-            path = 0, -- 0: Just the filename
-            -- 1: Relative path
-            -- 2: Absolute path
-            -- 3: Absolute path, with tilde as the home directory
-            -- 4: Filename and parent dir, with tilde as the home directory
-            shorting_target = 40, -- Shortens path to leave 40 spaces in the window
-            -- for other components. (terrible name, any suggestions?)
+            file_status = true,
+            newfile_status = true,
+            path = 0,
+            shorting_target = 40,
             symbols = {
-              modified = '[+]', -- Text to show when the file is modified.
-              readonly = '[-]', -- Text to show when the file is non-modifiable or readonly.
-              unnamed = '[No Name]', -- Text to show for unnamed buffers.
-              newfile = '[New]', -- Text to show for newly created file before first write
+              modified = '[+]',
+              readonly = '[-]',
+              unnamed = '[No Name]',
+              newfile = '[New]',
             },
+            color = { fg = '#E67E80' },
           },
           'searchcount',
           'selectioncount',
         },
         lualine_x = {
+          'copilot',
           {
             function()
               return vim.api.nvim_get_current_buf()
