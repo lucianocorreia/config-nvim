@@ -4,6 +4,9 @@ return {
   event = 'VimEnter',
   version = '1.*',
   dependencies = {
+    -- Copilot integration
+    'zbirenbaum/copilot-cmp',
+    { 'saghen/blink.compat', opts = { impersonate_nvim_cmp = true } },
     -- Snippet Engine
     {
       'L3MON4D3/LuaSnip',
@@ -37,14 +40,6 @@ return {
           region_check_events = 'CursorMoved,CursorHold,InsertEnter',
           delete_check_events = 'TextChanged,InsertLeave',
         })
-        
-        -- Mapeamento para limpar o snippet ao pressionar ESC
-        vim.keymap.set({'i', 's'}, '<Esc>', function()
-          if luasnip.in_snippet() then
-            luasnip.unlink_current()
-          end
-          return '<Esc>'
-        end, { expr = true, silent = true })
       end,
     },
     -- Optional lazydev integration for Lua development
@@ -108,8 +103,14 @@ return {
     },
 
     sources = {
-      default = { 'lsp', 'buffer', 'path', 'snippets', 'lazydev' },
+      default = { 'copilot', 'lsp', 'buffer', 'path', 'snippets', 'lazydev' },
       providers = {
+        copilot = {
+          module = 'blink.compat.source',
+          name = 'copilot',
+          score_offset = 100,
+          async = true,
+        },
         lazydev = { 
           module = 'lazydev.integrations.blink', 
           score_offset = 100,

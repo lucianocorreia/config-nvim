@@ -1,8 +1,8 @@
--- 🤖 Copilot Chat - Configuração limpa e otimizada
+-- 🤖 Copilot Chat - Configuração limpa e otimizada com Edits
 return {
   'CopilotC-Nvim/CopilotChat.nvim',
   dependencies = {
-    { 'github/copilot.vim' },
+    { 'zbirenbaum/copilot.lua' },
     { 'nvim-lua/plenary.nvim', branch = 'master' },
   },
   build = 'make tiktoken',
@@ -61,6 +61,12 @@ return {
       title = '🤖 Copilot Chat',
       footer = nil,
       zindex = 1,
+    },
+    
+    -- ✏️ Copilot Edits (como no VS Code - sugestões de próximos passos)
+    edits = {
+      diff = 'unified', -- 'unified' ou 'side-by-side'
+      auto_apply = false, -- Aplicar mudanças automaticamente
     },
     
     -- ⌨️ Mapeamentos dentro do chat
@@ -160,32 +166,6 @@ return {
           desc = 'Fechar Copilot Chat',
           silent = true 
         })
-        
-        -- Tab e Ctrl+J: remapear para usar a mesma função global
-        -- Isso garante que funcione igual aos outros buffers
-        vim.keymap.set('i', '<Tab>', function()
-          local copilot_keys = vim.fn['copilot#Accept']("")
-          if copilot_keys ~= '' then
-            vim.api.nvim_feedkeys(copilot_keys, 'n', true)
-          else
-            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Tab>', true, false, true), 'n', false)
-          end
-        end, {
-          buffer = buf,
-          desc = 'Aceitar sugestão Copilot',
-          silent = true,
-        })
-        
-        vim.keymap.set('i', '<C-J>', function()
-          local copilot_keys = vim.fn['copilot#Accept']("")
-          if copilot_keys ~= '' then
-            vim.api.nvim_feedkeys(copilot_keys, 'n', true)
-          end
-        end, {
-          buffer = buf,
-          desc = 'Aceitar sugestão Copilot',
-          silent = true,
-        })
       end,
     })
     
@@ -197,6 +177,10 @@ return {
     -- 🤖 Toggle e Chat Principal
     { '<leader>zh', '<cmd>CopilotChatToggle<cr>', mode = 'n', desc = 'Copilot Chat Toggle' },
     { '<leader>zh', '<cmd>CopilotChatToggle<cr>', mode = 'v', desc = 'Copilot Chat (com seleção)' },
+    
+    -- ✏️ Copilot Edits (próximos passos como no VS Code)
+    { '<leader>zs', '<cmd>CopilotChatInPlace<cr>', mode = 'n', desc = 'Copilot Edits (próximos passos)' },
+    { '<leader>zs', '<cmd>CopilotChatInPlace<cr>', mode = 'v', desc = 'Copilot Edits na seleção' },
     
     -- 💬 Chat rápido com input
     { '<leader>zq', function()
