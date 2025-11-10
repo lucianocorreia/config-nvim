@@ -1,6 +1,6 @@
 return {
   'nvim-lualine/lualine.nvim',
-  dependencies = { 
+  dependencies = {
     'nvim-tree/nvim-web-devicons',
     'AndreM222/copilot-lualine',
   },
@@ -47,7 +47,7 @@ return {
               unnamed = '[No Name]',
               newfile = '[New]',
             },
-            color = { fg = '#E67E80' },
+            color = { fg = '#e69875' },
           },
           'searchcount',
           'selectioncount',
@@ -70,10 +70,10 @@ return {
             color = { fg = '#cba6f7' },
           },
           'encoding',
-          {
-            'filetype',
-            icon_only = true,
-          },
+          -- {
+          --   'filetype',
+          --   icon_only = true,
+          -- },
         },
         lualine_y = {
           {
