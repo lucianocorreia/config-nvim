@@ -9,7 +9,12 @@ return {
     local harpoon = require 'harpoon'
     -- local extensions = require 'harpoon.extensions'
 
-    harpoon:setup()
+    harpoon:setup({
+      settings = {
+        save_on_toggle = true,
+        sync_on_ui_close = true,
+      }
+    })
 
     -- old harpoon setup
     -- require('harpoon').setup { excluded_filetypes = { 'NvimTree' } }
