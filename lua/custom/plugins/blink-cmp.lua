@@ -32,13 +32,13 @@ return {
         },
       },
       config = function()
-        local luasnip = require('luasnip')
-        
+        local luasnip = require 'luasnip'
+
         -- Configuração para desativar o snippet quando sair da região
-        luasnip.config.setup({
+        luasnip.config.setup {
           region_check_events = 'CursorMoved,CursorHold,InsertEnter',
           delete_check_events = 'TextChanged,InsertLeave',
-        })
+        }
       end,
     },
     -- Optional lazydev integration for Lua development
@@ -102,16 +102,17 @@ return {
     },
 
     sources = {
-      default = { 'copilot', 'lsp', 'buffer', 'path', 'snippets', 'lazydev' },
+      default = { 'lsp', 'copilot', 'buffer', 'path', 'snippets', 'lazydev' },
       providers = {
         copilot = {
           module = 'blink-copilot',
           name = 'copilot',
           score_offset = 100,
           async = true,
+          max_items = 1,
         },
-        lazydev = { 
-          module = 'lazydev.integrations.blink', 
+        lazydev = {
+          module = 'lazydev.integrations.blink',
           score_offset = 100,
           fallbacks = { 'lsp' },
         },
