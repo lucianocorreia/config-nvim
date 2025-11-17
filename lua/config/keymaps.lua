@@ -54,8 +54,8 @@ vim.keymap.set('n', '<leader>rp', ':%s/\\<<C-r><C-w>\\>//gI<Left><Left><Left>', 
 
 -- 💾 Salvar arquivo
 vim.keymap.set('n', '<leader>ww', function()
-  vim.cmd('write')
-  require('fidget').notify('✓ saved', vim.log.levels.INFO, { annote = vim.fn.expand('%:t'), key = 'save' })
+  vim.cmd 'write'
+  require('fidget').notify('✓ saved', vim.log.levels.INFO, { annote = vim.fn.expand '%:t', key = 'save' })
 end, { desc = '[W]rite/Save file' })
 
 -- 📁 Folding
@@ -104,3 +104,95 @@ end, { desc = 'Corr3ia-todo: Add TODO' })
 vim.keymap.set('n', '<leader>th', function()
   require('corr3ia.todo').header()
 end, { desc = 'Corr3ia-todo: Add Section' })
+
+-- 🤖 GitHub Copilot CLI - 3 modos de uso
+
+-- 1️⃣ Abrir Copilot CLI puro (sem contexto)
+vim.keymap.set('n', '<leader>zc', function()
+  vim.cmd 'vsplit'
+  vim.cmd 'terminal copilot'
+  vim.cmd 'startinsert'
+end, { desc = 'Copilot CLI: Abrir sem contexto' })
+
+-- 2️⃣ Abrir com contexto do arquivo atual
+vim.keymap.set('n', '<leader>zh', function()
+  local filepath = vim.fn.expand '%:p'
+  local filename = vim.fn.expand '%:t'
+  local filetype = vim.bo.filetype
+
+  vim.cmd 'vsplit'
+  vim.cmd('terminal copilot --add-dir ' .. vim.fn.getcwd())
+
+  if filepath ~= '' then
+    vim.defer_fn(function()
+      local prompt = string.format('Contexto: arquivo %s (%s)\n\nComo posso ajudar?', filename, filetype)
+      vim.fn.chansend(vim.b.terminal_job_id, prompt .. '\n')
+    end, 1000)
+  end
+
+  vim.cmd 'startinsert'
+end, { desc = 'Copilot CLI: Com arquivo atual' })
+
+-- 3️⃣ Abrir com arquivo + linhas selecionadas
+vim.keymap.set('x', '<leader>zh', function()
+  -- Pegar seleção ANTES de sair do modo visual
+  local start_line = vim.fn.line 'v'
+  local end_line = vim.fn.line '.'
+
+  -- Garantir que start_line é menor que end_line
+  if start_line > end_line then
+    start_line, end_line = end_line, start_line
+  end
+
+  local filepath = vim.fn.expand '%:p'
+
+  -- Sair do modo visual
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', true, false, true), 'n', false)
+
+  vim.schedule(function()
+    vim.cmd 'vsplit'
+    vim.cmd('terminal copilot --add-dir ' .. vim.fn.getcwd())
+
+    vim.defer_fn(function()
+      local prompt = string.format('Contexto: arquivo %s (linhas %d-%d)\n\nComo posso ajudar?', filepath, start_line, end_line)
+      vim.fn.chansend(vim.b.terminal_job_id, prompt .. '\n')
+    end, 1000)
+
+    vim.cmd 'startinsert'
+  end)
+end, { desc = 'Copilot CLI: Com arquivo e linhas selecionadas' })
+
+-- Atalho rápido para reload manual do arquivo
+vim.keymap.set('n', '<leader>zr', '<cmd>edit!<cr>', { desc = 'Reload arquivo atual' })
+
+-- 🎨 Melhorar cursor e TODAS as cores do terminal para melhor contraste
+vim.api.nvim_create_autocmd('TermOpen', {
+  callback = function()
+    vim.opt_local.number = false
+    vim.opt_local.relativenumber = false
+    vim.opt_local.signcolumn = 'no'
+
+    -- Cursor bem visível
+    vim.cmd 'highlight! TermCursor guifg=#2D353B guibg=#A7C080'
+    vim.cmd 'highlight! TermCursorNC guifg=#2D353B guibg=#859289'
+
+    -- Forçar TODAS as cores ANSI para serem mais escuras/contrastadas
+    vim.b.terminal_color_0 = '#2D353B' -- black
+    vim.b.terminal_color_1 = '#E67E80' -- red
+    vim.b.terminal_color_2 = '#A7C080' -- green
+    vim.b.terminal_color_3 = '#DBBC7F' -- yellow
+    vim.b.terminal_color_4 = '#7FBBB3' -- blue
+    vim.b.terminal_color_5 = '#D699B6' -- magenta
+    vim.b.terminal_color_6 = '#83C092' -- cyan
+    vim.b.terminal_color_7 = '#FFFFFF' -- white (BRANCO PURO para texto principal)
+    vim.b.terminal_color_8 = '#D3C6AA' -- bright black (bege claro ao invés de cinza)
+    vim.b.terminal_color_9 = '#E67E80' -- bright red
+    vim.b.terminal_color_10 = '#A7C080' -- bright green
+    vim.b.terminal_color_11 = '#DBBC7F' -- bright yellow
+    vim.b.terminal_color_12 = '#7FBBB3' -- bright blue
+    vim.b.terminal_color_13 = '#D699B6' -- bright magenta
+    vim.b.terminal_color_14 = '#83C092' -- bright cyan
+    vim.b.terminal_color_15 = '#FFFFFF' -- bright white (BRANCO PURO)
+  end,
+  desc = 'Forçar cores mais escuras no terminal',
+})

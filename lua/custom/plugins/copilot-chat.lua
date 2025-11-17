@@ -1,6 +1,7 @@
 -- 🤖 Copilot Chat - Configuração limpa e otimizada com Edits
 return {
   'CopilotC-Nvim/CopilotChat.nvim',
+  enabled = false,  -- DESABILITADO - usando Copilot CLI ao invés
   dependencies = {
     { 'zbirenbaum/copilot.lua' },
     { 'nvim-lua/plenary.nvim', branch = 'master' },
@@ -9,70 +10,39 @@ return {
   opts = {
     -- 🔧 Configurações principais
     debug = false,
-    proxy = nil,
-    allow_insecure = false,
-    
-    -- ✨ Autocomplete no chat
-    chat_autocomplete = true,
     
     -- 💬 Sistema de mensagens
     system_prompt = 'Você é um assistente de programação útil e preciso. Responda sempre em português brasileiro.',
     temperature = 0.1,
     
     -- 📋 Headers personalizados
-    question_header = '## 🧑‍💻 Usuário ',
-    answer_header = '## 🤖 Copilot ',
-    error_header = '## ❌ Erro ',
-    
-    -- 🎯 Comportamento da interface
-    show_folds = true,
-    show_help = true,
-    auto_follow_cursor = true,
-    auto_insert_mode = true,
-    clear_chat_on_new_prompt = false,
-    highlight_selection = true,
+    headers = {
+      user = '## 🧑‍💻 Usuário',
+      assistant = '## 🤖 Copilot',
+      tool = '## 🔧 Tool',
+    },
     
     -- 💾 Histórico
     history_path = vim.fn.stdpath('data') .. '/copilotchat_history',
     
-    -- 🎨 Configuração visual da janela de chat
-    chat = {
-      welcome_message = '👋 Olá! Sou o Copilot. Como posso ajudar você hoje?',
-      loading_text = '🤔 Pensando...',
-      question_sign = '🧑‍💻',
-      answer_sign = '🤖',
-      border = 'rounded',
-      max_width = 120,
-      max_height = 25,
-      zindex = 1,
-      margin_top = vim.o.cmdheight + 1,
-      margin_bottom = vim.o.cmdheight + 1,
-    },
-    
     -- 🪟 Layout da janela
     window = {
       layout = 'vertical',  -- 'vertical', 'horizontal', 'float'
-      width = 0.4,         -- 40% da tela para layout vertical
-      height = 0.8,        -- 80% da tela para layout float
-      relative = 'editor',
+      width = 0.4,          -- 40% da tela para layout vertical
+      height = 0.8,         -- 80% da tela para layout float
       border = 'rounded',
-      row = nil,
-      col = nil,
       title = '🤖 Copilot Chat',
-      footer = nil,
-      zindex = 1,
+      zindex = 100,
     },
     
-    -- ✏️ Copilot Edits (como no VS Code - sugestões de próximos passos)
-    edits = {
-      diff = 'unified', -- 'unified' ou 'side-by-side'
-      auto_apply = false, -- Aplicar mudanças automaticamente
-    },
+    -- 🎯 Comportamento da interface
+    auto_insert_mode = false,  -- Não entrar automaticamente em insert mode
+    auto_follow_cursor = false, -- Não seguir o cursor automaticamente
+    show_help = true,
     
     -- ⌨️ Mapeamentos dentro do chat
     mappings = {
       complete = {
-        detail = 'Use @<plugin> to tag workspace, /<command> for prompts, $<model> to change model, #<resource> to use resource',
         insert = '<Tab>',
       },
       close = {
@@ -85,7 +55,7 @@ return {
       },
       submit_prompt = {
         normal = '<CR>',
-        insert = '<C-CR>'
+        insert = '<C-s>'
       },
     },
   },
@@ -96,44 +66,7 @@ return {
     -- Inicializar o chat
     chat.setup(opts)
     
-    -- 🧹 Função para limpar IDs dos headers
-    local function clean_chat_buffer()
-      local buffers = vim.api.nvim_list_bufs()
-      for _, buf in ipairs(buffers) do
-        local name = vim.api.nvim_buf_get_name(buf)
-        if name:match('copilot%-chat') or name:match('CopilotChat') then
-          if vim.api.nvim_buf_is_valid(buf) and vim.api.nvim_buf_get_option(buf, 'modifiable') then
-            local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
-            local cleaned_lines = {}
-            local changed = false
-            
-            for _, line in ipairs(lines) do
-              -- Remove IDs UUID dos headers
-              local cleaned = line:gsub('## 🧑‍💻 Usuário %([%w%-]+%) %-%-%-', '## 🧑‍💻 Usuário')
-              cleaned = cleaned:gsub('## 🤖 Copilot %([%w%-]+%) %-%-%-', '## 🤖 Copilot')
-              -- Fallback para headers padrão sem emoji
-              cleaned = cleaned:gsub('## User %([%w%-]+%) %-%-%-', '## 🧑‍💻 Usuário')
-              cleaned = cleaned:gsub('## Copilot %([%w%-]+%) %-%-%-', '## 🤖 Copilot')
-              
-              if cleaned ~= line then
-                changed = true
-              end
-              table.insert(cleaned_lines, cleaned)
-            end
-            
-            if changed then
-              pcall(vim.api.nvim_buf_set_lines, buf, 0, -1, false, cleaned_lines)
-            end
-          end
-        end
-      end
-    end
-    
     -- 📝 Comandos personalizados
-    vim.api.nvim_create_user_command('CopilotChatClean', clean_chat_buffer, {
-      desc = 'Limpar IDs dos headers do Copilot Chat'
-    })
-    
     vim.api.nvim_create_user_command('CopilotChatTest', function()
       local chat_loaded, chat_module = pcall(require, 'CopilotChat')
       if chat_loaded then
@@ -152,23 +85,41 @@ return {
     end, { desc = 'Testar se o Copilot Chat está funcionando' })
     
     -- 🔧 Configurar buffer do chat quando aberto
-    vim.api.nvim_create_autocmd({'FileType', 'BufEnter'}, {
-      pattern = 'copilot-chat',
-      callback = function(event)
-        local buf = event.buf
-        -- Configurar buffer para não fechar automaticamente
-        vim.api.nvim_buf_set_option(buf, 'buflisted', true)
-        vim.api.nvim_buf_set_option(buf, 'bufhidden', 'hide')
+    vim.api.nvim_create_autocmd('BufEnter', {
+      pattern = 'copilot-*',
+      callback = function(ev)
+        vim.opt_local.relativenumber = false
+        vim.opt_local.number = false
+        vim.opt_local.wrap = true
         
-        -- Keymap local para fechar com 'q'
-        vim.keymap.set('n', 'q', '<cmd>close<cr>', { 
-          buffer = buf, 
-          desc = 'Fechar Copilot Chat',
-          silent = true 
-        })
+        -- Ir para o final do buffer após resposta
+        vim.defer_fn(function()
+          if vim.api.nvim_buf_is_valid(ev.buf) then
+            local line_count = vim.api.nvim_buf_line_count(ev.buf)
+            pcall(vim.api.nvim_win_set_cursor, 0, {line_count, 0})
+          end
+        end, 100)
       end,
     })
     
+    -- 🔧 Após receber resposta, ir para o final
+    vim.api.nvim_create_autocmd('User', {
+      pattern = 'CopilotChatResponse',
+      callback = function()
+        -- Encontrar janela do copilot chat
+        for _, win in ipairs(vim.api.nvim_list_wins()) do
+          local buf = vim.api.nvim_win_get_buf(win)
+          local bufname = vim.api.nvim_buf_get_name(buf)
+          if bufname:match('copilot%-') then
+            vim.api.nvim_set_current_win(win)
+            local line_count = vim.api.nvim_buf_line_count(buf)
+            vim.api.nvim_win_set_cursor(win, {line_count, 0})
+            vim.cmd('normal! zb') -- Scroll para mostrar o final
+            break
+          end
+        end
+      end,
+    })
 
   end,
   
@@ -177,10 +128,6 @@ return {
     -- 🤖 Toggle e Chat Principal
     { '<leader>zh', '<cmd>CopilotChatToggle<cr>', mode = 'n', desc = 'Copilot Chat Toggle' },
     { '<leader>zh', '<cmd>CopilotChatToggle<cr>', mode = 'v', desc = 'Copilot Chat (com seleção)' },
-    
-    -- ✏️ Copilot Edits (próximos passos como no VS Code)
-    { '<leader>zs', '<cmd>CopilotChatInPlace<cr>', mode = 'n', desc = 'Copilot Edits (próximos passos)' },
-    { '<leader>zs', '<cmd>CopilotChatInPlace<cr>', mode = 'v', desc = 'Copilot Edits na seleção' },
     
     -- 💬 Chat rápido com input
     { '<leader>zq', function()
@@ -197,22 +144,18 @@ return {
         end
       end, mode = 'v', desc = 'Copilot Chat Rápido (seleção)' },
     
-    -- 🔍 Comandos específicos para seleção
-    { '<leader>ze', '<cmd>CopilotChatExplain<cr>', mode = 'v', desc = 'Explicar código selecionado' },
-    { '<leader>zr', '<cmd>CopilotChatReview<cr>', mode = 'v', desc = 'Revisar código selecionado' },
-    { '<leader>zf', '<cmd>CopilotChatFix<cr>', mode = 'v', desc = 'Corrigir código selecionado' },
-    { '<leader>zo', '<cmd>CopilotChatOptimize<cr>', mode = 'v', desc = 'Otimizar código selecionado' },
-    { '<leader>zd', '<cmd>CopilotChatDocs<cr>', mode = 'v', desc = 'Gerar documentação' },
-    { '<leader>zt', '<cmd>CopilotChatTests<cr>', mode = 'v', desc = 'Gerar testes' },
-    
-    -- 📝 Comandos para arquivo inteiro
-    { '<leader>zeb', '<cmd>CopilotChatExplain<cr>', mode = 'n', desc = 'Explicar arquivo inteiro' },
-    { '<leader>zrb', '<cmd>CopilotChatReview<cr>', mode = 'n', desc = 'Revisar arquivo inteiro' },
-    { '<leader>zfb', '<cmd>CopilotChatFix<cr>', mode = 'n', desc = 'Corrigir arquivo inteiro' },
+    -- 🔍 Comandos específicos (funcionam em normal e visual mode)
+    { '<leader>ze', '<cmd>CopilotChatExplain<cr>', mode = { 'n', 'v' }, desc = 'Explicar código' },
+    { '<leader>zr', '<cmd>CopilotChatReview<cr>', mode = { 'n', 'v' }, desc = 'Revisar código' },
+    { '<leader>zf', '<cmd>CopilotChatFix<cr>', mode = { 'n', 'v' }, desc = 'Corrigir código' },
+    { '<leader>zo', '<cmd>CopilotChatOptimize<cr>', mode = { 'n', 'v' }, desc = 'Otimizar código' },
+    { '<leader>zd', '<cmd>CopilotChatDocs<cr>', mode = { 'n', 'v' }, desc = 'Gerar documentação' },
+    { '<leader>zt', '<cmd>CopilotChatTests<cr>', mode = { 'n', 'v' }, desc = 'Gerar testes' },
     
     -- 🎛️ Controle do chat
     { '<leader>zx', '<cmd>CopilotChatReset<cr>', mode = 'n', desc = 'Limpar chat' },
-    { '<leader>zl', '<cmd>CopilotChatClean<cr>', mode = 'n', desc = 'Limpar IDs do chat' },
     { '<leader>zT', '<cmd>CopilotChatTest<cr>', mode = 'n', desc = 'Testar Copilot Chat' },
+    { '<leader>zm', '<cmd>CopilotChatModels<cr>', mode = 'n', desc = 'Selecionar modelo' },
+    { '<leader>zp', '<cmd>CopilotChatPrompts<cr>', mode = 'n', desc = 'Ver prompts disponíveis' },
   },
 }
