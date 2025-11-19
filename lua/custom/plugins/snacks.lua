@@ -16,7 +16,17 @@ return {
       enabled = true,
       timeout = 3000,
     },
-    picker = { enabled = true },
+    picker = {
+      enabled = true,
+      matcher = {
+        frecency = true,
+      },
+      formatters = {
+        file = {
+          filename_first = true,
+        },
+      },
+    },
     quickfile = { enabled = true },
     scope = { enabled = true },
     scroll = { enabled = false },
@@ -33,7 +43,19 @@ return {
     {
       '<leader>sf',
       function()
-        Snacks.picker.smart { layout = { preview = { enabled = false } } }
+        Snacks.picker.smart {
+          layout = { preview = { enabled = false } },
+          sort = function(a, b)
+            -- Primeiro ordena por score
+            if a.score ~= b.score then
+              return a.score > b.score
+            end
+            -- Depois favorece nomes de arquivo mais curtos
+            local a_text = a.text or ""
+            local b_text = b.text or ""
+            return #a_text < #b_text
+          end,
+        }
       end,
       desc = 'Smart Find Files',
     },
@@ -68,14 +90,30 @@ return {
     {
       '<leader>ff',
       function()
-        Snacks.picker.git_files { layout = { preview = { enabled = false } } }
+        Snacks.picker.git_files {
+          layout = { preview = { enabled = false } },
+          sort = function(a, b)
+            if a.score ~= b.score then
+              return a.score > b.score
+            end
+            return #(a.text or "") < #(b.text or "")
+          end,
+        }
       end,
       desc = 'Find Files',
     },
     {
       '<leader>fg',
       function()
-        Snacks.picker.files { layout = { preview = { enabled = false } } }
+        Snacks.picker.files {
+          layout = { preview = { enabled = false } },
+          sort = function(a, b)
+            if a.score ~= b.score then
+              return a.score > b.score
+            end
+            return #(a.text or "") < #(b.text or "")
+          end,
+        }
       end,
       desc = 'Find Git Files',
     },
