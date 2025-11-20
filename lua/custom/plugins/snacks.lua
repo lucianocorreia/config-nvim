@@ -41,7 +41,7 @@ return {
   keys = {
     -- Top Pickers & Explorer
     {
-      '<leader>sf',
+      '<leader>ff',
       function()
         Snacks.picker.smart {
           layout = { preview = { enabled = false } },
@@ -51,8 +51,8 @@ return {
               return a.score > b.score
             end
             -- Depois favorece nomes de arquivo mais curtos
-            local a_text = a.text or ""
-            local b_text = b.text or ""
+            local a_text = a.text or ''
+            local b_text = b.text or ''
             return #a_text < #b_text
           end,
         }
@@ -88,7 +88,7 @@ return {
       desc = 'Find Config File',
     },
     {
-      '<leader>ff',
+      '<leader>fg',
       function()
         Snacks.picker.git_files {
           layout = { preview = { enabled = false } },
@@ -96,14 +96,14 @@ return {
             if a.score ~= b.score then
               return a.score > b.score
             end
-            return #(a.text or "") < #(b.text or "")
+            return #(a.text or '') < #(b.text or '')
           end,
         }
       end,
       desc = 'Find Files',
     },
     {
-      '<leader>fg',
+      '<leader>sf',
       function()
         Snacks.picker.files {
           layout = { preview = { enabled = false } },
@@ -111,7 +111,7 @@ return {
             if a.score ~= b.score then
               return a.score > b.score
             end
-            return #(a.text or "") < #(b.text or "")
+            return #(a.text or '') < #(b.text or '')
           end,
         }
       end,
@@ -234,13 +234,6 @@ return {
       desc = 'Autocmds',
     },
     {
-      '<leader>sb',
-      function()
-        Snacks.picker.lines()
-      end,
-      desc = 'Buffer Lines',
-    },
-    {
       '<leader>sc',
       function()
         Snacks.picker.command_history()
@@ -257,14 +250,14 @@ return {
     {
       '<leader>sd',
       function()
-        Snacks.picker.diagnostics { layout = { preview = { enabled = false } } }
+        Snacks.picker.diagnostics_buffer { layout = { preview = { enabled = false } } }
       end,
       desc = 'Diagnostics',
     },
     {
       '<leader>sD',
       function()
-        Snacks.picker.diagnostics_buffer { layout = { preview = { enabled = false } } }
+        Snacks.picker.diagnostics { layout = { preview = { enabled = false } } }
       end,
       desc = 'Buffer Diagnostics',
     },
