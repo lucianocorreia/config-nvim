@@ -52,9 +52,10 @@ return {
       },
     },
   },
-  --- @module 'blink.cmp'
-  --- @type blink.cmp.Config
-  opts = {
+  config = function()
+    local blink = require 'blink.cmp'
+    
+    blink.setup {
     keymap = {
       -- 'default' (recommended) for mappings similar to built-in completions
       --   <c-y> to accept ([y]es) the completion.
@@ -79,7 +80,7 @@ return {
       -- See :h blink-cmp-config-keymap for defining your own keymap
       preset = 'enter',
 
-      -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
+      -- Para mais advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
       --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
     },
 
@@ -102,14 +103,14 @@ return {
     },
 
     sources = {
-      default = { 'lsp', 'copilot', 'buffer', 'path', 'snippets', 'lazydev' },
+      default = { 'lsp', 'buffer', 'path', 'snippets', 'lazydev' },
       providers = {
         copilot = {
           module = 'blink-copilot',
           name = 'copilot',
           score_offset = 100,
           async = true,
-          max_items = 1,
+          max_items = 3,
         },
         lazydev = {
           module = 'lazydev.integrations.blink',
@@ -132,5 +133,11 @@ return {
 
     -- Shows a signature help window while you type arguments for a function
     signature = { enabled = true },
-  },
+    }
+
+    -- Keymap customizado: Ctrl+G para mostrar apenas sugestões do Copilot
+    vim.keymap.set('i', '<C-g>', function()
+      blink.show { providers = { 'copilot' } }
+    end, { desc = 'Mostrar sugestões do Copilot' })
+  end,
 }
