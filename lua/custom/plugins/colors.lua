@@ -201,7 +201,17 @@ return {
       },
 
       -- Override highlights or add new highlights
-      on_highlights = function(highlights, colors) end,
+      on_highlights = function(highlights, colors)
+        -- Blink-cmp: linha selecionada com fundo diferente mas sem afetar o texto
+        highlights.BlinkCmpMenuSelection = { bg = colors.visual, blend = 10 }
+
+        -- Snacks picker: linha selecionada sem afetar matches
+        highlights.Visual = { bg = colors.visual }
+        highlights.SnacksPickerListCursorLine = { bg = colors.visual }
+
+        -- Comentários: ajustar cor
+        highlights.Comment = { fg = '#627562', italic = true } -- tom esverdeado balanceado; original: '#606079'
+      end,
 
       -- Override colors
       colors = {
@@ -210,7 +220,7 @@ return {
         fg = '#cdcdcd',
         floatBorder = '#878787',
         line = '#252530',
-        comment = '#606079',
+        comment = '#6b6b80', -- original: '#606079'
         builtin = '#b4d4cf',
         func = '#c48282',
         string = '#e8b589',
