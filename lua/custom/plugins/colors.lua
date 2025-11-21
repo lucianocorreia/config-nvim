@@ -211,6 +211,25 @@ return {
 
         -- Comentários: ajustar cor
         highlights.Comment = { fg = '#627562', italic = true } -- tom esverdeado balanceado; original: '#606079'
+
+        -- 🔷 Blade: Melhorar syntax highlighting de diretivas PHP/Blade
+        -- Diretivas Blade (@if, @foreach, @endif, etc.) em laranja/dourado
+        -- data_get() em azul claro (builtin)
+        highlights.bladeDirective = { fg = '#e0a363', bold = true } -- laranja/number color
+        highlights.bladeDelimiter = { fg = '#e0a363', bold = true }
+        highlights.bladeEcho = { fg = '#b4d4cf' } -- azul claro builtin
+        highlights.bladeComment = { fg = colors.comment, italic = true }
+        
+        -- Treesitter highlights para Blade
+        highlights['@keyword.blade'] = { fg = '#e0a363', bold = true }
+        highlights['@keyword.directive.blade'] = { fg = '#e0a363', bold = true }
+        highlights['@tag.delimiter.blade'] = { fg = '#e0a363', bold = true }
+        highlights['@function.blade'] = { fg = '#b4d4cf' } -- funções em azul claro
+        highlights['@function.builtin.blade'] = { fg = '#b4d4cf' }
+        
+        -- 🔷 HTML: Ajustar cor dos brackets <> para azul (mesma cor do nome da tag)
+        highlights.htmlTag = { fg = '#6e94b2' } -- < > em azul
+        highlights.htmlEndTag = { fg = '#6e94b2' } -- </ > em azul
       end,
 
       -- Override colors
