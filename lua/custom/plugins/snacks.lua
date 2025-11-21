@@ -197,7 +197,7 @@ return {
       desc = 'Grep Open Buffers',
     },
     {
-      '<leader>sg',
+      '<leader>ss',
       function()
         Snacks.picker.grep()
       end,
