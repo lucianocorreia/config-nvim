@@ -1,6 +1,21 @@
 -- 🤖 Configuração de Autocommands
 -- Este arquivo contém todos os autocommands e eventos automáticos
 
+-- 🔇 Filtrar notificações específicas do Roslyn
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'cs',
+  group = vim.api.nvim_create_augroup('corr3ia-roslyn-silent', { clear = true }),
+  callback = function()
+    local original_notify = vim.notify
+    vim.notify = function(msg, level, opts)
+      if type(msg) == 'string' and msg:match('Multiple potential target files') then
+        return
+      end
+      return original_notify(msg, level, opts)
+    end
+  end,
+})
+
 -- ✨ Highlight no Yank (cópia)
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',

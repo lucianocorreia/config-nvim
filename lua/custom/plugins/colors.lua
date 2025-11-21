@@ -211,6 +211,10 @@ return {
 
         -- Comentários: ajustar cor
         highlights.Comment = { fg = '#627562', italic = true } -- tom esverdeado balanceado; original: '#606079'
+        
+        -- 🔷 C#: Comentários com a mesma cor customizada
+        highlights['@comment.cs'] = { fg = '#627562', italic = true }
+        highlights['@lsp.type.comment.cs'] = { fg = '#627562', italic = true }
 
         -- 🔷 Blade: Melhorar syntax highlighting de diretivas PHP/Blade
         -- Diretivas Blade (@if, @foreach, @endif, etc.) em laranja/dourado

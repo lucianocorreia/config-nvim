@@ -4,10 +4,7 @@ return {
   ft = { 'cs' },
   opts = {
     filewatching = 'auto',
-    broad_search = false,
-    lock_target = false,
     silent = true,
-    debug = false,
   },
   init = function()
     vim.lsp.config('roslyn', {
