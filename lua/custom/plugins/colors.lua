@@ -209,12 +209,10 @@ return {
         highlights.Visual = { bg = colors.visual }
         highlights.SnacksPickerListCursorLine = { bg = colors.visual }
 
-        -- Comentários: ajustar cor
+        -- Comentários: ajustar cor para TODAS as linguagens
         highlights.Comment = { fg = '#627562', italic = true } -- tom esverdeado balanceado; original: '#606079'
-        
-        -- 🔷 C#: Comentários com a mesma cor customizada
-        highlights['@comment.cs'] = { fg = '#627562', italic = true }
-        highlights['@lsp.type.comment.cs'] = { fg = '#627562', italic = true }
+        highlights['@comment'] = { fg = '#627562', italic = true } -- Treesitter: todos os comentários
+        highlights['@lsp.type.comment'] = { fg = '#627562', italic = true } -- LSP: todos os comentários
 
         -- 🔷 Blade: Melhorar syntax highlighting de diretivas PHP/Blade
         -- Diretivas Blade (@if, @foreach, @endif, etc.) em laranja/dourado
