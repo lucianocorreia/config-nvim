@@ -73,6 +73,16 @@ return {
       files = {
         maxSize = 1000000,
       },
+      diagnostics = {
+        undefinedVariables = true,
+        undefinedFunctions = true,
+        undefinedConstants = true,
+        undefinedClassConstants = true,
+        undefinedMethods = true,
+        undefinedProperties = true,
+        undefinedTypes = true,
+      },
     },
   },
+  capabilities = vim.lsp.protocol.make_client_capabilities(),
 }

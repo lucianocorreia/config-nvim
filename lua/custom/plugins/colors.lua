@@ -209,10 +209,29 @@ return {
         highlights.Visual = { bg = colors.visual }
         highlights.SnacksPickerListCursorLine = { bg = colors.visual }
 
-        -- Comentários: ajustar cor para TODAS as linguagens
-        highlights.Comment = { fg = '#627562', italic = true } -- tom esverdeado balanceado; original: '#606079'
-        highlights['@comment'] = { fg = '#627562', italic = true } -- Treesitter: todos os comentários
-        highlights['@lsp.type.comment'] = { fg = '#627562', italic = true } -- LSP: todos os comentários
+        -- Comentários: marrom/bege discreto
+        highlights.Comment = { fg = '#8a7a6a', italic = true } -- marrom acinzentado discreto
+        highlights['@comment'] = { fg = '#8a7a6a', italic = true } -- Treesitter: todos os comentários
+        highlights['@lsp.type.comment'] = { fg = '#8a7a6a', italic = true } -- LSP: todos os comentários
+
+        -- Parâmetros e variáveis não utilizados: verde
+        -- Comentários: marrom #8a7a6a | Não usados: verde #627562
+        highlights['@lsp.typemod.parameter.unused'] = { fg = '#627562', italic = true }
+        highlights['@lsp.typemod.variable.unused'] = { fg = '#627562', italic = true }
+        highlights['@lsp.mod.unused'] = { fg = '#627562', italic = true }
+        highlights['@lsp.type.parameter.unused'] = { fg = '#627562', italic = true }
+        highlights['@variable.parameter.unused'] = { fg = '#627562', italic = true }
+        
+        -- Use statements não utilizados em PHP
+        highlights['@lsp.typemod.class.unused'] = { fg = '#627562', italic = true }
+        highlights['@lsp.typemod.namespace.unused'] = { fg = '#627562', italic = true }
+        
+        -- Fallback para syntax highlighting tradicional
+        highlights.phpUnusedVariable = { fg = '#627562', italic = true }
+        highlights.Unnecessary = { fg = '#627562', italic = true }
+        
+        -- DiagnosticUnnecessary é usado por muitos LSPs para marcar código não usado
+        highlights.DiagnosticUnnecessary = { fg = '#627562', italic = true }
 
         -- 🔷 Blade: Melhorar syntax highlighting de diretivas PHP/Blade
         -- Diretivas Blade (@if, @foreach, @endif, etc.) em laranja/dourado
