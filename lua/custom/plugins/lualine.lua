@@ -5,6 +5,22 @@ return {
     'AndreM222/copilot-lualine',
   },
   config = function()
+    local function codecompanion_adapter_name()
+      local chat = require('codecompanion').buf_get_chat(vim.api.nvim_get_current_buf())
+      if not chat then
+        return nil
+      end
+      return ' ' .. chat.adapter.formatted_name
+    end
+
+    local function codecompanion_current_model_name()
+      local chat = require('codecompanion').buf_get_chat(vim.api.nvim_get_current_buf())
+      if not chat then
+        return nil
+      end
+      return chat.settings.model
+    end
+
     require('lualine').setup {
       -- sections = {lualine_c = {"filename", {getWords}}, lualine_x = {{getGuiFont}, 'filetype'}},
       options = {
@@ -95,7 +111,39 @@ return {
         },
         lualine_z = { 'progress', 'location' },
       },
-      -- extensions = { 'nvim-tree', 'lazy' },
+      extensions = {
+        {
+          filetypes = { 'codecompanion' },
+          sections = {
+            lualine_a = { 'mode' },
+            lualine_b = {
+              codecompanion_adapter_name,
+            },
+            lualine_c = {
+              codecompanion_current_model_name,
+            },
+            lualine_x = {},
+            lualine_y = {
+              'progress',
+            },
+            lualine_z = {
+              'location',
+            },
+          },
+          inactive_sections = {
+            lualine_a = {},
+            lualine_b = {
+              codecompanion_adapter_name,
+            },
+            lualine_c = {},
+            lualine_x = {},
+            lualine_y = {
+              'progress',
+            },
+            lualine_z = {},
+          },
+        },
+      },
     }
   end,
 }

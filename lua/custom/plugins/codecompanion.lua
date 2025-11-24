@@ -4,13 +4,14 @@ return {
     'nvim-lua/plenary.nvim',
     'nvim-treesitter/nvim-treesitter',
     'folke/snacks.nvim',
+    'j-hui/fidget.nvim',
     { 'MeanderingProgrammer/render-markdown.nvim', ft = { 'markdown', 'codecompanion' } },
   },
   config = function()
     require('codecompanion').setup {
       display = {
         action_palette = {
-          provider = 'snacks',
+          provider = 'default',
         },
         chat = {
           window = {
@@ -42,6 +43,9 @@ return {
         },
       },
     }
+  end,
+  init = function()
+    require('custom.plugins.codecompanion.fidget-spinner'):init()
   end,
   keys = {
     { '<leader>zc', '<cmd>CodeCompanionChat Toggle<cr>', mode = { 'n', 'v' }, desc = 'CodeCompanion: Chat Toggle' },
