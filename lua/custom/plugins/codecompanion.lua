@@ -3,20 +3,15 @@ return {
   dependencies = {
     'nvim-lua/plenary.nvim',
     'nvim-treesitter/nvim-treesitter',
-    'nvim-telescope/telescope.nvim',
+    'folke/snacks.nvim',
     { 'MeanderingProgrammer/render-markdown.nvim', ft = { 'markdown', 'codecompanion' } },
   },
   config = function()
     require('codecompanion').setup {
-      strategies = {
-        chat = {
-          adapter = 'copilot',
-        },
-        inline = {
-          adapter = 'copilot',
-        },
-      },
       display = {
+        action_palette = {
+          provider = 'snacks',
+        },
         chat = {
           window = {
             layout = 'vertical', -- float|vertical|horizontal|buffer
@@ -36,6 +31,14 @@ return {
               wrap = true,
             },
           },
+        },
+      },
+      strategies = {
+        chat = {
+          adapter = 'copilot',
+        },
+        inline = {
+          adapter = 'copilot',
         },
       },
     }

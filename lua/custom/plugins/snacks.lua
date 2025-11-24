@@ -26,6 +26,7 @@ return {
           filename_first = true,
         },
       },
+      ui_select = true,
     },
     quickfile = { enabled = true },
     scope = { enabled = true },
