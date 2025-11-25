@@ -49,7 +49,7 @@ return {
   end,
   keys = {
     { '<leader>zc', '<cmd>CodeCompanionChat Toggle<cr>', mode = { 'n', 'v' }, desc = 'CodeCompanion: Chat Toggle' },
-    { '<leader>zh', '<cmd>CodeCompanionChat<cr>', mode = { 'n', 'v' }, desc = 'CodeCompanion: Chat com contexto' },
+    { '<leader>zh', '<cmd>CodeCompanionChat<cr>', mode = { 'n', 'v' }, desc = 'CodeCompanion: Chat com seleção' },
     { '<leader>za', '<cmd>CodeCompanionActions<cr>', mode = { 'n', 'v' }, desc = 'CodeCompanion: Actions' },
     { '<leader>zi', '<cmd>CodeCompanion<cr>', mode = { 'n', 'v' }, desc = 'CodeCompanion: Inline prompt' },
     { '<leader>zv', '<cmd>CodeCompanionChat Add<cr>', mode = 'v', desc = 'CodeCompanion: Add selection to chat' },
