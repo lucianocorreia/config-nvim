@@ -417,11 +417,10 @@ return {
       custom_highlights = function(colors)
         return {
           DiagnosticVirtualTextWarn = { fg = colors.overlay1, bg = colors.none, italic = true },
-          -- PHP: parâmetro e variáveis com cor #EBA0AC
-          -- ['@variable.parameter.php'] = { fg = '#EBA0AC' },
-          -- ['@lsp.type.parameter.php'] = { fg = '#EBA0AC' },
-          -- ['@parameter'] = { fg = '#EBA0AC' },
-          -- ['@parameter.php'] = { fg = '#EBA0AC' },
+          DiagnosticUnderlineError = { sp = colors.red, underline = true, undercurl = true },
+          DiagnosticUnderlineWarn = { sp = colors.yellow, underline = true, undercurl = true },
+          DiagnosticUnderlineHint = { sp = colors.teal, underline = true, undercurl = true },
+          DiagnosticUnderlineInfo = { sp = colors.blue, underline = true, undercurl = true },
         }
       end,
       default_integrations = true,
