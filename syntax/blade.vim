@@ -35,13 +35,15 @@ syntax region bladePhpString start=+"+ skip=+\\\\\|\\"+ end=+"+ contained
 syntax region bladePhpString start=+'+ skip=+\\\\\|\\'+ end=+'+ contained
 
 " Define colors - usando cores do tema vague
-highlight default bladeDirective guifg=#c48282 gui=bold ctermfg=174 cterm=bold
-highlight default bladeComment guifg=#627562 gui=italic ctermfg=242 cterm=italic
-highlight default bladeEchoBrackets guifg=#90a0b5 gui=NONE ctermfg=109 cterm=NONE
-highlight default bladePhpFunction guifg=#6e94b2 gui=NONE ctermfg=67 cterm=NONE
-highlight default bladePhpKeyword guifg=#6e94b2 gui=NONE ctermfg=67 cterm=NONE
-highlight default bladePhpVar guifg=#cdcdcd ctermfg=251
-highlight default bladePhpString guifg=#e8b589 gui=italic ctermfg=180 cterm=italic
+" Define colors - usando paleta Catppuccin (macchiato)
+" Referência: https://github.com/catppuccin/catppuccin/blob/main/docs/style-guide.md
+highlight default bladeDirective guifg=#f5a97f gui=bold ctermfg=216 cterm=bold   " Peach
+highlight default bladeComment guifg=#8aadf4 gui=italic ctermfg=75 cterm=italic   " Sapphire (comentários: azul)
+highlight default bladeEchoBrackets guifg=#a6da95 gui=NONE ctermfg=114 cterm=NONE " Green
+highlight default bladePhpFunction guifg=#7dc4e4 gui=NONE ctermfg=81 cterm=NONE   " Sky
+highlight default bladePhpKeyword guifg=#c6a0f6 gui=NONE ctermfg=141 cterm=NONE  " Lavender
+highlight default bladePhpVar guifg=#eed49f ctermfg=222                        " Yellow
+highlight default bladePhpString guifg=#f5bde6 gui=italic ctermfg=218 cterm=italic " Pink
 
 " NÃO modificar cores do HTML - deixar como o tema define
 
