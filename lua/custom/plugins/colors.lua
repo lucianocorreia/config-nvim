@@ -124,6 +124,28 @@ return {
 
         -- change the background color of the terminal window
         highlight_groups.Terminal = { bg = palette.red }
+
+        -- 🔷 PHP: Destacar constantes builtin (ex: PHP_EOL) com cor diferente das strings
+        highlight_groups['@constant.builtin.php'] = {
+          fg = palette.yellow,
+          bold = false,
+        }
+        highlight_groups['@constant.php'] = {
+          fg = palette.yellow,
+          bold = false,
+        }
+        highlight_groups['@lsp.type.constant.php'] = {
+          fg = palette.yellow,
+          bold = false,
+        }
+        highlight_groups.phpConstant = {
+          fg = palette.yellow,
+          bold = false,
+        }
+        highlight_groups.phpDefine = {
+          fg = palette.yellow,
+          bold = false,
+        }
       end,
       ---You can override colours in the palette to use different hex colours.
       ---This function will be called once the base and background colours have
@@ -134,11 +156,11 @@ return {
         -- palette.red = '#E67E80'
         -- palette.red = '#ffa198'
         palette.red = '#E67E80'
-        
+
         -- Escurecer o background
-        palette.bg0 = '#1a1f1d'  -- Background mais escuro (original: #2b3339)
-        palette.bg1 = '#1e2421'  -- Background secundário mais escuro
-        palette.bg2 = '#232a27'  -- Background terciário mais escuro
+        palette.bg0 = '#1a1f1d' -- Background mais escuro (original: #2b3339)
+        palette.bg1 = '#1e2421' -- Background secundário mais escuro
+        palette.bg2 = '#232a27' -- Background terciário mais escuro
       end,
     }
 
