@@ -21,9 +21,9 @@ return {
     main = 'ibl',
     config = function()
       -- Define o highlight
-      vim.api.nvim_set_hl(0, 'IndentLine', { fg = '#363a4f', nocombine = true }) -- Catppuccin surface0
+      -- vim.api.nvim_set_hl(0, 'IndentLine', { fg = '#363a4f', nocombine = true }) -- Catppuccin surface0
       -- vim.api.nvim_set_hl(0, 'IndentLine', { fg = '#2e383c', nocombine = true })
-      -- vim.api.nvim_set_hl(0, 'IndentLine', { fg = '#252a2e', nocombine = true })
+      vim.api.nvim_set_hl(0, 'IndentLine', { fg = '#252a2e', nocombine = true })
 
       -- Configura o plugin manualmente
       require('ibl').setup {

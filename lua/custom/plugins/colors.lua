@@ -144,145 +144,148 @@
 -- *****************************************************************************************
 -- Colorscheme vague
 --
--- return {
---   'vague-theme/vague.nvim',
---   lazy = false, -- make sure we load this during startup if it is your main colorscheme
---   priority = 1000, -- make sure to load this before all the other plugins
---   config = function()
---     require('vague').setup {
---       transparent = false, -- don't set background
---       -- disable bold/italic globally in `style`
---       bold = false,
---       italic = false,
---       style = {
---         -- "none" is the same thing as default. But "italic" and "bold" are also valid options
---         boolean = 'bold',
---         number = 'none',
---         float = 'none',
---         error = 'bold',
---         comments = 'italic',
---         conditionals = 'none',
---         functions = 'none',
---         headings = 'bold',
---         operators = 'none',
---         strings = 'italic',
---         variables = 'none',
---
---         -- keywords
---         keywords = 'none',
---         keyword_return = 'italic',
---         keywords_loop = 'none',
---         keywords_label = 'none',
---         keywords_exception = 'none',
---
---         -- builtin
---         builtin_constants = 'bold',
---         builtin_functions = 'none',
---         builtin_types = 'bold',
---         builtin_variables = 'none',
---       },
---       -- plugin styles where applicable
---       -- make an issue/pr if you'd like to see more styling options!
---       plugins = {
---         lsp = {
---           diagnostic_error = 'bold',
---           diagnostic_hint = 'none',
---           diagnostic_info = 'italic',
---           diagnostic_ok = 'none',
---           diagnostic_warn = 'bold',
---         },
---         neotest = {
---           focused = 'bold',
---           adapter_name = 'bold',
---         },
---         telescope = {
---           match = 'bold',
---         },
---       },
---
---       -- Override highlights or add new highlights
---       on_highlights = function(highlights, colors)
---         -- Blink-cmp: linha selecionada com fundo diferente mas sem afetar o texto
---         highlights.BlinkCmpMenuSelection = { bg = colors.visual, blend = 10 }
---
---         -- Snacks picker: linha selecionada sem afetar matches
---         highlights.Visual = { bg = colors.visual }
---         highlights.SnacksPickerListCursorLine = { bg = colors.visual }
---
---         -- Comentários: marrom/bege discreto
---         highlights.Comment = { fg = '#8a7a6a', italic = true } -- marrom acinzentado discreto
---         highlights['@comment'] = { fg = '#8a7a6a', italic = true } -- Treesitter: todos os comentários
---         highlights['@lsp.type.comment'] = { fg = '#8a7a6a', italic = true } -- LSP: todos os comentários
---
---         -- Parâmetros e variáveis não utilizados: verde
---         -- Comentários: marrom #8a7a6a | Não usados: verde #627562
---         highlights['@lsp.typemod.parameter.unused'] = { fg = '#627562', italic = true }
---         highlights['@lsp.typemod.variable.unused'] = { fg = '#627562', italic = true }
---         highlights['@lsp.mod.unused'] = { fg = '#627562', italic = true }
---         highlights['@lsp.type.parameter.unused'] = { fg = '#627562', italic = true }
---         highlights['@variable.parameter.unused'] = { fg = '#627562', italic = true }
---
---         -- Use statements não utilizados em PHP
---         highlights['@lsp.typemod.class.unused'] = { fg = '#627562', italic = true }
---         highlights['@lsp.typemod.namespace.unused'] = { fg = '#627562', italic = true }
---
---         -- Fallback para syntax highlighting tradicional
---         highlights.phpUnusedVariable = { fg = '#627562', italic = true }
---         highlights.Unnecessary = { fg = '#627562', italic = true }
---
---         -- DiagnosticUnnecessary é usado por muitos LSPs para marcar código não usado
---         highlights.DiagnosticUnnecessary = { fg = '#627562', italic = true }
---
---         -- 🔷 Blade: Melhorar syntax highlighting de diretivas PHP/Blade
---         -- Diretivas Blade (@if, @foreach, @endif, etc.) em laranja/dourado
---         -- data_get() em azul claro (builtin)
---         highlights.bladeDirective = { fg = '#e0a363', bold = true } -- laranja/number color
---         highlights.bladeDelimiter = { fg = '#e0a363', bold = true }
---         highlights.bladeEcho = { fg = '#b4d4cf' } -- azul claro builtin
---         highlights.bladeComment = { fg = colors.comment, italic = true }
---
---         -- Treesitter highlights para Blade
---         highlights['@keyword.blade'] = { fg = '#e0a363', bold = true }
---         highlights['@keyword.directive.blade'] = { fg = '#e0a363', bold = true }
---         highlights['@tag.delimiter.blade'] = { fg = '#e0a363', bold = true }
---         highlights['@function.blade'] = { fg = '#b4d4cf' } -- funções em azul claro
---         highlights['@function.builtin.blade'] = { fg = '#b4d4cf' }
---
---         -- 🔷 HTML: Ajustar cor dos brackets <> para azul (mesma cor do nome da tag)
---         highlights.htmlTag = { fg = '#6e94b2' } -- < > em azul
---         highlights.htmlEndTag = { fg = '#6e94b2' } -- </ > em azul
---       end,
---
---       -- Override colors
---       colors = {
---         bg = '#1a1a1c',
---         inactiveBg = '#22222a',
---         fg = '#cdcdcd',
---         floatBorder = '#878787',
---         line = '#252530',
---         comment = '#6b6b80', -- original: '#606079'
---         builtin = '#b4d4cf',
---         func = '#c48282',
---         string = '#e8b589',
---         number = '#e0a363',
---         property = '#c3c3d5',
---         constant = '#aeaed1',
---         parameter = '#bb9dbd',
---         visual = '#333738',
---         error = '#d8647e',
---         warning = '#f3be7c',
---         hint = '#7e98e8',
---         operator = '#90a0b5',
---         keyword = '#6e94b2',
---         type = '#9bb4bc',
---         search = '#405065',
---         plus = '#7fa563',
---         delta = '#f3be7c',
---       },
---     }
---     vim.cmd 'colorscheme vague'
---   end,
--- }
+return {
+  'vague-theme/vague.nvim',
+  lazy = false, -- make sure we load this during startup if it is your main colorscheme
+  priority = 1000, -- make sure to load this before all the other plugins
+  config = function()
+    require('vague').setup {
+      transparent = false, -- don't set background
+      -- disable bold/italic globally in `style`
+      bold = false,
+      italic = false,
+      style = {
+        -- "none" is the same thing as default. But "italic" and "bold" are also valid options
+        boolean = 'bold',
+        number = 'none',
+        float = 'none',
+        error = 'bold',
+        comments = 'italic',
+        conditionals = 'none',
+        functions = 'none',
+        headings = 'bold',
+        operators = 'none',
+        strings = 'italic',
+        variables = 'none',
+
+        -- keywords
+        keywords = 'none',
+        keyword_return = 'italic',
+        keywords_loop = 'none',
+        keywords_label = 'none',
+        keywords_exception = 'none',
+
+        -- builtin
+        builtin_constants = 'bold',
+        builtin_functions = 'none',
+        builtin_types = 'bold',
+        builtin_variables = 'none',
+      },
+      -- plugin styles where applicable
+      -- make an issue/pr if you'd like to see more styling options!
+      plugins = {
+        lsp = {
+          diagnostic_error = 'bold',
+          diagnostic_hint = 'none',
+          diagnostic_info = 'italic',
+          diagnostic_ok = 'none',
+          diagnostic_warn = 'bold',
+        },
+        neotest = {
+          focused = 'bold',
+          adapter_name = 'bold',
+        },
+        telescope = {
+          match = 'bold',
+        },
+      },
+
+      -- Override highlights or add new highlights
+      on_highlights = function(highlights, colors)
+        -- Blink-cmp: linha selecionada com fundo diferente mas sem afetar o texto
+        highlights.BlinkCmpMenuSelection = { bg = colors.visual, blend = 10 }
+
+        -- Snacks picker: linha selecionada sem afetar matches
+        highlights.Visual = { bg = colors.visual }
+        highlights.SnacksPickerListCursorLine = { bg = colors.visual }
+
+        -- Comentários: marrom/bege discreto
+        highlights.Comment = { fg = '#8a7a6a', italic = true } -- marrom acinzentado discreto
+        highlights['@comment'] = { fg = '#8a7a6a', italic = true } -- Treesitter: todos os comentários
+        highlights['@lsp.type.comment'] = { fg = '#8a7a6a', italic = true } -- LSP: todos os comentários
+
+        -- Parâmetros e variáveis não utilizados: verde
+        -- Comentários: marrom #8a7a6a | Não usados: verde #627562
+        highlights['@lsp.typemod.parameter.unused'] = { fg = '#627562', italic = true }
+        highlights['@lsp.typemod.variable.unused'] = { fg = '#627562', italic = true }
+        highlights['@lsp.mod.unused'] = { fg = '#627562', italic = true }
+        highlights['@lsp.type.parameter.unused'] = { fg = '#627562', italic = true }
+        highlights['@variable.parameter.unused'] = { fg = '#627562', italic = true }
+
+        -- Use statements não utilizados em PHP
+        highlights['@lsp.typemod.class.unused'] = { fg = '#627562', italic = true }
+        highlights['@lsp.typemod.namespace.unused'] = { fg = '#627562', italic = true }
+
+        -- Fallback para syntax highlighting tradicional
+        highlights.phpUnusedVariable = { fg = '#627562', italic = true }
+        highlights.Unnecessary = { fg = '#627562', italic = true }
+
+        -- DiagnosticUnnecessary é usado por muitos LSPs para marcar código não usado
+        highlights.DiagnosticUnnecessary = { fg = '#627562', italic = true }
+
+        -- 🔷 Blade: Melhorar syntax highlighting de diretivas PHP/Blade
+        -- Diretivas Blade (@if, @foreach, @endif, etc.) em laranja/dourado
+        -- data_get() em azul claro (builtin)
+        highlights.bladeDirective = { fg = '#e0a363', bold = true } -- laranja/number color
+        highlights.bladeDelimiter = { fg = '#e0a363', bold = true }
+        highlights.bladeEcho = { fg = '#b4d4cf' } -- azul claro builtin
+        highlights.bladeComment = { fg = colors.comment, italic = true }
+
+        -- Treesitter highlights para Blade
+        highlights['@keyword.blade'] = { fg = '#e0a363', bold = true }
+        highlights['@keyword.directive.blade'] = { fg = '#e0a363', bold = true }
+        highlights['@tag.delimiter.blade'] = { fg = '#e0a363', bold = true }
+        highlights['@function.blade'] = { fg = '#b4d4cf' } -- funções em azul claro
+        highlights['@function.builtin.blade'] = { fg = '#b4d4cf' }
+
+        -- 🔷 HTML: Ajustar cor dos brackets <> para azul (mesma cor do nome da tag)
+        highlights.htmlTag = { fg = '#6e94b2' } -- < > em azul
+        highlights.htmlEndTag = { fg = '#6e94b2' } -- </ > em azul
+
+        highlights['@variable.builtin.javascript'] = { fg = '#e0a363', bold = false }
+        highlights['@variable.builtin.typescript'] = { fg = '#e0a363', bold = false }
+      end,
+
+      -- Override colors
+      colors = {
+        bg = '#1a1a1c',
+        inactiveBg = '#22222a',
+        fg = '#cdcdcd',
+        floatBorder = '#878787',
+        line = '#252530',
+        comment = '#6b6b80', -- original: '#606079'
+        builtin = '#b4d4cf',
+        func = '#c48282',
+        string = '#e8b589',
+        number = '#e0a363',
+        property = '#c3c3d5',
+        constant = '#aeaed1',
+        parameter = '#bb9dbd',
+        visual = '#333738',
+        error = '#d8647e',
+        warning = '#f3be7c',
+        hint = '#7e98e8',
+        operator = '#90a0b5',
+        keyword = '#6e94b2',
+        type = '#9bb4bc',
+        search = '#405065',
+        plus = '#7fa563',
+        delta = '#f3be7c',
+      },
+    }
+    vim.cmd 'colorscheme vague'
+  end,
+}
 
 --
 -- *****************************************************************************************
@@ -377,109 +380,109 @@
 -- *****************************************************************************************
 
 -- Colorscheme configuration for Neovim using Catppuccin theme
-return {
-  'catppuccin/nvim',
-  name = 'catppuccin',
-  config = function()
-    require('catppuccin').setup {
-      flavour = 'mocha', -- latte, frappe, macchiato, mocha
-      background = { -- :h background
-        light = 'latte',
-        dark = 'mocha',
-      },
-      transparent_background = false, -- disables setting the background color.
-      show_end_of_buffer = false, -- shows the '~' characters after the end of buffers
-      term_colors = false, -- sets terminal colors (e.g. `g:terminal_color_0`)
-      dim_inactive = {
-        enabled = false, -- dims the background color of inactive window
-        shade = 'dark',
-        percentage = 0.15, -- percentage of the shade to apply to the inactive window
-      },
-      no_italic = false, -- Force no italic
-      no_bold = true, -- Force no bold
-      no_underline = true, -- Force no underline
-      styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
-        comments = { 'italic' }, -- Change the style of comments
-        conditionals = {},
-        loops = {},
-        functions = {},
-        keywords = {},
-        strings = {},
-        variables = {},
-        numbers = {},
-        booleans = {},
-        properties = {},
-        types = {},
-        operators = {},
-        -- miscs = {}, -- Uncomment to turn off hard-coded styles
-      },
-      color_overrides = {},
-      custom_highlights = function(colors)
-        return {
-          DiagnosticVirtualTextWarn = { fg = colors.overlay1, bg = colors.none, italic = true },
-          DiagnosticUnderlineError = { sp = colors.red, underline = true, undercurl = true },
-          DiagnosticUnderlineWarn = { sp = colors.yellow, underline = true, undercurl = true },
-          DiagnosticUnderlineHint = { sp = colors.teal, underline = true, undercurl = true },
-          DiagnosticUnderlineInfo = { sp = colors.blue, underline = true, undercurl = true },
-        }
-      end,
-      default_integrations = true,
-      integrations = {
-        blink_cmp = true,
-        gitsigns = true,
-        nvimtree = true,
-        treesitter = true,
-        notify = true,
-        noice = true,
-        harpoon = true,
-        mason = true,
-        mini = {
-          enabled = true,
-          indentscope_color = '',
-        },
-        dropbar = {
-          enabled = true,
-          color_mode = false, -- enable color for kind's texts, not just kind's icons
-        },
-        indent_blankline = {
-          enabled = true,
-          scope_color = '', -- catppuccin color (eg. `lavender`) Default: text
-          colored_indent_levels = false,
-        },
-        copilot_vim = true,
-        snacks = {
-          enabled = true,
-          indent_scope_color = '', -- catppuccin color (eg. `lavender`) Default: text
-        },
-        nvim_surround = true,
-        flash = true,
-        lsp_trouble = true,
-        native_lsp = {
-          enabled = true,
-          virtual_text = {
-            errors = { 'italic' },
-            hints = { 'italic' },
-            warnings = { 'italic' },
-            information = { 'italic' },
-            ok = { 'italic' },
-          },
-          underlines = {
-            errors = { 'underline' },
-            hints = { 'underline' },
-            warnings = { 'underline' },
-            information = { 'underline' },
-            ok = { 'underline' },
-          },
-          inlay_hints = {
-            background = true,
-          },
-        },
-        which_key = true,
-        -- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
-      },
-    }
-
-    -- setup must be called before loading
-    vim.cmd.colorscheme 'catppuccin'
-  end,
-}
+-- return {
+--   'catppuccin/nvim',
+--   name = 'catppuccin',
+--   config = function()
+--     require('catppuccin').setup {
+--       flavour = 'mocha', -- latte, frappe, macchiato, mocha
+--       background = { -- :h background
+--         light = 'latte',
+--         dark = 'mocha',
+--       },
+--       transparent_background = false, -- disables setting the background color.
+--       show_end_of_buffer = false, -- shows the '~' characters after the end of buffers
+--       term_colors = false, -- sets terminal colors (e.g. `g:terminal_color_0`)
+--       dim_inactive = {
+--         enabled = false, -- dims the background color of inactive window
+--         shade = 'dark',
+--         percentage = 0.15, -- percentage of the shade to apply to the inactive window
+--       },
+--       no_italic = false, -- Force no italic
+--       no_bold = true, -- Force no bold
+--       no_underline = true, -- Force no underline
+--       styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
+--         comments = { 'italic' }, -- Change the style of comments
+--         conditionals = {},
+--         loops = {},
+--         functions = {},
+--         keywords = {},
+--         strings = {},
+--         variables = {},
+--         numbers = {},
+--         booleans = {},
+--         properties = {},
+--         types = {},
+--         operators = {},
+--         -- miscs = {}, -- Uncomment to turn off hard-coded styles
+--       },
+--       color_overrides = {},
+--       custom_highlights = function(colors)
+--         return {
+--           DiagnosticVirtualTextWarn = { fg = colors.overlay1, bg = colors.none, italic = true },
+--           DiagnosticUnderlineError = { sp = colors.red, underline = true, undercurl = true },
+--           DiagnosticUnderlineWarn = { sp = colors.yellow, underline = true, undercurl = true },
+--           DiagnosticUnderlineHint = { sp = colors.teal, underline = true, undercurl = true },
+--           DiagnosticUnderlineInfo = { sp = colors.blue, underline = true, undercurl = true },
+--         }
+--       end,
+--       default_integrations = true,
+--       integrations = {
+--         blink_cmp = true,
+--         gitsigns = true,
+--         nvimtree = true,
+--         treesitter = true,
+--         notify = true,
+--         noice = true,
+--         harpoon = true,
+--         mason = true,
+--         mini = {
+--           enabled = true,
+--           indentscope_color = '',
+--         },
+--         dropbar = {
+--           enabled = true,
+--           color_mode = false, -- enable color for kind's texts, not just kind's icons
+--         },
+--         indent_blankline = {
+--           enabled = true,
+--           scope_color = '', -- catppuccin color (eg. `lavender`) Default: text
+--           colored_indent_levels = false,
+--         },
+--         copilot_vim = true,
+--         snacks = {
+--           enabled = true,
+--           indent_scope_color = '', -- catppuccin color (eg. `lavender`) Default: text
+--         },
+--         nvim_surround = true,
+--         flash = true,
+--         lsp_trouble = true,
+--         native_lsp = {
+--           enabled = true,
+--           virtual_text = {
+--             errors = { 'italic' },
+--             hints = { 'italic' },
+--             warnings = { 'italic' },
+--             information = { 'italic' },
+--             ok = { 'italic' },
+--           },
+--           underlines = {
+--             errors = { 'underline' },
+--             hints = { 'underline' },
+--             warnings = { 'underline' },
+--             information = { 'underline' },
+--             ok = { 'underline' },
+--           },
+--           inlay_hints = {
+--             background = true,
+--           },
+--         },
+--         which_key = true,
+--         -- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
+--       },
+--     }
+--
+--     -- setup must be called before loading
+--     vim.cmd.colorscheme 'catppuccin'
+--   end,
+-- }
