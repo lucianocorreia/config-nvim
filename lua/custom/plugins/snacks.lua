@@ -15,6 +15,25 @@ return {
     notifier = {
       enabled = true,
       timeout = 3000,
+      filter = function(notif)
+        -- Filtrar mensagens de inicialização do Roslyn
+        local msg = notif.msg or ''
+        if type(msg) == 'table' then
+          msg = table.concat(msg, ' ')
+        end
+        msg = tostring(msg):lower()
+        
+        -- Bloquear mensagens específicas do Roslyn
+        if msg:match('roslyn') or 
+           msg:match('initialized') or 
+           msg:match('project.*initialized') or
+           msg:match('language server.*started') or
+           msg:match('server.*ready') then
+          return false
+        end
+        
+        return true
+      end,
     },
     picker = {
       enabled = true,

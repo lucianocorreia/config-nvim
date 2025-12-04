@@ -1,291 +1,296 @@
 -- *****************************************************************************************
 -- Everforest
--- return {
---   'neanias/everforest-nvim',
---   version = false,
---   lazy = false,
---   priority = 1000, -- make sure to load this before all the other start plugins
---   -- Optional; default configuration will be used if setup isn't called.
---   config = function()
---     require('everforest').setup {
---       ---Controls the "hardness" of the background. Options are "soft", "medium" or "hard".
---       ---Default is "medium".
---       background = 'hard',
---       ---How much of the background should be transparent. 2 will have more UI
---       ---components be transparent (e.g. status line background)
---       transparent_background_level = 0,
---       ---Whether italics should be used for keywords and more.
---       italics = false,
---       ---Disable italic fonts for comments. Comments are in italics by default, set
---       ---this to `true` to make them _not_ italic!
---       disable_italic_comments = true,
---       ---By default, the colour of the sign column background is the same as the as normal text
---       ---background, but you can use a grey background by setting this to `"grey"`.
---       sign_column_background = 'none',
---       ---The contrast of line numbers, indent lines, etc. Options are `"high"` or
---       ---`"low"` (default).
---       ui_contrast = 'low',
---       ---Dim inactive windows. Only works in Neovim. Can look a bit weird with Telescope.
---       ---
---       ---When this option is used in conjunction with show_eob set to `false`, the
---       ---end of the buffer will only be hidden inside the active window. Inside
---       ---inactive windows, the end of buffer filler characters will be visible in
---       ---dimmed symbols. This is due to the way Vim and Neovim handle `EndOfBuffer`.
---       dim_inactive_windows = false,
---       ---Some plugins support highlighting error/warning/info/hint texts, by
---       ---default these texts are only underlined, but you can use this option to
---       ---also highlight the background of them.
---       diagnostic_text_highlight = true,
---       ---Which colour the diagnostic text should be. Options are `"grey"` or `"coloured"` (default)
---       diagnostic_virtual_text = 'coloured',
---       ---Some plugins support highlighting error/warning/info/hint lines, but this
---       ---feature is disabled by default in this colour scheme.
---       diagnostic_line_highlight = true,
---       ---By default, this color scheme won't colour the foreground of |spell|, instead
---       ---colored under curls will be used. If you also want to colour the foreground,
---       ---set this option to `true`.
---       spell_foreground = true,
---       ---Whether to show the EndOfBuffer highlight.
---       show_eob = false,
---       ---Style used to make floating windows stand out from other windows. `"bright"`
---       ---makes the background of these windows lighter than |hl-Normal|, whereas
---       ---`"dim"` makes it darker.
---       ---
---       ---Floating windows include for instance diagnostic pop-ups, scrollable
---       ---documentation windows from completion engines, overlay windows from
---       ---installers, etc.
---       ---
---       ---NB: This is only significant for dark backgrounds as the light palettes
---       ---have the same colour for both values in the switch.
---       float_style = 'bright',
---       ---Inlay hints are special markers that are displayed inline with the code to
---       ---provide you with additional information. You can use this option to customize
---       ---the background color of inlay hints.
---       ---
---       ---Options are `"none"` or `"dimmed"`.
---       inlay_hints_background = 'none',
---       ---You can override specific highlights to use other groups or a hex colour.
---       ---This function will be called with the highlights and colour palette tables.
---       ---@param highlight_groups Highlights
---       ---@param palette Palette
---       on_highlights = function(highlight_groups, palette)
---         highlight_groups.DiagnosticVirtualTextError = { fg = '#b86466', bg = 'NONE' }
---         highlight_groups.DiagnosticVirtualTextWarn = { fg = '#e69875', bg = 'NONE' }
---         highlight_groups.DiagnosticVirtualTextInfo = { fg = '#7fbbb3', bg = 'NONE' }
---         highlight_groups.DiagnosticVirtualTextHint = { fg = '#c9c6bf', bg = 'NONE' }
---
---         -- 🎨 Customização de cores de seleção e yank
---         -- Cor de seleção visual (quando você seleciona texto)
---         -- highlight_groups.Visual = {
---         --   bg = '#5A6B44', -- Verde escuro mais suave
---         --   fg = 'NONE',    -- Mantém a cor do texto original
---         --   bold = false
---         -- }
---         --
---         -- -- Cor quando você faz yank (cópia) - IncSearch é usado para highlight do yank
---         -- highlight_groups.IncSearch = {
---         --   bg = '#dbbc7f', -- Cor clara/amarelada
---         --   fg = '#343F44', -- Texto escuro para contraste
---         --   bold = false
---         -- }
---
---         -- 🐘 PHP: Destacar caractere $ com cor de keywords
---         -- Usar a mesma cor de public, static, class, function, etc.
---         highlight_groups.phpVarSelector = {
---           fg = palette.purple, -- Mesma cor das palavras-chave (public, static, etc.)
---           bold = false,
---         }
---
---         -- Alternativa mais específica para treesitter (caso use)
---         highlight_groups['@variable.builtin.php'] = {
---           fg = palette.purple,
---           bold = false,
---         }
---
---         -- Para syntax highlighting tradicional
---         highlight_groups.phpIdentifier = {
---           fg = palette.fg, -- Cor normal para o nome da variável
---         }
---
---         -- 🔷 C#: Remover itálicos de classes, tipos e namespaces
---         highlight_groups['@type.cs'] = { fg = palette.blue, italic = false }
---         highlight_groups['@type.builtin.cs'] = { fg = palette.blue, italic = false }
---         highlight_groups['@namespace.cs'] = { fg = palette.yellow, italic = false }
---         highlight_groups['@property.cs'] = { fg = palette.fg, italic = false }
---         highlight_groups['@method.cs'] = { fg = palette.green, italic = false }
---         highlight_groups['@keyword.cs'] = { fg = palette.purple, italic = false }
---         highlight_groups['@attribute.cs'] = { fg = palette.orange, italic = false }
---
---         -- Para syntax highlighting tradicional (fallback)
---         highlight_groups.csType = { fg = palette.blue, italic = false }
---         highlight_groups.csClass = { fg = palette.blue, italic = false }
---         highlight_groups.csClassType = { fg = palette.blue, italic = false }
---         highlight_groups.csStorage = { fg = palette.purple, italic = false }
---
---         -- change the background color of the terminal window
---         highlight_groups.Terminal = { bg = palette.red }
---       end,
---       ---You can override colours in the palette to use different hex colours.
---       ---This function will be called once the base and background colours have
---       ---been mixed on the palette.
---       ---@param palette Palette
---       colours_override = function(palette)
---         -- palette.red = '#b86466'
---         -- palette.red = '#E67E80'
---         -- palette.red = '#ffa198'
---         palette.red = '#E67E80'
---       end,
---     }
---
---     vim.cmd [[colorscheme everforest]]
---   end,
--- }
+return {
+  'neanias/everforest-nvim',
+  version = false,
+  lazy = false,
+  priority = 1000, -- make sure to load this before all the other start plugins
+  -- Optional; default configuration will be used if setup isn't called.
+  config = function()
+    require('everforest').setup {
+      ---Controls the "hardness" of the background. Options are "soft", "medium" or "hard".
+      ---Default is "medium".
+      background = 'hard',
+      ---How much of the background should be transparent. 2 will have more UI
+      ---components be transparent (e.g. status line background)
+      transparent_background_level = 0,
+      ---Whether italics should be used for keywords and more.
+      italics = false,
+      ---Disable italic fonts for comments. Comments are in italics by default, set
+      ---this to `true` to make them _not_ italic!
+      disable_italic_comments = true,
+      ---By default, the colour of the sign column background is the same as the as normal text
+      ---background, but you can use a grey background by setting this to `"grey"`.
+      sign_column_background = 'none',
+      ---The contrast of line numbers, indent lines, etc. Options are `"high"` or
+      ---`"low"` (default).
+      ui_contrast = 'low',
+      ---Dim inactive windows. Only works in Neovim. Can look a bit weird with Telescope.
+      ---
+      ---When this option is used in conjunction with show_eob set to `false`, the
+      ---end of the buffer will only be hidden inside the active window. Inside
+      ---inactive windows, the end of buffer filler characters will be visible in
+      ---dimmed symbols. This is due to the way Vim and Neovim handle `EndOfBuffer`.
+      dim_inactive_windows = false,
+      ---Some plugins support highlighting error/warning/info/hint texts, by
+      ---default these texts are only underlined, but you can use this option to
+      ---also highlight the background of them.
+      diagnostic_text_highlight = true,
+      ---Which colour the diagnostic text should be. Options are `"grey"` or `"coloured"` (default)
+      diagnostic_virtual_text = 'coloured',
+      ---Some plugins support highlighting error/warning/info/hint lines, but this
+      ---feature is disabled by default in this colour scheme.
+      diagnostic_line_highlight = true,
+      ---By default, this color scheme won't colour the foreground of |spell|, instead
+      ---colored under curls will be used. If you also want to colour the foreground,
+      ---set this option to `true`.
+      spell_foreground = true,
+      ---Whether to show the EndOfBuffer highlight.
+      show_eob = false,
+      ---Style used to make floating windows stand out from other windows. `"bright"`
+      ---makes the background of these windows lighter than |hl-Normal|, whereas
+      ---`"dim"` makes it darker.
+      ---
+      ---Floating windows include for instance diagnostic pop-ups, scrollable
+      ---documentation windows from completion engines, overlay windows from
+      ---installers, etc.
+      ---
+      ---NB: This is only significant for dark backgrounds as the light palettes
+      ---have the same colour for both values in the switch.
+      float_style = 'bright',
+      ---Inlay hints are special markers that are displayed inline with the code to
+      ---provide you with additional information. You can use this option to customize
+      ---the background color of inlay hints.
+      ---
+      ---Options are `"none"` or `"dimmed"`.
+      inlay_hints_background = 'none',
+      ---You can override specific highlights to use other groups or a hex colour.
+      ---This function will be called with the highlights and colour palette tables.
+      ---@param highlight_groups Highlights
+      ---@param palette Palette
+      on_highlights = function(highlight_groups, palette)
+        highlight_groups.DiagnosticVirtualTextError = { fg = '#b86466', bg = 'NONE' }
+        highlight_groups.DiagnosticVirtualTextWarn = { fg = '#e69875', bg = 'NONE' }
+        highlight_groups.DiagnosticVirtualTextInfo = { fg = '#7fbbb3', bg = 'NONE' }
+        highlight_groups.DiagnosticVirtualTextHint = { fg = '#c9c6bf', bg = 'NONE' }
+
+        -- 🎨 Customização de cores de seleção e yank
+        -- Cor de seleção visual (quando você seleciona texto)
+        -- highlight_groups.Visual = {
+        --   bg = '#5A6B44', -- Verde escuro mais suave
+        --   fg = 'NONE',    -- Mantém a cor do texto original
+        --   bold = false
+        -- }
+        --
+        -- -- Cor quando você faz yank (cópia) - IncSearch é usado para highlight do yank
+        -- highlight_groups.IncSearch = {
+        --   bg = '#dbbc7f', -- Cor clara/amarelada
+        --   fg = '#343F44', -- Texto escuro para contraste
+        --   bold = false
+        -- }
+
+        -- 🐘 PHP: Destacar caractere $ com cor de keywords
+        -- Usar a mesma cor de public, static, class, function, etc.
+        highlight_groups.phpVarSelector = {
+          fg = palette.purple, -- Mesma cor das palavras-chave (public, static, etc.)
+          bold = false,
+        }
+
+        -- Alternativa mais específica para treesitter (caso use)
+        highlight_groups['@variable.builtin.php'] = {
+          fg = palette.purple,
+          bold = false,
+        }
+
+        -- Para syntax highlighting tradicional
+        highlight_groups.phpIdentifier = {
+          fg = palette.fg, -- Cor normal para o nome da variável
+        }
+
+        -- 🔷 C#: Remover itálicos de classes, tipos e namespaces
+        highlight_groups['@type.cs'] = { fg = palette.blue, italic = false }
+        highlight_groups['@type.builtin.cs'] = { fg = palette.blue, italic = false }
+        highlight_groups['@namespace.cs'] = { fg = palette.yellow, italic = false }
+        highlight_groups['@property.cs'] = { fg = palette.fg, italic = false }
+        highlight_groups['@method.cs'] = { fg = palette.green, italic = false }
+        highlight_groups['@keyword.cs'] = { fg = palette.purple, italic = false }
+        highlight_groups['@attribute.cs'] = { fg = palette.orange, italic = false }
+
+        -- Para syntax highlighting tradicional (fallback)
+        highlight_groups.csType = { fg = palette.blue, italic = false }
+        highlight_groups.csClass = { fg = palette.blue, italic = false }
+        highlight_groups.csClassType = { fg = palette.blue, italic = false }
+        highlight_groups.csStorage = { fg = palette.purple, italic = false }
+
+        -- change the background color of the terminal window
+        highlight_groups.Terminal = { bg = palette.red }
+      end,
+      ---You can override colours in the palette to use different hex colours.
+      ---This function will be called once the base and background colours have
+      ---been mixed on the palette.
+      ---@param palette Palette
+      colours_override = function(palette)
+        -- palette.red = '#b86466'
+        -- palette.red = '#E67E80'
+        -- palette.red = '#ffa198'
+        palette.red = '#E67E80'
+        
+        -- Escurecer o background
+        palette.bg0 = '#1a1f1d'  -- Background mais escuro (original: #2b3339)
+        palette.bg1 = '#1e2421'  -- Background secundário mais escuro
+        palette.bg2 = '#232a27'  -- Background terciário mais escuro
+      end,
+    }
+
+    vim.cmd [[colorscheme everforest]]
+  end,
+}
 
 -- *****************************************************************************************
 -- Colorscheme vague
 --
-return {
-  'vague-theme/vague.nvim',
-  lazy = false, -- make sure we load this during startup if it is your main colorscheme
-  priority = 1000, -- make sure to load this before all the other plugins
-  config = function()
-    require('vague').setup {
-      transparent = false, -- don't set background
-      -- disable bold/italic globally in `style`
-      bold = false,
-      italic = false,
-      style = {
-        -- "none" is the same thing as default. But "italic" and "bold" are also valid options
-        boolean = 'bold',
-        number = 'none',
-        float = 'none',
-        error = 'bold',
-        comments = 'italic',
-        conditionals = 'none',
-        functions = 'none',
-        headings = 'bold',
-        operators = 'none',
-        strings = 'italic',
-        variables = 'none',
-
-        -- keywords
-        keywords = 'none',
-        keyword_return = 'italic',
-        keywords_loop = 'none',
-        keywords_label = 'none',
-        keywords_exception = 'none',
-
-        -- builtin
-        builtin_constants = 'bold',
-        builtin_functions = 'none',
-        builtin_types = 'bold',
-        builtin_variables = 'none',
-      },
-      -- plugin styles where applicable
-      -- make an issue/pr if you'd like to see more styling options!
-      plugins = {
-        lsp = {
-          diagnostic_error = 'bold',
-          diagnostic_hint = 'none',
-          diagnostic_info = 'italic',
-          diagnostic_ok = 'none',
-          diagnostic_warn = 'bold',
-        },
-        neotest = {
-          focused = 'bold',
-          adapter_name = 'bold',
-        },
-        telescope = {
-          match = 'bold',
-        },
-      },
-
-      -- Override highlights or add new highlights
-      on_highlights = function(highlights, colors)
-        -- Blink-cmp: linha selecionada com fundo diferente mas sem afetar o texto
-        highlights.BlinkCmpMenuSelection = { bg = colors.visual, blend = 10 }
-
-        -- Snacks picker: linha selecionada sem afetar matches
-        highlights.Visual = { bg = colors.visual }
-        highlights.SnacksPickerListCursorLine = { bg = colors.visual }
-
-        -- Comentários: marrom/bege discreto
-        highlights.Comment = { fg = '#8a7a6a', italic = true } -- marrom acinzentado discreto
-        highlights['@comment'] = { fg = '#8a7a6a', italic = true } -- Treesitter: todos os comentários
-        highlights['@lsp.type.comment'] = { fg = '#8a7a6a', italic = true } -- LSP: todos os comentários
-
-        -- Parâmetros e variáveis não utilizados: verde
-        -- Comentários: marrom #8a7a6a | Não usados: verde #627562
-        highlights['@lsp.typemod.parameter.unused'] = { fg = '#627562', italic = true }
-        highlights['@lsp.typemod.variable.unused'] = { fg = '#627562', italic = true }
-        highlights['@lsp.mod.unused'] = { fg = '#627562', italic = true }
-        highlights['@lsp.type.parameter.unused'] = { fg = '#627562', italic = true }
-        highlights['@variable.parameter.unused'] = { fg = '#627562', italic = true }
-
-        -- Use statements não utilizados em PHP
-        highlights['@lsp.typemod.class.unused'] = { fg = '#627562', italic = true }
-        highlights['@lsp.typemod.namespace.unused'] = { fg = '#627562', italic = true }
-
-        -- Fallback para syntax highlighting tradicional
-        highlights.phpUnusedVariable = { fg = '#627562', italic = true }
-        highlights.Unnecessary = { fg = '#627562', italic = true }
-
-        -- DiagnosticUnnecessary é usado por muitos LSPs para marcar código não usado
-        highlights.DiagnosticUnnecessary = { fg = '#627562', italic = true }
-
-        -- 🔷 Blade: Melhorar syntax highlighting de diretivas PHP/Blade
-        -- Diretivas Blade (@if, @foreach, @endif, etc.) em laranja/dourado
-        -- data_get() em azul claro (builtin)
-        highlights.bladeDirective = { fg = '#e0a363', bold = true } -- laranja/number color
-        highlights.bladeDelimiter = { fg = '#e0a363', bold = true }
-        highlights.bladeEcho = { fg = '#b4d4cf' } -- azul claro builtin
-        highlights.bladeComment = { fg = colors.comment, italic = true }
-
-        -- Treesitter highlights para Blade
-        highlights['@keyword.blade'] = { fg = '#e0a363', bold = true }
-        highlights['@keyword.directive.blade'] = { fg = '#e0a363', bold = true }
-        highlights['@tag.delimiter.blade'] = { fg = '#e0a363', bold = true }
-        highlights['@function.blade'] = { fg = '#b4d4cf' } -- funções em azul claro
-        highlights['@function.builtin.blade'] = { fg = '#b4d4cf' }
-
-        -- 🔷 HTML: Ajustar cor dos brackets <> para azul (mesma cor do nome da tag)
-        highlights.htmlTag = { fg = '#6e94b2' } -- < > em azul
-        highlights.htmlEndTag = { fg = '#6e94b2' } -- </ > em azul
-
-        highlights['@variable.builtin.javascript'] = { fg = '#e0a363', bold = false }
-        highlights['@variable.builtin.typescript'] = { fg = '#e0a363', bold = false }
-      end,
-
-      -- Override colors
-      colors = {
-        bg = '#1a1a1c',
-        inactiveBg = '#22222a',
-        fg = '#cdcdcd',
-        floatBorder = '#878787',
-        line = '#252530',
-        comment = '#6b6b80', -- original: '#606079'
-        builtin = '#b4d4cf',
-        func = '#c48282',
-        string = '#e8b589',
-        number = '#e0a363',
-        property = '#c3c3d5',
-        constant = '#aeaed1',
-        parameter = '#bb9dbd',
-        visual = '#333738',
-        error = '#d8647e',
-        warning = '#f3be7c',
-        hint = '#7e98e8',
-        operator = '#90a0b5',
-        keyword = '#6e94b2',
-        type = '#9bb4bc',
-        search = '#405065',
-        plus = '#7fa563',
-        delta = '#f3be7c',
-      },
-    }
-    vim.cmd 'colorscheme vague'
-  end,
-}
+-- return {
+--   'vague-theme/vague.nvim',
+--   lazy = false, -- make sure we load this during startup if it is your main colorscheme
+--   priority = 1000, -- make sure to load this before all the other plugins
+--   config = function()
+--     require('vague').setup {
+--       transparent = false, -- don't set background
+--       -- disable bold/italic globally in `style`
+--       bold = false,
+--       italic = false,
+--       style = {
+--         -- "none" is the same thing as default. But "italic" and "bold" are also valid options
+--         boolean = 'bold',
+--         number = 'none',
+--         float = 'none',
+--         error = 'bold',
+--         comments = 'italic',
+--         conditionals = 'none',
+--         functions = 'none',
+--         headings = 'bold',
+--         operators = 'none',
+--         strings = 'italic',
+--         variables = 'none',
+--
+--         -- keywords
+--         keywords = 'none',
+--         keyword_return = 'italic',
+--         keywords_loop = 'none',
+--         keywords_label = 'none',
+--         keywords_exception = 'none',
+--
+--         -- builtin
+--         builtin_constants = 'bold',
+--         builtin_functions = 'none',
+--         builtin_types = 'bold',
+--         builtin_variables = 'none',
+--       },
+--       -- plugin styles where applicable
+--       -- make an issue/pr if you'd like to see more styling options!
+--       plugins = {
+--         lsp = {
+--           diagnostic_error = 'bold',
+--           diagnostic_hint = 'none',
+--           diagnostic_info = 'italic',
+--           diagnostic_ok = 'none',
+--           diagnostic_warn = 'bold',
+--         },
+--         neotest = {
+--           focused = 'bold',
+--           adapter_name = 'bold',
+--         },
+--         telescope = {
+--           match = 'bold',
+--         },
+--       },
+--
+--       -- Override highlights or add new highlights
+--       on_highlights = function(highlights, colors)
+--         -- Blink-cmp: linha selecionada com fundo diferente mas sem afetar o texto
+--         highlights.BlinkCmpMenuSelection = { bg = colors.visual, blend = 10 }
+--
+--         -- Snacks picker: linha selecionada sem afetar matches
+--         highlights.Visual = { bg = colors.visual }
+--         highlights.SnacksPickerListCursorLine = { bg = colors.visual }
+--
+--         -- Comentários: marrom/bege discreto
+--         highlights.Comment = { fg = '#8a7a6a', italic = true } -- marrom acinzentado discreto
+--         highlights['@comment'] = { fg = '#8a7a6a', italic = true } -- Treesitter: todos os comentários
+--         highlights['@lsp.type.comment'] = { fg = '#8a7a6a', italic = true } -- LSP: todos os comentários
+--
+--         -- Parâmetros e variáveis não utilizados: verde
+--         -- Comentários: marrom #8a7a6a | Não usados: verde #627562
+--         highlights['@lsp.typemod.parameter.unused'] = { fg = '#627562', italic = true }
+--         highlights['@lsp.typemod.variable.unused'] = { fg = '#627562', italic = true }
+--         highlights['@lsp.mod.unused'] = { fg = '#627562', italic = true }
+--         highlights['@lsp.type.parameter.unused'] = { fg = '#627562', italic = true }
+--         highlights['@variable.parameter.unused'] = { fg = '#627562', italic = true }
+--
+--         -- Use statements não utilizados em PHP
+--         highlights['@lsp.typemod.class.unused'] = { fg = '#627562', italic = true }
+--         highlights['@lsp.typemod.namespace.unused'] = { fg = '#627562', italic = true }
+--
+--         -- Fallback para syntax highlighting tradicional
+--         highlights.phpUnusedVariable = { fg = '#627562', italic = true }
+--         highlights.Unnecessary = { fg = '#627562', italic = true }
+--
+--         -- DiagnosticUnnecessary é usado por muitos LSPs para marcar código não usado
+--         highlights.DiagnosticUnnecessary = { fg = '#627562', italic = true }
+--
+--         -- 🔷 Blade: Melhorar syntax highlighting de diretivas PHP/Blade
+--         -- Diretivas Blade (@if, @foreach, @endif, etc.) em laranja/dourado
+--         -- data_get() em azul claro (builtin)
+--         highlights.bladeDirective = { fg = '#e0a363', bold = true } -- laranja/number color
+--         highlights.bladeDelimiter = { fg = '#e0a363', bold = true }
+--         highlights.bladeEcho = { fg = '#b4d4cf' } -- azul claro builtin
+--         highlights.bladeComment = { fg = colors.comment, italic = true }
+--
+--         -- Treesitter highlights para Blade
+--         highlights['@keyword.blade'] = { fg = '#e0a363', bold = true }
+--         highlights['@keyword.directive.blade'] = { fg = '#e0a363', bold = true }
+--         highlights['@tag.delimiter.blade'] = { fg = '#e0a363', bold = true }
+--         highlights['@function.blade'] = { fg = '#b4d4cf' } -- funções em azul claro
+--         highlights['@function.builtin.blade'] = { fg = '#b4d4cf' }
+--
+--         -- 🔷 HTML: Ajustar cor dos brackets <> para azul (mesma cor do nome da tag)
+--         highlights.htmlTag = { fg = '#6e94b2' } -- < > em azul
+--         highlights.htmlEndTag = { fg = '#6e94b2' } -- </ > em azul
+--
+--         highlights['@variable.builtin.javascript'] = { fg = '#e0a363', bold = false }
+--         highlights['@variable.builtin.typescript'] = { fg = '#e0a363', bold = false }
+--       end,
+--
+--       -- Override colors
+--       colors = {
+--         bg = '#1a1a1c',
+--         inactiveBg = '#22222a',
+--         fg = '#cdcdcd',
+--         floatBorder = '#878787',
+--         line = '#252530',
+--         comment = '#6b6b80', -- original: '#606079'
+--         builtin = '#b4d4cf',
+--         func = '#c48282',
+--         string = '#e8b589',
+--         number = '#e0a363',
+--         property = '#c3c3d5',
+--         constant = '#aeaed1',
+--         parameter = '#bb9dbd',
+--         visual = '#333738',
+--         error = '#d8647e',
+--         warning = '#f3be7c',
+--         hint = '#7e98e8',
+--         operator = '#90a0b5',
+--         keyword = '#6e94b2',
+--         type = '#9bb4bc',
+--         search = '#405065',
+--         plus = '#7fa563',
+--         delta = '#f3be7c',
+--       },
+--     }
+--     vim.cmd 'colorscheme vague'
+--   end,
+-- }
 
 --
 -- *****************************************************************************************
@@ -484,5 +489,40 @@ return {
 --
 --     -- setup must be called before loading
 --     vim.cmd.colorscheme 'catppuccin'
+--   end,
+-- }
+
+-- *****************************************************************************************
+-- Tokyo Night
+-- return {
+--   'folke/tokyonight.nvim',
+--   lazy = false,
+--   priority = 1000,
+--   config = function()
+--     require('tokyonight').setup {
+--       style = 'night', -- Options: storm, moon, night, day
+--       light_style = 'day',
+--       transparent = false,
+--       terminal_colors = true,
+--       styles = {
+--         comments = { italic = true },
+--         keywords = { italic = false },
+--         functions = {},
+--         variables = {},
+--         sidebars = 'dark',
+--         floats = 'dark',
+--       },
+--       sidebars = { 'qf', 'help' },
+--       day_brightness = 0.3,
+--       hide_inactive_statusline = false,
+--       dim_inactive = false,
+--       lualine_bold = false,
+--
+--       on_colors = function(colors) end,
+--
+--       on_highlights = function(highlights, colors) end,
+--     }
+--
+--     vim.cmd [[colorscheme tokyonight]]
 --   end,
 -- }
