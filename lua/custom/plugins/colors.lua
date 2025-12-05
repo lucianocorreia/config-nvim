@@ -10,7 +10,7 @@ return {
     require('everforest').setup {
       ---Controls the "hardness" of the background. Options are "soft", "medium" or "hard".
       ---Default is "medium".
-      background = 'hard',
+      background = 'medium',
       ---How much of the background should be transparent. 2 will have more UI
       ---components be transparent (e.g. status line background)
       transparent_background_level = 0,
@@ -158,9 +158,9 @@ return {
         palette.red = '#E67E80'
 
         -- Escurecer o background
-        palette.bg0 = '#1a1f1d' -- Background mais escuro (original: #2b3339)
-        palette.bg1 = '#1e2421' -- Background secundário mais escuro
-        palette.bg2 = '#232a27' -- Background terciário mais escuro
+        palette.bg0 = '#1f2326' -- Background mais escuro (original: #2b3339)
+        palette.bg1 = '#23282b' -- Background secundário mais escuro
+        palette.bg2 = '#272c2f' -- Background terciário mais escuro
       end,
     }
 
