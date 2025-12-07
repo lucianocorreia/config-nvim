@@ -94,5 +94,10 @@ return {
       gdscript = { 'gdformat' },
       gd = { 'gdformat' },
     },
+    formatters = {
+      gdformat = {
+        prepend_args = { '--line-length', '180' },
+      },
+    },
   },
 }
