@@ -53,7 +53,7 @@ vim.keymap.set('n', '<leader>y', 'viwy', { desc = 'Copy word to clipboard' })
 vim.keymap.set('n', '<leader>rp', ':%s/\\<<C-r><C-w>\\>//gI<Left><Left><Left>', { desc = 'Replace word under cursor' })
 
 -- 💾 Salvar arquivo
-vim.keymap.set('n', '<leader>ww', function()
+vim.keymap.set('n', '<leader>w', function()
   vim.cmd 'write'
   require('fidget').notify('✓ saved', vim.log.levels.INFO, { annote = vim.fn.expand '%:t', key = 'save' })
 end, { desc = '[W]rite/Save file' })
@@ -139,3 +139,4 @@ vim.api.nvim_create_autocmd('TermOpen', {
   end,
   desc = 'Forçar cores mais escuras no terminal',
 })
+
