@@ -6,7 +6,13 @@ return {
     {
       '<leader>cf',
       function()
-        require('conform').format { async = true, lsp_format = 'fallback' }
+        require('conform').format({ async = true, lsp_format = 'fallback' }, function(err)
+          if not err then
+            require('fidget').notify('Buffer formatted successfully', vim.log.levels.INFO)
+          else
+            require('fidget').notify('Format failed: ' .. err, vim.log.levels.ERROR)
+          end
+        end)
       end,
       mode = '',
       desc = '[F]ormat buffer',
@@ -49,6 +55,19 @@ return {
         }
       end
     end,
+    format_after_save = function(bufnr)
+      local disable_filetypes = {
+        c = true,
+        cpp = true,
+        php = true,
+        vue = true,
+      }
+      if not disable_filetypes[vim.bo[bufnr].filetype] then
+        vim.schedule(function()
+          require('fidget').notify('File formatted on save', vim.log.levels.INFO, { annote = vim.bo[bufnr].filetype })
+        end)
+      end
+    end,
     formatters_by_ft = {
       lua = { 'stylua' },
 
@@ -70,6 +89,10 @@ return {
 
       -- 🐍 Python (exemplo commented)
       -- python = { "isort", "black" },
+
+      -- 🎮 Godot/GDScript
+      gdscript = { 'gdformat' },
+      gd = { 'gdformat' },
     },
   },
 }
