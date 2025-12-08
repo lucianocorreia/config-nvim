@@ -35,8 +35,8 @@ return {
         debounce = 75, -- Delay em ms (VS Code usa ~75ms)
         keymap = {
           accept = false, -- Desabilita mapeamento padrão do Tab
-          accept_word = '<C-Right>',
-          accept_line = '<C-Down>',
+          accept_word = '<M-w>',
+          accept_line = '<M-l>',
           next = '<M-]>',
           prev = '<M-[>',
           dismiss = '<C-e>',

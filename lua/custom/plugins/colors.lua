@@ -35,12 +35,12 @@ return {
       ---Some plugins support highlighting error/warning/info/hint texts, by
       ---default these texts are only underlined, but you can use this option to
       ---also highlight the background of them.
-      diagnostic_text_highlight = true,
+      diagnostic_text_highlight = false,
       ---Which colour the diagnostic text should be. Options are `"grey"` or `"coloured"` (default)
       diagnostic_virtual_text = 'coloured',
       ---Some plugins support highlighting error/warning/info/hint lines, but this
       ---feature is disabled by default in this colour scheme.
-      diagnostic_line_highlight = true,
+      diagnostic_line_highlight = false,
       ---By default, this color scheme won't colour the foreground of |spell|, instead
       ---colored under curls will be used. If you also want to colour the foreground,
       ---set this option to `true`.
@@ -73,6 +73,16 @@ return {
         highlight_groups.DiagnosticVirtualTextWarn = { fg = '#e69875', bg = 'NONE' }
         highlight_groups.DiagnosticVirtualTextInfo = { fg = '#7fbbb3', bg = 'NONE' }
         highlight_groups.DiagnosticVirtualTextHint = { fg = '#c9c6bf', bg = 'NONE' }
+        
+        -- Remover background das linhas com diagnósticos
+        highlight_groups.DiagnosticLineError = { bg = 'NONE' }
+        highlight_groups.DiagnosticLineWarn = { bg = 'NONE' }
+        highlight_groups.DiagnosticLineInfo = { bg = 'NONE' }
+        highlight_groups.DiagnosticLineHint = { bg = 'NONE' }
+        highlight_groups.DiagnosticLineNrError = { fg = '#b86466', bg = 'NONE' }
+        highlight_groups.DiagnosticLineNrWarn = { fg = '#e69875', bg = 'NONE' }
+        highlight_groups.DiagnosticLineNrInfo = { fg = '#7fbbb3', bg = 'NONE' }
+        highlight_groups.DiagnosticLineNrHint = { fg = '#c9c6bf', bg = 'NONE' }
 
         -- 🎨 Customização de cores de seleção e yank
         -- Cor de seleção visual (quando você seleciona texto)
