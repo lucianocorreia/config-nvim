@@ -21,7 +21,16 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('corr3ia-highlight-yank', { clear = true }),
   callback = function()
-    vim.highlight.on_yank()
+    -- Define custom yank highlight
+    vim.api.nvim_set_hl(0, 'YankHighlight', {
+      bg = '#ffcc66',  -- Ayu mirage accent color
+      fg = '#1f2430',  -- Ayu mirage background for contrast
+    })
+    
+    vim.highlight.on_yank({
+      higroup = 'YankHighlight',
+      timeout = 200,
+    })
   end,
 })
 

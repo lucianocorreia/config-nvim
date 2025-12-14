@@ -34,15 +34,16 @@ syntax match bladePhpVar "$\h\w*" contained
 syntax region bladePhpString start=+"+ skip=+\\\\\|\\"+ end=+"+ contained
 syntax region bladePhpString start=+'+ skip=+\\\\\|\\'+ end=+'+ contained
 
-" Define colors - using ayu mirage palette
-" Referência: https://github.com/ayu-theme/ayu-colors
-highlight default bladeDirective guifg=#ffcc66 gui=bold ctermfg=221 cterm=bold   " Yellow (accent)
-highlight default bladeComment guifg=#5c6773 gui=italic ctermfg=242 cterm=italic   " Comment gray
-highlight default bladeEchoBrackets guifg=#ffd580 gui=NONE ctermfg=222 cterm=NONE " Orange
-highlight default bladePhpFunction guifg=#73d0ff gui=NONE ctermfg=117 cterm=NONE   " Blue
-highlight default bladePhpKeyword guifg=#d4bfff gui=NONE ctermfg=183 cterm=NONE  " Purple
-highlight default bladePhpVar guifg=#ffcc66 ctermfg=221                        " Yellow
-highlight default bladePhpString guifg=#d5ff80 gui=italic ctermfg=192 cterm=italic " Green
+" Define colors - usando cores do tema vague
+" Define colors - usando paleta Catppuccin (macchiato)
+" Referência: https://github.com/catppuccin/catppuccin/blob/main/docs/style-guide.md
+highlight default bladeDirective guifg=#f5a97f gui=bold ctermfg=216 cterm=bold   " Peach
+highlight default bladeComment guifg=#8aadf4 gui=italic ctermfg=75 cterm=italic   " Sapphire (comentários: azul)
+highlight default bladeEchoBrackets guifg=#a6da95 gui=NONE ctermfg=114 cterm=NONE " Green
+highlight default bladePhpFunction guifg=#7dc4e4 gui=NONE ctermfg=81 cterm=NONE   " Sky
+highlight default bladePhpKeyword guifg=#c6a0f6 gui=NONE ctermfg=141 cterm=NONE  " Lavender
+highlight default bladePhpVar guifg=#eed49f ctermfg=222                        " Yellow
+highlight default bladePhpString guifg=#f5bde6 gui=italic ctermfg=218 cterm=italic " Pink
 
 " NÃO modificar cores do HTML - deixar como o tema define
 
