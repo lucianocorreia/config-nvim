@@ -29,6 +29,9 @@ return {
         ['@tag.delimiter.blade'] = { fg = '#ffcc66', bold = true },
         ['@function.blade'] = { fg = '#73d0ff' },
         ['@function.builtin.blade'] = { fg = '#73d0ff' },
+        
+        -- 🔷 C#: Fix using directives being shown as comments
+        ['@keyword.import'] = { fg = '#ffae57' },  -- using statements in orange/keyword color
       },
     })
     require('ayu').colorscheme()
