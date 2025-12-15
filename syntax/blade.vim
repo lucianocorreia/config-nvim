@@ -34,15 +34,15 @@ syntax match bladePhpVar "$\h\w*" contained
 syntax region bladePhpString start=+"+ skip=+\\\\\|\\"+ end=+"+ contained
 syntax region bladePhpString start=+'+ skip=+\\\\\|\\'+ end=+'+ contained
 
-" Define colors - using ayu mirage palette
-" Referência: https://github.com/ayu-theme/ayu-colors
-highlight default bladeDirective guifg=#ffcc66 gui=bold ctermfg=221 cterm=bold   " Yellow (accent)
-highlight default bladeComment guifg=#5c6773 gui=italic ctermfg=242 cterm=italic   " Comment gray
-highlight default bladeEchoBrackets guifg=#ffd580 gui=NONE ctermfg=222 cterm=NONE " Orange
-highlight default bladePhpFunction guifg=#73d0ff gui=NONE ctermfg=117 cterm=NONE   " Blue
-highlight default bladePhpKeyword guifg=#d4bfff gui=NONE ctermfg=183 cterm=NONE  " Purple
-highlight default bladePhpVar guifg=#ffcc66 ctermfg=221                        " Yellow
-highlight default bladePhpString guifg=#d5ff80 gui=italic ctermfg=192 cterm=italic " Green
+" Define colors - using Everforest palette
+" Referência: https://github.com/sainnhe/everforest
+highlight default bladeDirective guifg=#dbbc7f gui=bold ctermfg=180 cterm=bold   " Yellow (accent)
+highlight default bladeComment guifg=#7a8478 gui=italic ctermfg=243 cterm=italic   " Comment gray
+highlight default bladeEchoBrackets guifg=#e69875 gui=NONE ctermfg=173 cterm=NONE " Orange
+highlight default bladePhpFunction guifg=#7fbbb3 gui=NONE ctermfg=109 cterm=NONE   " Blue/Aqua
+highlight default bladePhpKeyword guifg=#d699b6 gui=NONE ctermfg=175 cterm=NONE  " Purple
+highlight default bladePhpVar guifg=#dbbc7f ctermfg=180                        " Yellow
+highlight default bladePhpString guifg=#a7c080 gui=italic ctermfg=144 cterm=italic " Green
 
 " NÃO modificar cores do HTML - deixar como o tema define
 
