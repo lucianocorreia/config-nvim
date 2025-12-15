@@ -1,64 +1,64 @@
 -- *****************************************************************************************
 -- Neovim Ayu
-return {
-  'Shatur/neovim-ayu',
-  lazy = false,
-  priority = 1000,
-  config = function()
-    require('ayu').setup {
-      mirage = true,
-      terminal = true,
-      overrides = {
-        LineNr = { fg = '#5c6773' }, -- Relative line numbers (brighter)
-        CursorLineNr = { fg = '#ffcc66', bold = true }, -- Current line number
+-- return {
+--   'Shatur/neovim-ayu',
+--   lazy = false,
+--   priority = 1000,
+--   config = function()
+--     require('ayu').setup {
+--       mirage = true,
+--       terminal = true,
+--       overrides = {
+--         LineNr = { fg = '#5c6773' }, -- Relative line numbers (brighter)
+--         CursorLineNr = { fg = '#ffcc66', bold = true }, -- Current line number
 
-        -- Override bright entity color (#73D0FF) globally - more discrete
-        Identifier = { fg = '#5a9ecc' },
-        Type = { fg = '#5a9ecc' },
-        ['@tag.attribute'] = { fg = '#5a9ecc' },
+--         -- Override bright entity color (#73D0FF) globally - more discrete
+--         Identifier = { fg = '#5a9ecc' },
+--         Type = { fg = '#5a9ecc' },
+--         ['@tag.attribute'] = { fg = '#5a9ecc' },
 
-        -- 🔷 Blade syntax highlighting (ayu mirage colors)
-        bladeDirective = { fg = '#ffcc66', bold = true }, -- @directives in yellow
-        bladeDelimiter = { fg = '#ffcc66', bold = true }, -- {{ }} delimiters
-        bladeEcho = { fg = '#73d0ff' }, -- echo statements in blue
-        bladeComment = { fg = '#5c6773', italic = true }, -- blade comments
+--         -- 🔷 Blade syntax highlighting (ayu mirage colors)
+--         bladeDirective = { fg = '#ffcc66', bold = true }, -- @directives in yellow
+--         bladeDelimiter = { fg = '#ffcc66', bold = true }, -- {{ }} delimiters
+--         bladeEcho = { fg = '#73d0ff' }, -- echo statements in blue
+--         bladeComment = { fg = '#5c6773', italic = true }, -- blade comments
 
-        -- Treesitter highlights for Blade
-        ['@keyword.blade'] = { fg = '#ffcc66', bold = true },
-        ['@keyword.directive.blade'] = { fg = '#ffcc66', bold = true },
-        ['@tag.delimiter.blade'] = { fg = '#ffcc66', bold = true },
-        ['@function.blade'] = { fg = '#73d0ff' },
-        ['@function.builtin.blade'] = { fg = '#73d0ff' },
+--         -- Treesitter highlights for Blade
+--         ['@keyword.blade'] = { fg = '#ffcc66', bold = true },
+--         ['@keyword.directive.blade'] = { fg = '#ffcc66', bold = true },
+--         ['@tag.delimiter.blade'] = { fg = '#ffcc66', bold = true },
+--         ['@function.blade'] = { fg = '#73d0ff' },
+--         ['@function.builtin.blade'] = { fg = '#73d0ff' },
 
-        -- 🔷 C#: Fix using directives being shown as comments
-        ['@keyword.import'] = { fg = '#ffae57' }, -- using statements in orange/keyword color
-      },
-    }
-    require('ayu').colorscheme()
+--         -- 🔷 C#: Fix using directives being shown as comments
+--         ['@keyword.import'] = { fg = '#ffae57' }, -- using statements in orange/keyword color
+--       },
+--     }
+--     require('ayu').colorscheme()
 
-    -- Force override entity color after colorscheme loads
-    vim.schedule(function()
-      local darker_blue = '#5a9ecc'
-      vim.api.nvim_set_hl(0, 'Identifier', { fg = darker_blue })
-      vim.api.nvim_set_hl(0, 'Type', { fg = darker_blue })
-      vim.api.nvim_set_hl(0, '@tag.attribute', { fg = darker_blue })
-      -- vim.api.nvim_set_hl(0, '@variable', { fg = darker_blue })
-      vim.api.nvim_set_hl(0, '@property', { fg = darker_blue })
-      vim.api.nvim_set_hl(0, '@parameter', { fg = darker_blue })
-    end)
-  end,
-}
+--     -- Force override entity color after colorscheme loads
+--     vim.schedule(function()
+--       local darker_blue = '#5a9ecc'
+--       vim.api.nvim_set_hl(0, 'Identifier', { fg = darker_blue })
+--       vim.api.nvim_set_hl(0, 'Type', { fg = darker_blue })
+--       vim.api.nvim_set_hl(0, '@tag.attribute', { fg = darker_blue })
+--       -- vim.api.nvim_set_hl(0, '@variable', { fg = darker_blue })
+--       vim.api.nvim_set_hl(0, '@property', { fg = darker_blue })
+--       vim.api.nvim_set_hl(0, '@parameter', { fg = darker_blue })
+--     end)
+--   end,
+-- }
 
 -- *****************************************************************************************
 -- Everforest
--- return {
---   'neanias/everforest-nvim',
---   version = false,
---   lazy = false,
---   priority = 1000, -- make sure to load this before all the other start plugins
---   -- Optional; default configuration will be used if setup isn't called.
---   config = function()
---     require('everforest').setup {
+return {
+  'neanias/everforest-nvim',
+  version = false,
+  lazy = false,
+  priority = 1000, -- make sure to load this before all the other start plugins
+  -- Optional; default configuration will be used if setup isn't called.
+  config = function()
+    require('everforest').setup {
 --       ---Controls the "hardness" of the background. Options are "soft", "medium" or "hard".
 --       ---Default is "medium".
 --       background = 'medium',
@@ -568,12 +568,12 @@ return {
 --         which_key = true,
 --         -- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
 --       },
---     }
---
---     -- setup must be called before loading
---     vim.cmd.colorscheme 'catppuccin'
---   end,
--- }
+    }
+
+    -- setup must be called before loading
+    vim.cmd.colorscheme 'everforest'
+  end,
+}
 
 -- *****************************************************************************************
 -- Tokyo Night

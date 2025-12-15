@@ -25,8 +25,8 @@ return {
       -- sections = {lualine_c = {"filename", {getWords}}, lualine_x = {{getGuiFont}, 'filetype'}},
       options = {
         icons_enabled = true,
-        theme = 'ayu',
-        -- theme = 'everforest',
+        theme = 'everforest',
+        -- theme = 'ayu',
         -- theme = 'vague',
         -- theme = 'rose-pine',
         -- theme = 'catppuccin',

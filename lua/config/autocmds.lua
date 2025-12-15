@@ -23,8 +23,8 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function()
     -- Define custom yank highlight
     vim.api.nvim_set_hl(0, 'YankHighlight', {
-      bg = '#ffcc66',  -- Ayu mirage accent color
-      fg = '#1f2430',  -- Ayu mirage background for contrast
+      bg = '#a7c080',  -- Everforest green
+      fg = '#2d353b',  -- Everforest background for contrast
     })
     
     vim.highlight.on_yank({
