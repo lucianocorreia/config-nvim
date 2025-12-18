@@ -14,6 +14,10 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnos
 -- 💻 Terminal
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
+-- Split de janelas
+vim.keymap.set('n', '<leader>vs', '<Cmd>vsplit<CR>', { desc = 'Vertical [S]plit window' })
+vim.keymap.set('n', '<leader>hs', '<Cmd>split<CR>', { desc = 'Horizontal [S]plit window' })
+
 -- 🪟 Navegação entre janelas
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
@@ -139,4 +143,3 @@ vim.api.nvim_create_autocmd('TermOpen', {
   end,
   desc = 'Forçar cores mais escuras no terminal',
 })
-
