@@ -18,6 +18,10 @@ return {
       },
     }
 
+    -- Configurar cor do nome do arquivo (mesma cor da lualine)
+    vim.api.nvim_set_hl(0, 'DropBarKindFile', { fg = '#e69875', bold = true })
+    vim.api.nvim_set_hl(0, 'DropBarIconKindFile', { fg = '#e69875' })
+
     local dropbar_api = require 'dropbar.api'
     vim.keymap.set('n', '<Leader>;', dropbar_api.pick, { desc = 'Pick symbols in winbar' })
   end,
