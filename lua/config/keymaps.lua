@@ -35,6 +35,7 @@ vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Move [D]own' })
 vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Move [U]p' })
 vim.keymap.set('n', 'n', 'nzzzv', { desc = 'Next search result (centered)' })
 vim.keymap.set('n', 'N', 'Nzzzv', { desc = 'Previous search result (centered)' })
+vim.keymap.set('n', 'G', 'Gzz', { desc = 'Go to end of file (centered)' })
 
 -- 📤 Movimento de linhas (Visual mode)
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { desc = 'Move selection down' })
@@ -52,6 +53,8 @@ vim.keymap.set('n', 'L', '2<C-W><', { desc = 'Resize window horizontally -' })
 vim.keymap.set('n', '<leader>P', '"*p', { desc = 'Paste from system clipboard' })
 vim.keymap.set('n', '<leader>p', 'viwP', { desc = 'Paste over word', silent = true })
 vim.keymap.set('n', '<leader>y', 'viwy', { desc = 'Copy word to clipboard' })
+vim.keymap.set('n', '<leader>a', 'ggVG', { desc = 'Select [A]ll' })
+vim.keymap.set({'n', 'v'}, '<leader>d', '"_d', { desc = '[D]elete without yanking' })
 
 -- 🔄 Substituição
 vim.keymap.set('n', '<leader>rp', ':%s/\\<<C-r><C-w>\\>//gI<Left><Left><Left>', { desc = 'Replace word under cursor' })

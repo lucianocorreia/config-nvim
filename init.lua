@@ -42,3 +42,4 @@ require('lazy').setup({
 
 -- 🔧 Carregar configuração do LSP (após plugins)
 require('config.lsp')
+-- require('config.copilot-lsp') -- Copilot LSP para NES - DESABILITADO (NES não funcionou)

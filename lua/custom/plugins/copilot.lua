@@ -1,14 +1,6 @@
--- 🚀 GitHub Copilot - Versão moderna e mais rápida
+-- 🚀 GitHub Copilot - Inline suggestions (separado do NES)
 return {
   'zbirenbaum/copilot.lua',
-  -- dependencies = {
-  --   {
-  --     'copilotlsp-nvim/copilot-lsp',
-  --     init = function()
-  --       vim.g.copilot_nes_debounce = 500
-  --     end,
-  --   },
-  -- },
   cmd = 'Copilot',
   event = 'InsertEnter',
   config = function()
@@ -24,17 +16,17 @@ return {
           open = '<M-CR>',
         },
         layout = {
-          position = 'bottom', -- | top | left | right
+          position = 'bottom',
           ratio = 0.4,
         },
       },
       suggestion = {
         enabled = true,
-        auto_trigger = true, -- Sugestões automáticas (como no VS Code)
+        auto_trigger = true,
         hide_during_completion = false,
-        debounce = 75, -- Delay em ms (VS Code usa ~75ms)
+        debounce = 75,
         keymap = {
-          accept = false, -- Desabilita mapeamento padrão do Tab
+          accept = false, -- Desabilita para usar custom Tab
           accept_word = '<M-w>',
           accept_line = '<M-l>',
           next = '<M-]>',
@@ -42,15 +34,6 @@ return {
           dismiss = '<C-e>',
         },
       },
-      -- NES (Next Edit Suggestion) - Ainda em desenvolvimento
-      -- nes = {
-      --   enabled = true,
-      --   keymap = {
-      --     accept_and_goto = '<C-j>',
-      --     accept = '<C-l>',
-      --     dismiss = '<C-h>',
-      --   },
-      -- },
       filetypes = {
         yaml = true,
         markdown = true,
@@ -62,17 +45,17 @@ return {
         cvs = false,
         ['.'] = false,
       },
-      copilot_node_command = 'node', -- Node.js version must be > 18.x
+      copilot_node_command = 'node',
       server_opts_overrides = {},
     }
 
-    -- Mapeamento inteligente do Tab: aceita sugestão se houver, senão insere tab normal
+    -- Tab aceita Copilot inline (como antes)
     vim.keymap.set('i', '<Tab>', function()
       if require('copilot.suggestion').is_visible() then
         require('copilot.suggestion').accept()
       else
         vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Tab>', true, false, true), 'n', false)
       end
-    end, { desc = 'Aceita sugestão do Copilot ou Tab normal' })
+    end, { desc = 'Copilot: Aceita sugestão ou Tab normal' })
   end,
 }
