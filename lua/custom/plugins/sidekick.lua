@@ -25,14 +25,14 @@ return {
       tools = {
         -- Gemini via aichat (GRATUITO!)
         gemini = {
-          cmd = { 'aichat', '--model', 'gemini:gemini-1.5-flash' },
+          cmd = { 'aichat', '--model', 'gemini:gemini-2.0-flash' },
           keys = {
             submit = { '<C-s>', function(t) t:send('\n') end },
           },
         },
         -- Gemini Pro (modelo mais potente, ainda gratuito)
         ['gemini-pro'] = {
-          cmd = { 'aichat', '--model', 'gemini:gemini-1.5-pro' },
+          cmd = { 'aichat', '--model', 'gemini:gemini-2.5-pro' },
           keys = {
             submit = { '<C-s>', function(t) t:send('\n') end },
           },
