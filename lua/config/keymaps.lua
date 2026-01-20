@@ -53,8 +53,8 @@ vim.keymap.set('n', 'L', '2<C-W><', { desc = 'Resize window horizontally -' })
 vim.keymap.set('n', '<leader>P', '"*p', { desc = 'Paste from system clipboard' })
 vim.keymap.set('n', '<leader>p', 'viwP', { desc = 'Paste over word', silent = true })
 vim.keymap.set('n', '<leader>y', 'viwy', { desc = 'Copy word to clipboard' })
-vim.keymap.set('n', '<leader>a', 'ggVG', { desc = 'Select [A]ll' })
-vim.keymap.set({'n', 'v'}, '<leader>d', '"_d', { desc = '[D]elete without yanking' })
+-- vim.keymap.set('n', '<leader>a', 'ggVG', { desc = 'Select [A]ll' })
+vim.keymap.set({ 'n', 'v' }, '<leader>d', '"_d', { desc = '[D]elete without yanking' })
 
 -- 🔄 Substituição
 vim.keymap.set('n', '<leader>rp', ':%s/\\<<C-r><C-w>\\>//gI<Left><Left><Left>', { desc = 'Replace word under cursor' })
