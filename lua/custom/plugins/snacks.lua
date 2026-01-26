@@ -412,7 +412,10 @@ return {
     {
       'gro',
       function()
-        Snacks.picker.lsp_symbols { layout = { preview = { enabled = false } } }
+        Snacks.picker.lsp_symbols { 
+          scope = 'buf',
+          layout = { preview = { enabled = false } },
+        }
       end,
       desc = 'LSP Symbols',
     },

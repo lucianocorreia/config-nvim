@@ -121,14 +121,99 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
--- Enable Language Servers
-vim.lsp.enable({
+-- 📦 Load LSP configurations
+local lsp_dir = vim.fn.stdpath('config') .. '/lsp/'
+local lsp_configs = {
   'lua_ls',
   'intelephense',
-  'vls',
   'ts_ls',
   'html',
   'cssls',
   'jsonls',
   'gdscript',
+}
+
+local loaded_count = 0
+for _, server in ipairs(lsp_configs) do
+  local config_file = lsp_dir .. server .. '.lua'
+  if vim.fn.filereadable(config_file) == 1 then
+    local success, config = pcall(dofile, config_file)
+    if success and config then
+      vim.lsp.config(server, config)
+      loaded_count = loaded_count + 1
+    else
+      vim.notify('Failed to load ' .. server .. ' config: ' .. tostring(config), vim.log.levels.ERROR)
+    end
+  end
+end
+
+-- Enable Language Servers (except Vue)
+vim.lsp.enable({
+  'lua_ls',
+  'intelephense',
+  'ts_ls',
+  'html',
+  'cssls',
+  'jsonls',
+  'gdscript',
+})
+
+-- Vue LSP com autocmd (mais confiável)
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'vue',
+  callback = function(args)
+    local bufnr = args.buf
+    local root = vim.fs.root(bufnr, { 'package.json', '.git', 'composer.json' })
+    
+    if not root then return end
+    
+    -- Verificar versão do Vue
+    local package_json = root .. '/package.json'
+    local f = io.open(package_json, 'r')
+    if not f then return end
+    
+    local content = f:read('*all')
+    f:close()
+    
+    local is_vue2 = content:match('"vue"%s*:%s*"[^"]*2%.') ~= nil
+    local is_vue3 = content:match('"vue"%s*:%s*"[^"]*3%.') ~= nil
+    
+    if is_vue2 then
+      -- Vue 2: usar VLS
+      vim.lsp.start({
+        name = 'vls',
+        cmd = { 'vls' },
+        root_dir = root,
+        settings = {
+          vetur = {
+            ignoreProjectWarning = true,
+            useWorkspaceDependencies = false,
+            validation = {
+              template = true,
+              script = true,
+              style = true,
+            },
+            completion = {
+              autoImport = true,
+              tagCasing = 'kebab',
+              useScaffoldSnippets = true,
+            },
+          },
+        },
+      })
+    elseif is_vue3 then
+      -- Vue 3: Volar com configuração correta
+      vim.lsp.start({
+        name = 'volar',
+        cmd = { 'vue-language-server', '--stdio' },
+        root_dir = root,
+        init_options = {
+          typescript = {
+            tsdk = root .. '/node_modules/typescript/lib'
+          }
+        },
+        filetypes = { 'vue' },
+      })
+    end
+  end,
 })
