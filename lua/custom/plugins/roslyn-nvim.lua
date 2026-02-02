@@ -3,28 +3,41 @@ return {
   'seblyng/roslyn.nvim',
   ft = { 'cs' },
   opts = {
-    filewatching = 'auto',
+    filewatching = "auto",
     broad_search = true,
-    on_attach = function(client, bufnr)
-      -- Desabilitar notificações de progresso padrão do Roslyn
-      -- O fidget vai pegar automaticamente via window/logMessage
-      client.server_capabilities.window = client.server_capabilities.window or {}
-      
-      -- Silenciar mensagens de inicialização específicas do Roslyn
-      local original_notify = client.notify
-      client.notify = function(method, params)
-        -- Filtrar mensagens de inicialização
-        if method == 'window/logMessage' then
-          local message = params.message or ''
-          -- Ignorar mensagens de "Project initialized" e similares
-          if message:match('initialized') or message:match('ready') or message:match('started') then
-            -- Não fazer nada, silenciar essas mensagens
-            return
-          end
+    
+    -- Escolher automaticamente a solução da subpasta quando houver múltiplas
+    choose_target = function(targets)
+      -- Se houver KlingoNFSe/KlingoNFSe.sln, escolher essa
+      return vim.iter(targets):find(function(target)
+        if target:match("KlingoNFSe/KlingoNFSe%.sln$") then
+          return target
         end
-        -- Para outras mensagens, chamar o notify original
-        return original_notify(method, params)
-      end
+      end) or targets[1] -- Fallback para primeira opção
     end,
+    
+    config = {
+      capabilities = require('blink.cmp').get_lsp_capabilities(),
+      
+      settings = {
+        ['csharp|completion'] = {
+          dotnet_show_completion_items_from_unimported_namespaces = true,
+          dotnet_show_name_completion_suggestions = true,
+          dotnet_provide_regex_completions = true,
+        },
+        ['csharp|inlay_hints'] = {
+          csharp_enable_inlay_hints_for_implicit_object_creation = true,
+          csharp_enable_inlay_hints_for_implicit_variable_types = true,
+          dotnet_enable_inlay_hints_for_parameters = true,
+        },
+      },
+      
+      on_attach = function(client, bufnr)
+        -- Mostrar qual target foi escolhido
+        if vim.g.roslyn_nvim_selected_solution then
+          vim.notify('✅ Roslyn: ' .. vim.fn.fnamemodify(vim.g.roslyn_nvim_selected_solution, ':t'), vim.log.levels.INFO)
+        end
+      end,
+    },
   },
 }

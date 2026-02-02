@@ -1,16 +1,15 @@
 -- C# Language Server - Comandos auxiliares para Roslyn
 return {
   vim.api.nvim_create_user_command('RoslynRestore', function()
-    print("🔄 Executando dotnet restore...")
+    print("🔄 Executando dotnet restore e build...")
     
     local cwd = vim.fn.getcwd()
     local sln = vim.fn.glob(cwd .. '/**/*.sln', false, true)[1]
     
     if sln then
       local sln_dir = vim.fn.fnamemodify(sln, ':h')
-      local cmd = 'cd ' .. vim.fn.shellescape(sln_dir) .. ' && dotnet restore && dotnet build --no-restore'
-      print("📁 Restaurando e compilando: " .. vim.fn.fnamemodify(sln, ':t'))
-      print("💡 Isso pode levar alguns minutos...")
+      local cmd = string.format('cd %s && dotnet restore && dotnet build --no-restore', vim.fn.shellescape(sln_dir))
+      print("📁 Processando: " .. vim.fn.fnamemodify(sln, ':t'))
       
       vim.fn.jobstart(cmd, {
         on_stdout = function(_, data)
@@ -22,36 +21,23 @@ return {
             end
           end
         end,
-        on_stderr = function(_, data)
-          if data then
-            for _, line in ipairs(data) do
-              if line ~= '' and not line:match('^%s*$') then
-                print(line)
-              end
-            end
-          end
-        end,
         on_exit = function(_, code)
           if code == 0 then
-            print("✅ Build concluído com sucesso!")
-            print("💡 Reiniciando Roslyn...")
+            print("✅ Build OK! Reiniciando Roslyn em 3s...")
             vim.defer_fn(function()
               vim.cmd('Roslyn restart')
-              print("🎉 Roslyn reiniciado! Aguarde alguns segundos para análise do projeto.")
-            end, 1000)
+              print("🎉 Roslyn reiniciado! Aguarde ~30s para indexação completa.")
+            end, 3000)
           else
-            print("❌ Erro ao executar build (código: " .. code .. ")")
-            print("💡 Verifique os erros acima e tente corrigir antes de usar o LSP")
+            print("❌ Erro no build (código: " .. code .. ")")
           end
         end,
       })
     else
-      print("❌ Nenhum .sln encontrado")
-      print("💡 Execute manualmente:")
-      print("   dotnet restore")
-      print("   dotnet build")
+      print("❌ Nenhum .sln encontrado. Execute manualmente:")
+      print("   cd projeto && dotnet restore && dotnet build")
     end
-  end, { desc = 'Executar dotnet restore+build e reiniciar Roslyn' }),
+  end, { desc = 'Restore, build e reiniciar Roslyn' }),
   
   vim.api.nvim_create_user_command('RoslynStatus', function()
     -- Verificar .NET SDK

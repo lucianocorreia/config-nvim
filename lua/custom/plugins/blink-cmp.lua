@@ -96,6 +96,7 @@ return {
       documentation = { auto_show = true, auto_show_delay_ms = 500 },
       ghost_text = { enabled = false },
       menu = {
+        auto_show = true, -- 🔥 FIX: Mostrar menu automaticamente
         winhighlight = 'Normal:BlinkCmpMenu,FloatBorder:BlinkCmpMenuBorder,CursorLine:BlinkCmpMenuSelection,Search:None,CurSearch:None',
         draw = {
           columns = { { 'kind_icon', 'label', 'label_description', gap = 1 }, { 'kind' } },

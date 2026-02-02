@@ -7,6 +7,9 @@ require('config.keymaps')  -- Mapeamentos de teclas
 require('config.autocmds') -- Autocommands e eventos
 require('config.commands') -- Comandos customizados
 
+-- 🎨 Desabilitar semantic tokens do Roslyn (evita flickering)
+require('corr3ia.disable-semantic-tokens')
+
 -- � Bootstrap do Lazy.nvim
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
