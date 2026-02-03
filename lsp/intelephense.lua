@@ -82,6 +82,11 @@ return {
         undefinedProperties = true,
         undefinedTypes = true,
       },
+      inlayHint = {
+        returnTypes = true,
+        parameterTypes = true,
+        parameterNames = true,
+      },
     },
   },
   capabilities = vim.lsp.protocol.make_client_capabilities(),
