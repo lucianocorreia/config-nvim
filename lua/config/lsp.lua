@@ -203,17 +203,65 @@ vim.api.nvim_create_autocmd('FileType', {
       })
     elseif is_vue3 then
       -- Vue 3: Volar com configuração correta
-      vim.lsp.start({
-        name = 'volar',
-        cmd = { 'vue-language-server', '--stdio' },
-        root_dir = root,
-        init_options = {
-          typescript = {
-            tsdk = root .. '/node_modules/typescript/lib'
-          }
-        },
-        filetypes = { 'vue' },
-      })
+      -- Buscar TypeScript SDK (local ou global)
+      local tsdk = root .. '/node_modules/typescript/lib'
+      if vim.fn.isdirectory(tsdk) == 0 then
+        -- Fallback para typescript global via npm/yarn
+        local global_ts = vim.fn.system('npm root -g 2>/dev/null'):gsub('\n', '') .. '/typescript/lib'
+        if vim.fn.isdirectory(global_ts) == 1 then
+          tsdk = global_ts
+        else
+          tsdk = '' -- Volar tentará encontrar automaticamente
+        end
+      end
+      
+      -- Verificar se tem o plugin @vue/typescript-plugin
+      local has_vue_plugin = vim.fn.isdirectory(root .. '/node_modules/@vue/typescript-plugin') == 1
+      
+      if has_vue_plugin then
+        -- Modo Híbrido: ts_ls + Volar com plugin
+        vim.lsp.start({
+          name = 'ts_ls',
+          cmd = { 'typescript-language-server', '--stdio' },
+          root_dir = root,
+          init_options = {
+            plugins = {
+              {
+                name = '@vue/typescript-plugin',
+                location = root .. '/node_modules/@vue/typescript-plugin',
+                languages = { 'vue' },
+              },
+            },
+          },
+          filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact' },
+        })
+        
+        vim.lsp.start({
+          name = 'volar',
+          cmd = { 'vue-language-server', '--stdio' },
+          root_dir = root,
+          init_options = {
+            typescript = { tsdk = tsdk },
+            vue = { hybridMode = true },
+          },
+          filetypes = { 'vue' },
+        })
+      else
+        -- Modo Take Over: Apenas Volar (melhor para Laravel)
+        vim.lsp.start({
+          name = 'volar',
+          cmd = { 'vue-language-server', '--stdio' },
+          root_dir = root,
+          init_options = {
+            typescript = { tsdk = tsdk },
+            vue = { hybridMode = false },
+          },
+          filetypes = { 'vue', 'typescript', 'javascript' },
+          on_new_config = function(new_config, new_root_dir)
+            new_config.init_options.typescript.tsdk = new_root_dir .. '/node_modules/typescript/lib'
+          end,
+        })
+      end
     end
   end,
 })

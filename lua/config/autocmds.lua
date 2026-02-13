@@ -1,6 +1,16 @@
 -- 🤖 Configuração de Autocommands
 -- Este arquivo contém todos os autocommands e eventos automáticos
 
+-- 💬 Desabilitar continuação automática de comentários
+vim.api.nvim_create_autocmd('FileType', {
+  desc = 'Disable automatic comment continuation',
+  group = vim.api.nvim_create_augroup('corr3ia-no-auto-comment', { clear = true }),
+  pattern = '*',
+  callback = function()
+    vim.opt_local.formatoptions:remove({ 'c', 'r', 'o' })
+  end,
+})
+
 -- 🔇 Filtrar notificações específicas do Roslyn
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'cs',
