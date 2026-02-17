@@ -18,12 +18,13 @@ syntax match bladeDirective "@\(php\|endphp\|js\|json\|method\|csrf\|error\|dd\|
 syntax match bladeDirective "@\(verbatim\|endverbatim\|vite\|viteReactRefresh\)"
 syntax match bladeDirective "@\(aware\|class\|style\|checked\|selected\|disabled\|readonly\|required\|bind\|stack\)"
 
-" Blade comments
-syntax region bladeComment start="{{\s*--" end="--\s*}}" contains=@Spell
+" Blade comments - com prioridade alta
+syntax region bladeComment start="{{--" end="--}}" keepend contains=@Spell
 
 " Blade echo statements {{ }} - chaves em cinza azulado
-syntax region bladeEchoRegion matchgroup=bladeEchoBrackets start="{{\s*" end="\s*}}" contains=bladePhpFunction,bladePhpVar,bladePhpString,bladePhpKeyword
-syntax region bladeRawEchoRegion matchgroup=bladeEchoBrackets start="{!!\s*" end="\s*!!}" contains=bladePhpFunction,bladePhpVar,bladePhpString,bladePhpKeyword
+" Usa negative lookahead para não capturar comentários
+syntax region bladeEchoRegion matchgroup=bladeEchoBrackets start="{{\ze[^-]" end="}}" contains=bladePhpFunction,bladePhpVar,bladePhpString,bladePhpKeyword
+syntax region bladeRawEchoRegion matchgroup=bladeEchoBrackets start="{!!" end="!!}" contains=bladePhpFunction,bladePhpVar,bladePhpString,bladePhpKeyword
 
 " PHP keywords dentro de {{ }} - if, foreach, etc
 syntax keyword bladePhpKeyword if else elseif endif foreach for while return new true false null contained
