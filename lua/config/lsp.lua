@@ -60,6 +60,20 @@ vim.diagnostic.config({
   },
 })
 
+-- Suppress Intelephense false positives (undefined method/type) in Pest test files
+local orig_diagnostics_handler = vim.lsp.handlers["textDocument/publishDiagnostics"]
+vim.lsp.handlers["textDocument/publishDiagnostics"] = function(err, result, ctx, config)
+  if result and result.diagnostics then
+    local uri = result.uri or ""
+    if uri:match("/tests/.*%.php$") then
+      result.diagnostics = vim.tbl_filter(function(d)
+        return not (d.code == "P1013" or d.code == "P1003")
+      end, result.diagnostics)
+    end
+  end
+  orig_diagnostics_handler(err, result, ctx, config)
+end
+
 --  LSP UI Customization
 vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
   vim.lsp.handlers.hover, {

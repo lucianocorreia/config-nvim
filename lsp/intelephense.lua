@@ -79,7 +79,7 @@ return {
         undefinedConstants = true,
         undefinedClassConstants = true,
         undefinedMethods = true,
-        undefinedProperties = true,
+        undefinedProperties = false, -- Pest uses dynamic properties via $this in closures
         undefinedTypes = true,
       },
       inlayHint = {
