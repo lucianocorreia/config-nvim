@@ -1,7 +1,7 @@
 -- 🤖 Copilot Chat - Configuração limpa e otimizada com Edits
 return {
   'CopilotC-Nvim/CopilotChat.nvim',
-  enabled = false,  -- DESABILITADO - usando Copilot CLI ao invés
+  enabled = true,
   dependencies = {
     { 'zbirenbaum/copilot.lua' },
     { 'nvim-lua/plenary.nvim', branch = 'master' },
@@ -128,6 +128,25 @@ return {
     -- 🤖 Toggle e Chat Principal
     { '<leader>zh', '<cmd>CopilotChatToggle<cr>', mode = 'n', desc = 'Copilot Chat Toggle' },
     { '<leader>zh', '<cmd>CopilotChatToggle<cr>', mode = 'v', desc = 'Copilot Chat (com seleção)' },
+
+    -- ✏️ Inserir código na linha atual (visual: modificar seleção | normal: inserir após cursor)
+    -- Dica: no chat use <C-y> para aplicar diff (visual) ou gy+p para colar (insert)
+    { '<leader>zi', function()
+        local input = vim.fn.input('Copilot (inserir): ')
+        if input ~= '' then
+          require('CopilotChat').ask(input, {
+            selection = require('CopilotChat.select').line,
+          })
+        end
+      end, mode = 'n', desc = 'Copilot: inserir código na linha atual' },
+    { '<leader>zi', function()
+        local input = vim.fn.input('Copilot (modificar seleção): ')
+        if input ~= '' then
+          require('CopilotChat').ask(input, {
+            selection = require('CopilotChat.select').visual,
+          })
+        end
+      end, mode = 'v', desc = 'Copilot: modificar seleção' },
     
     -- 💬 Chat rápido com input
     { '<leader>zq', function()
