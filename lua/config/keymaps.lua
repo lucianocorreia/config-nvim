@@ -7,6 +7,7 @@ vim.keymap.set('i', 'jj', '<ESC>', { desc = 'Exit insert mode with jj' })
 
 -- 🏥 Diagnósticos
 vim.keymap.set('n', '<leader>qq', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('n', '<leader>qw', vim.lsp.buf.workspace_diagnostics, { desc = 'Open [W]orkspace diagnostics' })
 vim.keymap.set('n', 'gl', vim.diagnostic.open_float, { desc = 'Show diagnostic in float window' })
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic' })

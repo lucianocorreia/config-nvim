@@ -74,19 +74,6 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = function(err, result, ctx,
   orig_diagnostics_handler(err, result, ctx, config)
 end
 
---  LSP UI Customization
-vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
-  vim.lsp.handlers.hover, {
-    border = 'rounded',
-  }
-)
-
-vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
-  vim.lsp.handlers.signature_help, {
-    border = 'rounded',
-  }
-)
-
 -- 🔍 LSP Attach Function
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('corr3ia-lsp-attach', { clear = true }),
@@ -94,17 +81,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
     --  Highlight references
     local client = vim.lsp.get_client_by_id(event.data.client_id)
     if client then
-      -- Function to check if client supports method (compatible with 0.10 and 0.11)
-      local function client_supports_method(method, bufnr)
-        if vim.fn.has('nvim-0.11') == 1 then
-          return client:supports_method(method, bufnr)
-        else
-          return client.supports_method and client.supports_method(method, { bufnr = bufnr })
-        end
-      end
-
       -- Document highlight
-      if client_supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf) then
+      if client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf) then
         local highlight_augroup = vim.api.nvim_create_augroup('corr3ia-lsp-highlight', { clear = false })
         vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
           buffer = event.buf,
@@ -127,9 +105,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
         })
       end
 
-      -- 🔄 Inlay hints (se suportado) - apenas toggle, sem keymap
-      if client_supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf) then
-        -- Inlay hints disponíveis via :lua vim.lsp.inlay_hint.enable()
+      -- 🔄 Inlay hints toggle
+      if client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf) then
+        vim.keymap.set('n', '<leader>ih', function()
+          vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }), { bufnr = event.buf })
+        end, { buffer = event.buf, desc = 'Toggle [I]nlay [H]ints' })
       end
     end
   end,
