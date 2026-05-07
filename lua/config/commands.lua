@@ -27,7 +27,12 @@ vim.api.nvim_create_user_command('LspClients', function()
   for _, client in ipairs(clients) do
     print('  • ID: ' .. client.id .. ', Nome: ' .. client.name)
     if client.config and client.config.cmd then
-      print('    Comando: ' .. table.concat(client.config.cmd, ' '))
+      local cmd = client.config.cmd
+      if type(cmd) == 'table' then
+        print('    Comando: ' .. table.concat(cmd, ' '))
+      elseif type(cmd) == 'function' then
+        print('    Comando: <função dinâmica>')
+      end
     end
     if client.config and client.config.root_dir then
       print('    Root: ' .. client.config.root_dir)
