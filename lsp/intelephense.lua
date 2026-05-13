@@ -81,6 +81,9 @@ return {
         undefinedMethods = true,
         undefinedProperties = false, -- Pest uses dynamic properties via $this in closures
         undefinedTypes = true,
+        exclude = {
+          ['*.php'] = { 'P1132' },
+        },
       },
       inlayHint = {
         returnTypes = true,

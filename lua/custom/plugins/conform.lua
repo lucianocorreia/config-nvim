@@ -2,36 +2,6 @@ return {
   'stevearc/conform.nvim',
   event = { 'BufWritePre' },
   cmd = { 'ConformInfo' },
-  keys = {
-    {
-      '<leader>cf',
-      function()
-        require('conform').format({ async = true, lsp_format = 'fallback' }, function(err)
-          if not err then
-            require('fidget').notify('Buffer formatted successfully', vim.log.levels.INFO)
-          else
-            require('fidget').notify('Format failed: ' .. err, vim.log.levels.ERROR)
-          end
-        end)
-      end,
-      mode = '',
-      desc = '[F]ormat buffer',
-    },
-    {
-      '<leader>cf',
-      function()
-        vim.lsp.buf.format {
-          async = true,
-          range = {
-            ['start'] = vim.api.nvim_buf_get_mark(0, '<'),
-            ['end'] = vim.api.nvim_buf_get_mark(0, '>'),
-          },
-        }
-      end,
-      mode = 'v',
-      desc = '[F]ormat selected text',
-    },
-  },
   opts = {
     notify_on_error = false,
     format_on_save = function(bufnr)
@@ -64,7 +34,7 @@ return {
       }
       if not disable_filetypes[vim.bo[bufnr].filetype] then
         vim.schedule(function()
-          require('fidget').notify('File formatted on save', vim.log.levels.INFO, { annote = vim.bo[bufnr].filetype })
+          vim.notify('File formatted on save (' .. vim.bo[bufnr].filetype .. ')', vim.log.levels.INFO)
         end)
       end
     end,

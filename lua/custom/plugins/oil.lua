@@ -212,7 +212,5 @@ return {
         border = 'rounded',
       },
     }
-
-    vim.keymap.set('n', '<leader>ee', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
   end,
 }

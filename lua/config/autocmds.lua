@@ -76,6 +76,36 @@ vim.api.nvim_create_autocmd('TermOpen', {
   end,
 })
 
+vim.api.nvim_create_autocmd('TermOpen', {
+  desc = 'Forçar cores mais escuras no terminal',
+  group = vim.api.nvim_create_augroup('corr3ia-terminal-colors', { clear = true }),
+  callback = function()
+    vim.opt_local.number = false
+    vim.opt_local.relativenumber = false
+    vim.opt_local.signcolumn = 'no'
+
+    vim.cmd 'highlight! TermCursor guifg=#2D353B guibg=#A7C080'
+    vim.cmd 'highlight! TermCursorNC guifg=#2D353B guibg=#859289'
+
+    vim.b.terminal_color_0 = '#2D353B'
+    vim.b.terminal_color_1 = '#E67E80'
+    vim.b.terminal_color_2 = '#A7C080'
+    vim.b.terminal_color_3 = '#DBBC7F'
+    vim.b.terminal_color_4 = '#7FBBB3'
+    vim.b.terminal_color_5 = '#D699B6'
+    vim.b.terminal_color_6 = '#83C092'
+    vim.b.terminal_color_7 = '#FFFFFF'
+    vim.b.terminal_color_8 = '#D3C6AA'
+    vim.b.terminal_color_9 = '#E67E80'
+    vim.b.terminal_color_10 = '#A7C080'
+    vim.b.terminal_color_11 = '#DBBC7F'
+    vim.b.terminal_color_12 = '#7FBBB3'
+    vim.b.terminal_color_13 = '#D699B6'
+    vim.b.terminal_color_14 = '#83C092'
+    vim.b.terminal_color_15 = '#FFFFFF'
+  end,
+})
+
 -- 📁 Abrir no último local editado
 vim.api.nvim_create_autocmd('BufReadPost', {
   desc = 'Go to last position when opening buffer',

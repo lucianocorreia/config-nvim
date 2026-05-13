@@ -331,76 +331,52 @@ vim.api.nvim_create_user_command('ThemeInfo', function()
   end
 end, { desc = 'Informações sobre o tema atual' })
 
--- 🤖 Copilot Chat Commands
-vim.api.nvim_create_user_command('CopilotInfo', function()
-  print('🤖 Informações do Copilot Chat:')
-  print('===============================')
-  
-  -- Verificar se Copilot está disponível
-  local copilot_ok, copilot = pcall(require, 'CopilotChat')
-  if not copilot_ok then
-    print('❌ CopilotChat não encontrado')
-    return
-  end
-  
-  print('✅ CopilotChat disponível')
-  
-  -- Verificar status do chat
-  local chat_open = vim.fn.bufname():match('copilot%-chat') ~= nil
-  print('Chat aberto: ' .. (chat_open and '✅ Sim' or '❌ Não'))
-  
-  print('')
-  print('⌨️ Keymaps principais:')
-  print('  <leader>zh - Toggle chat (com buffer atual)')
-  print('  <leader>zq - Pergunta rápida (com contexto)')
-  print('  <leader>ze - Explicar código (visual)')
-  print('  <leader>zr - Revisar código (visual)')
-  print('  <leader>zf - Corrigir código (visual)')
-  print('  <leader>zm - Gerar commit message')
-  print('  <leader>zx - Limpar chat')
-  
-  print('')
-  print('💡 Dica: Agora o chat já inclui automaticamente o buffer atual!')
-end, { desc = 'Informações sobre Copilot Chat' })
+vim.api.nvim_create_user_command('VuePerfInfo', function()
+  local bufnr = vim.api.nvim_get_current_buf()
+  local name = vim.api.nvim_buf_get_name(bufnr)
+  local ft = vim.bo[bufnr].filetype
+  local uv = vim.uv or vim.loop
 
-vim.api.nvim_create_user_command('CopilotHelp', function()
-  print('🤖 Guia Rápido do Copilot Chat:')
-  print('===============================')
-  print('')
-  print('🎯 CONTEXTO AUTOMÁTICO:')
-  print('• <leader>zh - Abre chat COM buffer atual já incluído')
-  print('• <leader>zq - Pergunta rápida COM contexto automático')
-  print('• Não precisa mais usar #buffer!')
-  print('')
-  print('📝 COMANDOS POR MODO:')
-  print('Normal mode (arquivo inteiro):')
-  print('  <leader>zh  - Chat com buffer completo')
-  print('  <leader>zeb - Explicar arquivo inteiro')
-  print('  <leader>zrb - Revisar arquivo inteiro')
-  print('  <leader>zfb - Corrigir arquivo inteiro')
-  print('')
-  print('Visual mode (seleção):')
-  print('  <leader>zh - Chat com código selecionado')
-  print('  <leader>ze - Explicar seleção')
-  print('  <leader>zr - Revisar seleção')
-  print('  <leader>zf - Corrigir seleção')
-  print('  <leader>zo - Otimizar seleção')
-  print('  <leader>zd - Gerar documentação')
-  print('  <leader>zt - Gerar testes')
-  print('  <leader>zr - Revisar seleção')
-  print('  <leader>zf - Corrigir seleção')
-  print('  <leader>zo - Otimizar seleção')
-  print('  <leader>zd - Documentar seleção')
-  print('  <leader>zt - Gerar testes')
-  print('')
-  print('🚀 UTILITÁRIOS:')
-  print('  <leader>zm - Gerar commit message')
-  print('  <leader>zs - Commit para staged files')
-  print('  <leader>zx - Limpar chat')
-  print('  <leader>zv - Toggle janela')
-  print('')
-  print('💡 DICAS:')
-  print('• O contexto agora é automático!')
-  print('• Use visual mode para código específico')
-  print('• Use normal mode para arquivo inteiro')
-end, { desc = 'Guia completo do Copilot Chat' })
+  local size = 0
+  if name ~= '' then
+    local ok, stat = pcall(uv.fs_stat, name)
+    if ok and stat and stat.size then
+      size = stat.size
+    end
+  end
+
+  print('⚡ Vue Perf Info:')
+  print('==============')
+  print('Buffer: ' .. (name ~= '' and name or '[No Name]'))
+  print('Filetype: ' .. ft)
+  print(string.format('Tamanho: %d bytes (%.1f KB)', size, size / 1024))
+  print('Debug verbose: ' .. (vim.g.vue_perf_debug and 'ON' or 'OFF') .. ' (toggle: :VuePerfDebugToggle)')
+
+  local ts_active = vim.treesitter.highlighter.active[bufnr] ~= nil
+  print('Treesitter ativo: ' .. (ts_active and 'sim' or 'não'))
+
+  local clients = vim.lsp.get_clients({ bufnr = bufnr })
+  if #clients == 0 then
+    print('LSP no buffer: nenhum')
+  else
+    print('LSP no buffer:')
+    for _, client in ipairs(clients) do
+      local semantic = client.server_capabilities and client.server_capabilities.semanticTokensProvider ~= nil
+      print(string.format('  • %s | semanticTokens: %s', client.name, semantic and 'on' or 'off'))
+    end
+  end
+end, { desc = 'Inspecionar estado de performance para arquivo Vue' })
+
+vim.api.nvim_create_user_command('VuePerfDebugToggle', function()
+  vim.g.vue_perf_debug = not vim.g.vue_perf_debug
+  print('Vue perf debug: ' .. (vim.g.vue_perf_debug and 'ON' or 'OFF'))
+end, { desc = 'Ativar/desativar logs detalhados de performance Vue' })
+
+vim.api.nvim_create_user_command('VueTsInstall', function()
+  local ok = pcall(vim.cmd, 'TSInstall vue')
+  if ok then
+    print('Instalação do parser Vue iniciada. Aguarde concluir no cmdline do Neovim.')
+  else
+    print('Falha ao iniciar :TSInstall vue. Verifique se nvim-treesitter está carregado.')
+  end
+end, { desc = 'Instalar parser Treesitter de Vue' })

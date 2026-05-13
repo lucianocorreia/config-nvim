@@ -127,6 +127,35 @@ local lsp_configs = {
   'gdscript',
 }
 
+local vue_debug_threshold_ms = 120
+local vue_global_tsdk_cache = nil
+
+local function vue_debug_enabled()
+  return vim.g.vue_perf_debug == true
+end
+
+local function get_cached_global_tsdk()
+  if vue_global_tsdk_cache ~= nil then
+    return vue_global_tsdk_cache
+  end
+
+  local t0 = vim.uv.hrtime()
+  local global_root = vim.fn.system('npm root -g 2>/dev/null'):gsub('\n', '')
+  local global_ts = global_root .. '/typescript/lib'
+  if vim.fn.isdirectory(global_ts) == 1 then
+    vue_global_tsdk_cache = global_ts
+  else
+    vue_global_tsdk_cache = ''
+  end
+
+  if vue_debug_enabled() then
+    local dt = (vim.uv.hrtime() - t0) / 1e6
+    vim.notify(string.format('[VuePerf] npm root -g lookup: %.1fms', dt), vim.log.levels.INFO)
+  end
+
+  return vue_global_tsdk_cache
+end
+
 local loaded_count = 0
 for _, server in ipairs(lsp_configs) do
   local config_file = lsp_dir .. server .. '.lua'
@@ -156,6 +185,7 @@ vim.lsp.enable({
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'vue',
   callback = function(args)
+    local t_start = vim.uv.hrtime()
     local bufnr = args.buf
     local root = vim.fs.root(bufnr, { 'package.json', '.git', 'composer.json' })
     
@@ -200,9 +230,9 @@ vim.api.nvim_create_autocmd('FileType', {
       -- Buscar TypeScript SDK (local ou global)
       local tsdk = root .. '/node_modules/typescript/lib'
       if vim.fn.isdirectory(tsdk) == 0 then
-        -- Fallback para typescript global via npm/yarn
-        local global_ts = vim.fn.system('npm root -g 2>/dev/null'):gsub('\n', '') .. '/typescript/lib'
-        if vim.fn.isdirectory(global_ts) == 1 then
+        -- Fallback para typescript global via npm/yarn (com cache)
+        local global_ts = get_cached_global_tsdk()
+        if global_ts ~= '' and vim.fn.isdirectory(global_ts) == 1 then
           tsdk = global_ts
         else
           tsdk = '' -- Volar tentará encontrar automaticamente
@@ -256,6 +286,11 @@ vim.api.nvim_create_autocmd('FileType', {
           end,
         })
       end
+    end
+
+    local total_ms = (vim.uv.hrtime() - t_start) / 1e6
+    if vue_debug_enabled() or total_ms > vue_debug_threshold_ms then
+      vim.notify(string.format('[VuePerf] FileType vue setup em %.1fms (%s)', total_ms, vim.api.nvim_buf_get_name(bufnr)), vim.log.levels.WARN)
     end
   end,
 })

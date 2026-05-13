@@ -26,13 +26,23 @@ return {
         {
           'rafamadriz/friendly-snippets',
           config = function()
-            require('luasnip.loaders.from_vscode').lazy_load()
-            require('luasnip.loaders.from_lua').lazy_load { paths = { '~/.config/nvim/snippets' } }
+            local ok_vscode, vscode_loader = pcall(require, 'luasnip.loaders.from_vscode')
+            if ok_vscode then
+              vscode_loader.lazy_load()
+            end
+
+            local ok_lua, lua_loader = pcall(require, 'luasnip.loaders.from_lua')
+            if ok_lua then
+              lua_loader.lazy_load { paths = { '~/.config/nvim/snippets' } }
+            end
           end,
         },
       },
       config = function()
-        local luasnip = require 'luasnip'
+        local ok, luasnip = pcall(require, 'luasnip')
+        if not ok then
+          return
+        end
 
         -- Configuração para desativar o snippet quando sair da região
         luasnip.config.setup {
@@ -54,6 +64,36 @@ return {
   },
   config = function()
     local blink = require 'blink.cmp'
+    local has_luasnip = pcall(require, 'luasnip')
+    local has_lazydev = pcall(require, 'lazydev.integrations.blink')
+
+    local default_sources = { 'lsp', 'buffer', 'path' }
+    if has_luasnip then
+      table.insert(default_sources, 'snippets')
+    end
+    if has_lazydev then
+      table.insert(default_sources, 'lazydev')
+    end
+
+    local providers = {
+      copilot = {
+        module = 'blink-copilot',
+        name = 'copilot',
+        score_offset = 100,
+        async = true,
+        opts = {
+          max_completions = 3,
+        },
+      },
+    }
+
+    if has_lazydev then
+      providers.lazydev = {
+        module = 'lazydev.integrations.blink',
+        score_offset = 100,
+        fallbacks = { 'lsp' },
+      }
+    end
 
     blink.setup {
       keymap = {
@@ -105,26 +145,11 @@ return {
       },
 
       sources = {
-        default = { 'lsp', 'buffer', 'path', 'snippets', 'lazydev' },
-        providers = {
-          copilot = {
-            module = 'blink-copilot',
-            name = 'copilot',
-            score_offset = 100,
-            async = true,
-            opts = {
-              max_completions = 3,
-            },
-          },
-          lazydev = {
-            module = 'lazydev.integrations.blink',
-            score_offset = 100,
-            fallbacks = { 'lsp' },
-          },
-        },
+        default = default_sources,
+        providers = providers,
       },
 
-      snippets = { preset = 'luasnip' },
+      snippets = has_luasnip and { preset = 'luasnip' } or { preset = 'default' },
 
       -- Blink.cmp includes an optional, recommended rust fuzzy matcher,
       -- which automatically downloads a prebuilt binary when enabled.
@@ -138,10 +163,5 @@ return {
       -- Shows a signature help window while you type arguments for a function
       signature = { enabled = true },
     }
-
-    -- Keymap customizado: Ctrl+G para mostrar apenas sugestões do Copilot
-    vim.keymap.set('i', '<C-g>', function()
-      blink.show { providers = { 'copilot' } }
-    end, { desc = 'Mostrar sugestões do Copilot' })
   end,
 }

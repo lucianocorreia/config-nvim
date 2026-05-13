@@ -2,7 +2,7 @@ return {
   'folke/snacks.nvim',
   priority = 1000,
   dependencies = {
-    'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
+    'nvim-tree/nvim-web-devicons',
   },
   lazy = false,
   ---@type snacks.Config
@@ -10,28 +10,31 @@ return {
     bigfile = { enabled = true },
     dashboard = { enabled = false },
     explorer = { enabled = false },
-    indent = { enabled = false },
+    indent = {
+      enabled = true,
+      animate = { enabled = false },
+      scope = { enabled = false },
+      chunk = { enabled = false },
+    },
     input = { enabled = true },
     notifier = {
-      enabled = true,
+      enabled = false,
       timeout = 3000,
       filter = function(notif)
-        -- Filtrar mensagens de inicialização do Roslyn
         local msg = notif.msg or ''
         if type(msg) == 'table' then
           msg = table.concat(msg, ' ')
         end
         msg = tostring(msg):lower()
-        
-        -- Bloquear mensagens específicas do Roslyn
-        if msg:match('roslyn') or 
-           msg:match('initialized') or 
-           msg:match('project.*initialized') or
-           msg:match('language server.*started') or
-           msg:match('server.*ready') then
+
+        if msg:match('roslyn')
+          or msg:match('initialized')
+          or msg:match('project.*initialized')
+          or msg:match('language server.*started')
+          or msg:match('server.*ready') then
           return false
         end
-        
+
         return true
       end,
     },
@@ -48,499 +51,66 @@ return {
       ui_select = true,
     },
     quickfile = { enabled = true },
-    scope = { enabled = true },
+    scope = { enabled = false },
     scroll = { enabled = false },
     statuscolumn = { enabled = true },
     words = { enabled = true },
     styles = {
-      notification = {
-        -- wo = { wrap = true } -- Wrap notifications
-      },
-    },
-  },
-  keys = {
-    -- Top Pickers & Explorer
-    {
-      '<leader>ff',
-      function()
-        Snacks.picker.smart {
-          layout = { preview = { enabled = false } },
-          sort = function(a, b)
-            -- Primeiro ordena por score
-            if a.score ~= b.score then
-              return a.score > b.score
-            end
-            -- Depois favorece nomes de arquivo mais curtos
-            local a_text = a.text or ''
-            local b_text = b.text or ''
-            return #a_text < #b_text
-          end,
-        }
-      end,
-      desc = 'Smart Find Files',
-    },
-    {
-      '<leader><leader>',
-      function()
-        Snacks.picker.buffers { layout = { preview = { enabled = false } } }
-      end,
-      desc = 'Buffers',
-    },
-    {
-      '<leader>:',
-      function()
-        Snacks.picker.command_history()
-      end,
-      desc = 'Command History',
-    },
-    {
-      '<leader>n',
-      function()
-        Snacks.picker.notifications()
-      end,
-      desc = 'Notification History',
-    },
-    {
-      '<leader>fc',
-      function()
-        Snacks.picker.files { cwd = vim.fn.stdpath 'config' }
-      end,
-      desc = 'Find Config File',
-    },
-    {
-      '<leader>fg',
-      function()
-        Snacks.picker.git_files {
-          layout = { preview = { enabled = false } },
-          sort = function(a, b)
-            if a.score ~= b.score then
-              return a.score > b.score
-            end
-            return #(a.text or '') < #(b.text or '')
-          end,
-        }
-      end,
-      desc = 'Find Files',
-    },
-    {
-      '<leader>sf',
-      function()
-        Snacks.picker.files {
-          layout = { preview = { enabled = false } },
-          sort = function(a, b)
-            if a.score ~= b.score then
-              return a.score > b.score
-            end
-            return #(a.text or '') < #(b.text or '')
-          end,
-        }
-      end,
-      desc = 'Find Git Files',
-    },
-    {
-      '<leader>fp',
-      function()
-        Snacks.picker.projects()
-      end,
-      desc = 'Projects',
-    },
-    {
-      '<leader>fr',
-      function()
-        Snacks.picker.recent { filter = { cwd = true } }
-      end,
-      desc = 'Recent files',
-    },
-    -- git
-    {
-      '<leader>gb',
-      function()
-        Snacks.picker.git_branches()
-      end,
-      desc = 'Git Branches',
-    },
-    {
-      '<leader>gl',
-      function()
-        Snacks.picker.git_log()
-      end,
-      desc = 'Git Log',
-    },
-    {
-      '<leader>gL',
-      function()
-        Snacks.picker.git_log_line()
-      end,
-      desc = 'Git Log Line',
-    },
-    {
-      '<leader>gs',
-      function()
-        Snacks.picker.git_status()
-      end,
-      desc = 'Git Status',
-    },
-    {
-      '<leader>gS',
-      function()
-        Snacks.picker.git_stash()
-      end,
-      desc = 'Git Stash',
-    },
-    {
-      '<leader>gd',
-      function()
-        Snacks.picker.git_diff()
-      end,
-      desc = 'Git Diff (Hunks)',
-    },
-    {
-      '<leader>gf',
-      function()
-        Snacks.picker.git_log_file()
-      end,
-      desc = 'Git Log File',
-    },
-    -- Grep
-    {
-      '<leader>sb',
-      function()
-        Snacks.picker.lines()
-      end,
-      desc = 'Buffer Lines',
-    },
-    {
-      '<leader>sB',
-      function()
-        Snacks.picker.grep_buffers()
-      end,
-      desc = 'Grep Open Buffers',
-    },
-    {
-      '<leader>ss',
-      function()
-        Snacks.picker.grep()
-      end,
-      desc = 'Grep',
-    },
-    {
-      '<leader>sw',
-      function()
-        Snacks.picker.grep_word()
-      end,
-      desc = 'Visual selection or word',
-      mode = { 'n', 'x' },
-    },
-    -- search
-    {
-      '<leader>s"',
-      function()
-        Snacks.picker.registers()
-      end,
-      desc = 'Registers',
-    },
-    {
-      '<leader>s/',
-      function()
-        Snacks.picker.search_history()
-      end,
-      desc = 'Search History',
-    },
-    {
-      '<leader>sa',
-      function()
-        Snacks.picker.autocmds()
-      end,
-      desc = 'Autocmds',
-    },
-    {
-      '<leader>sc',
-      function()
-        Snacks.picker.command_history()
-      end,
-      desc = 'Command History',
-    },
-    {
-      '<leader>sC',
-      function()
-        Snacks.picker.commands()
-      end,
-      desc = 'Commands',
-    },
-    {
-      '<leader>sd',
-      function()
-        Snacks.picker.diagnostics_buffer { layout = { preview = { enabled = false } } }
-      end,
-      desc = 'Diagnostics',
-    },
-    {
-      '<leader>sD',
-      function()
-        Snacks.picker.diagnostics { layout = { preview = { enabled = false } } }
-      end,
-      desc = 'Buffer Diagnostics',
-    },
-    {
-      '<leader>sh',
-      function()
-        Snacks.picker.help()
-      end,
-      desc = 'Help Pages',
-    },
-    {
-      '<leader>sH',
-      function()
-        Snacks.picker.highlights()
-      end,
-      desc = 'Highlights',
-    },
-    {
-      '<leader>si',
-      function()
-        Snacks.picker.icons()
-      end,
-      desc = 'Icons',
-    },
-    {
-      '<leader>sj',
-      function()
-        Snacks.picker.jumps()
-      end,
-      desc = 'Jumps',
-    },
-    {
-      '<leader>sk',
-      function()
-        Snacks.picker.keymaps { layout = { preview = { enabled = false } } }
-      end,
-      desc = 'Keymaps',
-    },
-    {
-      '<leader>sl',
-      function()
-        Snacks.picker.loclist()
-      end,
-      desc = 'Location List',
-    },
-    {
-      '<leader>sm',
-      function()
-        Snacks.picker.marks()
-      end,
-      desc = 'Marks',
-    },
-    {
-      '<leader>sM',
-      function()
-        Snacks.picker.man()
-      end,
-      desc = 'Man Pages',
-    },
-    {
-      '<leader>sp',
-      function()
-        Snacks.picker.lazy()
-      end,
-      desc = 'Search for Plugin Spec',
-    },
-    {
-      '<leader>sq',
-      function()
-        Snacks.picker.qflist()
-      end,
-      desc = 'Quickfix List',
-    },
-    {
-      '<leader>sR',
-      function()
-        Snacks.picker.resume()
-      end,
-      desc = 'Resume',
-    },
-    {
-      '<leader>su',
-      function()
-        Snacks.picker.undo()
-      end,
-      desc = 'Undo History',
-    },
-    {
-      '<leader>uC',
-      function()
-        Snacks.picker.colorschemes()
-      end,
-      desc = 'Colorschemes',
-    },
-    -- LSP
-    {
-      'grd',
-      function()
-        Snacks.picker.lsp_definitions()
-      end,
-      desc = 'Goto Definition',
-    },
-    {
-      'grD',
-      function()
-        Snacks.picker.lsp_declarations()
-      end,
-      desc = 'Goto Declaration',
-    },
-    {
-      'grr',
-      function()
-        Snacks.picker.lsp_references()
-      end,
-      nowait = true,
-      desc = 'References',
-    },
-    {
-      'gri',
-      function()
-        Snacks.picker.lsp_implementations()
-      end,
-      desc = 'Goto Implementation',
-    },
-    {
-      'gry',
-      function()
-        Snacks.picker.lsp_type_definitions()
-      end,
-      desc = 'Goto T[y]pe Definition',
-    },
-    {
-      'gro',
-      function()
-        Snacks.picker.lsp_symbols { 
-          scope = 'buf',
-          layout = { preview = { enabled = false } },
-        }
-      end,
-      desc = 'LSP Symbols',
-    },
-    {
-      '<leader>sS',
-      function()
-        Snacks.picker.lsp_workspace_symbols()
-      end,
-      desc = 'LSP Workspace Symbols',
-    },
-    -- Other
-    {
-      '<leader>n',
-      function()
-        Snacks.notifier.show_history()
-      end,
-      desc = 'Notification History',
-    },
-    {
-      '<leader>bd',
-      function()
-        Snacks.bufdelete()
-      end,
-      desc = 'Delete Buffer',
-    },
-    {
-      '<leader>cR',
-      function()
-        Snacks.rename.rename_file()
-      end,
-      desc = 'Rename File',
-    },
-    {
-      '<leader>gB',
-      function()
-        Snacks.gitbrowse()
-      end,
-      desc = 'Git Browse',
-      mode = { 'n', 'v' },
-    },
-    {
-      '<leader>gg',
-      function()
-        Snacks.lazygit()
-      end,
-      desc = 'Lazygit',
-    },
-    {
-      '<leader>un',
-      function()
-        Snacks.notifier.hide()
-      end,
-      desc = 'Dismiss All Notifications',
-    },
-    {
-      '<c-/>',
-      function()
-        Snacks.terminal()
-      end,
-      desc = 'Toggle Terminal',
-    },
-    {
-      '<c-/>',
-      function()
-        Snacks.terminal()
-      end,
-      desc = 'Toggle Terminal',
-      mode = { 't' },
-    },
-    {
-      '<c-_>',
-      function()
-        Snacks.terminal()
-      end,
-      desc = 'which_key_ignore',
-    },
-    {
-      ']]',
-      function()
-        Snacks.words.jump(vim.v.count1)
-      end,
-      desc = 'Next Reference',
-      mode = { 'n', 't' },
-    },
-    {
-      '[[',
-      function()
-        Snacks.words.jump(-vim.v.count1)
-      end,
-      desc = 'Prev Reference',
-      mode = { 'n', 't' },
-    },
-    {
-      '<leader>N',
-      desc = 'Neovim News',
-      function()
-        Snacks.win {
-          file = vim.api.nvim_get_runtime_file('doc/news.txt', false)[1],
-          width = 0.6,
-          height = 0.6,
-          wo = {
-            spell = false,
-            wrap = false,
-            signcolumn = 'yes',
-            statuscolumn = ' ',
-            conceallevel = 3,
-          },
-        }
-      end,
+      notification = {},
     },
   },
   init = function()
+    local function hex_to_rgb(hex)
+      hex = hex:gsub('#', '')
+      return tonumber(hex:sub(1, 2), 16), tonumber(hex:sub(3, 4), 16), tonumber(hex:sub(5, 6), 16)
+    end
+
+    local function rgb_to_hex(r, g, b)
+      return string.format('#%02x%02x%02x', r, g, b)
+    end
+
+    local function blend(fg, bg, alpha)
+      local fr, fg2, fb = hex_to_rgb(fg)
+      local br, bg2, bb = hex_to_rgb(bg)
+      local r = math.floor((alpha * fr) + ((1 - alpha) * br) + 0.5)
+      local g = math.floor((alpha * fg2) + ((1 - alpha) * bg2) + 0.5)
+      local b = math.floor((alpha * fb) + ((1 - alpha) * bb) + 0.5)
+      return rgb_to_hex(r, g, b)
+    end
+
+    local function set_indent_highlights()
+      -- Keep indent guides subtle by blending Normal fg into bg.
+      local normal = vim.api.nvim_get_hl(0, { name = 'Normal', link = false })
+      local fg = normal.fg and string.format('#%06x', normal.fg) or '#d3c6aa'
+      local bg = normal.bg and string.format('#%06x', normal.bg) or '#1f2326'
+      local subtle = blend(fg, bg, 0.22)
+
+      vim.api.nvim_set_hl(0, 'SnacksIndent', { fg = subtle, nocombine = true })
+      vim.api.nvim_set_hl(0, 'SnacksIndentScope', { fg = subtle, nocombine = true })
+      vim.api.nvim_set_hl(0, 'SnacksIndentChunk', { fg = subtle, nocombine = true })
+
+      for i = 1, 8 do
+        vim.api.nvim_set_hl(0, 'SnacksIndent' .. i, { fg = subtle, nocombine = true })
+      end
+    end
+
+    set_indent_highlights()
+    vim.api.nvim_create_autocmd('ColorScheme', {
+      group = vim.api.nvim_create_augroup('corr3ia-snacks-indent-colors', { clear = true }),
+      callback = set_indent_highlights,
+    })
+
     vim.api.nvim_create_autocmd('User', {
       pattern = 'VeryLazy',
       callback = function()
-        -- Setup some globals for debugging (lazy-loaded)
         _G.dd = function(...)
           Snacks.debug.inspect(...)
         end
         _G.bt = function()
           Snacks.debug.backtrace()
         end
-        vim.print = _G.dd -- Override print to use snacks for `:=` command
+        vim.print = _G.dd
 
-        -- Create some toggle mappings
         Snacks.toggle.option('spell', { name = 'Spelling' }):map '<leader>us'
         Snacks.toggle.option('wrap', { name = 'Wrap' }):map '<leader>uw'
         Snacks.toggle.option('relativenumber', { name = 'Relative Number' }):map '<leader>uL'

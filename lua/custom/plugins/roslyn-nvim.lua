@@ -1,4 +1,13 @@
 -- Roslyn C# Language Server
+local function get_capabilities()
+  local ok, blink = pcall(require, 'blink.cmp')
+  if ok and type(blink.get_lsp_capabilities) == 'function' then
+    return blink.get_lsp_capabilities()
+  end
+
+  return vim.lsp.protocol.make_client_capabilities()
+end
+
 return {
   'seblyng/roslyn.nvim',
   ft = { 'cs' },
@@ -17,7 +26,7 @@ return {
     end,
     
     config = {
-      capabilities = require('blink.cmp').get_lsp_capabilities(),
+      capabilities = get_capabilities(),
       
       settings = {
         ['csharp|completion'] = {
