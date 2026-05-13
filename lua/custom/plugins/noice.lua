@@ -6,6 +6,19 @@ return {
     'rcarriga/nvim-notify',
   },
   opts = {
+    views = {
+      save_mini = {
+        backend = 'mini',
+        relative = 'editor',
+        align = 'message-right',
+        reverse = true,
+        timeout = 1400,
+        position = { row = -2, col = '100%' },
+        size = { width = 'auto', height = 'auto', max_height = 5 },
+        focusable = false,
+        enter = false,
+      },
+    },
     cmdline = {
       enabled = true,
       view = 'cmdline_popup',
@@ -36,6 +49,13 @@ return {
     },
     routes = {
       {
+        view = 'save_mini',
+        filter = {
+          event = 'notify',
+          find = '^Saved ',
+        },
+      },
+      {
         filter = {
           event = 'notify',
           find = 'No information available',
@@ -58,6 +78,7 @@ return {
         stages = 'fade',
         timeout = 2500,
         render = 'compact',
+        top_down = true,
       })
       vim.notify = notify
     end

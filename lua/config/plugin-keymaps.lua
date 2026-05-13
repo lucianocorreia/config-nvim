@@ -91,6 +91,26 @@ function M.setup(map)
       { 'n', '<leader>af', function() require('sidekick.cli').send { msg = '{file}' } end, 'Sidekick: Send File' },
       { 'x', '<leader>av', function() require('sidekick.cli').send { msg = '{selection}' } end, 'Sidekick: Send Visual Selection' },
       { { 'n', 'x' }, '<leader>ap', function() require('sidekick.cli').prompt() end, 'Sidekick: Select Prompt' },
+      { 'n', '<leader>aq', function()
+          vim.ui.input({ prompt = 'Pergunta rápida para IA: ' }, function(input)
+            if not input or input == '' then
+              return
+            end
+            require('sidekick.cli').send {
+              msg = input .. '\n\nContexto atual:\n{this}',
+            }
+          end)
+        end, 'Sidekick: Quick Ask (contexto atual)' },
+      { 'n', '<leader>al', function()
+          require('sidekick.cli').send {
+            msg = 'Gere APENAS uma linha de código para o contexto abaixo. Sem explicações.\n\n{this}',
+          }
+        end, 'Sidekick: Gerar 1 linha' },
+      { 'x', '<leader>ae', function()
+          require('sidekick.cli').send {
+            msg = 'Ajuste SOMENTE o trecho selecionado. Retorne apenas código final.\n\n{selection}',
+          }
+        end, 'Sidekick: Ajustar seleção' },
       { 'n', '<leader>ag', function() require('sidekick.cli').toggle({ name = 'gemini', focus = true }) end, 'Sidekick: Gemini (Flash)' },
     },
     {
