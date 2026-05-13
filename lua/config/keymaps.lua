@@ -63,9 +63,7 @@ local editing = {
     '<leader>w',
     function()
       vim.cmd 'write'
-      vim.notify('Saved ' .. vim.fn.expand '%:t', vim.log.levels.INFO, {
-        title = 'Save',
-      })
+      vim.notify('✓ Saved ' .. vim.fn.expand '%:t', vim.log.levels.INFO, { title = '' })
     end,
     '[W]rite/Save file',
   },

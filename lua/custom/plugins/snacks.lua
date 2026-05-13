@@ -18,7 +18,7 @@ return {
     },
     input = { enabled = true },
     notifier = {
-      enabled = false,
+      enabled = true,
       timeout = 3000,
       filter = function(notif)
         local msg = notif.msg or ''

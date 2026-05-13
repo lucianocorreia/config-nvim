@@ -63,11 +63,14 @@ return {
 
       -- 🎮 Godot/GDScript
       gdscript = { 'gdformat' },
+      gdscript3 = { 'gdformat' },
       gd = { 'gdformat' },
     },
     formatters = {
       gdformat = {
-        prepend_args = { '--line-length', '180' },
+        command = vim.fn.stdpath('data') .. '/mason/bin/gdformat',
+        args = { '-', '--line-length', '180' },
+        stdin = true,
       },
     },
   },

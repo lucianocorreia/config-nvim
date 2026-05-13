@@ -84,6 +84,33 @@ vim.api.nvim_create_user_command('ReloadConfig', function()
   print('🔄 Configuração recarregada!')
 end, { desc = 'Recarregar configuração do Neovim' })
 
+vim.api.nvim_create_user_command('PackUpdate', function()
+  if type(vim.pack) ~= 'table' or type(vim.pack.update) ~= 'function' then
+    vim.notify('vim.pack.update não está disponível nesta versão do Neovim', vim.log.levels.ERROR)
+    return
+  end
+
+  vim.notify('📦 Atualizando plugins com vim.pack...', vim.log.levels.INFO)
+  vim.pack.update()
+end, { desc = 'Atualizar plugins instalados com vim.pack' })
+
+vim.api.nvim_create_user_command('PackSync', function()
+  if type(vim.pack) ~= 'table' or type(vim.pack.update) ~= 'function' then
+    vim.notify('vim.pack não está disponível nesta versão do Neovim', vim.log.levels.ERROR)
+    return
+  end
+
+  local ok_pack, pack = pcall(require, 'config.pack')
+  if not ok_pack or type(pack.setup) ~= 'function' then
+    vim.notify('Não foi possível carregar config.pack para sincronizar', vim.log.levels.ERROR)
+    return
+  end
+
+  vim.notify('📦 Sincronizando plugins (setup + update)...', vim.log.levels.INFO)
+  pack.setup()
+  vim.pack.update()
+end, { desc = 'Sincronizar plugins (instalar faltantes e atualizar)' })
+
 -- 📊 Info Commands
 vim.api.nvim_create_user_command('ConfigInfo', function()
   local config_path = vim.fn.stdpath('config')

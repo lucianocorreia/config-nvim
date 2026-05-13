@@ -60,6 +60,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     if client.name == 'roslyn' then
       disable = true
+    elseif client.name == 'gdscript' and (ft == 'gd' or ft == 'gdscript' or ft == 'gdscript3') and has_treesitter_parser(ft) then
+      -- Godot LSP semantic tokens podem homogeneizar method/type em alguns temas.
+      -- Mantemos o highlight do Treesitter, que está mais próximo do preview do picker.
+      disable = true
     elseif client.name == 'vls' and ft == 'vue' and has_treesitter_parser('vue') then
       -- VLS costuma aplicar semantic tokens de forma tardia em alguns projetos Vue 2.
       disable = true
