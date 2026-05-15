@@ -26,15 +26,10 @@ return {
       end
     end,
     format_after_save = function(bufnr)
-      local disable_filetypes = {
-        c = true,
-        cpp = true,
-        php = true,
-        vue = true,
-      }
+      local disable_filetypes = { c = true, cpp = true, php = true, vue = true }
       if not disable_filetypes[vim.bo[bufnr].filetype] then
         vim.schedule(function()
-          vim.notify('File formatted on save (' .. vim.bo[bufnr].filetype .. ')', vim.log.levels.INFO)
+          require('fidget').notify('formatted (' .. vim.bo[bufnr].filetype .. ')', vim.log.levels.INFO)
         end)
       end
     end,

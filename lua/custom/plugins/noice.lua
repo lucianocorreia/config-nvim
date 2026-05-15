@@ -5,7 +5,7 @@ return {
     'MunifTanjim/nui.nvim',
   },
   opts = {
-    notify = { enabled = false },
+    notify = {},
     cmdline = {
       enabled = true,
       view = 'cmdline_popup',
@@ -35,15 +35,17 @@ return {
       lsp_doc_border = true,
     },
     routes = {
+      -- Suprime a mensagem nativa de arquivo salvo ("X lines written")
       {
-        filter = {
-          event = 'msg_show',
-          find = 'written',
-        },
+        filter = { event = 'msg_show', kind = '', find = 'written' },
+        opts = { skip = true },
+      },
+      -- Garante que vim.notify não aparece como popup do noice
+      {
+        filter = { event = 'notify' },
         opts = { skip = true },
       },
     },
-
   },
   config = function(_, opts)
     require('noice').setup(opts)

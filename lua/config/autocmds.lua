@@ -1,7 +1,19 @@
 -- 🤖 Configuração de Autocommands
 -- Este arquivo contém todos os autocommands e eventos automáticos
 
--- 💬 Desabilitar continuação automática de comentários
+-- � Notificação discreta de arquivo salvo via fidget
+vim.api.nvim_create_autocmd('BufWritePost', {
+  desc = 'Notify file saved via fidget',
+  group = vim.api.nvim_create_augroup('corr3ia-save-notify', { clear = true }),
+  callback = function()
+    local ok, fidget = pcall(require, 'fidget')
+    if ok then
+      fidget.notify('saved', vim.log.levels.INFO)
+    end
+  end,
+})
+
+-- �💬 Desabilitar continuação automática de comentários
 vim.api.nvim_create_autocmd('FileType', {
   desc = 'Disable automatic comment continuation',
   group = vim.api.nvim_create_augroup('corr3ia-no-auto-comment', { clear = true }),

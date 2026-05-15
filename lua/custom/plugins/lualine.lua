@@ -9,11 +9,7 @@ return {
       -- sections = {lualine_c = {"filename", {getWords}}, lualine_x = {{getGuiFont}, 'filetype'}},
       options = {
         icons_enabled = true,
-        theme = 'everforest',
-        -- theme = 'ayu',
-        -- theme = 'vague',
-        -- theme = 'rose-pine',
-        -- theme = 'catppuccin',
+        theme = 'auto',
         component_separators = '|',
         section_separators = '',
       },
@@ -25,9 +21,9 @@ return {
             'diff',
             colored = true, -- Displays a colored diff status if set to true
             diff_color = {
-              added = { fg = '#a6e3a1' },
-              modified = { fg = '#f9e2af' },
-              removed = { fg = '#f38ba8' },
+              added = { fg = '#a6da95' },
+              modified = { fg = '#eed49f' },
+              removed = { fg = '#ed8796' },
             },
             symbols = { added = '⊕ ', modified = '⊙ ', removed = '⊖ ' }, -- Changes the symbols used by the diff.
           },
@@ -48,7 +44,6 @@ return {
               unnamed = '[No Name]',
               newfile = '[New]',
             },
-            color = { fg = '#e69875' },
           },
           'searchcount',
           'selectioncount',
@@ -59,7 +54,6 @@ return {
             function()
               return vim.api.nvim_get_current_buf()
             end,
-            color = { fg = '#f9e2af' },
           },
           'encoding',
           -- {
