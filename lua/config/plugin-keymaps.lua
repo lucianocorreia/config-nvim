@@ -379,7 +379,7 @@ function M.setup(map)
       { 'n', '<leader>sl', snacks_picker 'loclist', 'Location List' },
       { 'n', '<leader>sm', snacks_picker 'marks', 'Marks' },
       { 'n', '<leader>sM', snacks_picker 'man', 'Man Pages' },
-      { 'n', '<leader>sp', snacks_picker 'lazy', 'Search for Plugin Spec' },
+      -- { 'n', '<leader>sp', snacks_picker 'lazy', 'Search for Plugin Spec' },
       { 'n', '<leader>sq', snacks_picker 'qflist', 'Quickfix List' },
       { 'n', '<leader>sR', snacks_picker 'resume', 'Resume' },
       { 'n', '<leader>su', snacks_picker 'undo', 'Undo History' },

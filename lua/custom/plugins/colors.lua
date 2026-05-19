@@ -9,6 +9,8 @@ return {
       require('catppuccin').setup {
         flavour = 'mocha',
         no_underline = true,
+        no_bold = false,
+        transparent_background = false,
         styles = {
           comments = { 'italic' },
           conditionals = {},
@@ -48,31 +50,31 @@ return {
 
       -- GDScript/LSP pode aplicar estilos semanticos apos o colorscheme.
       -- Mantemos tudo sem italico/sublinhado (exceto comentarios).
-    --   local function disable_gdscript_semantic_styles()
-    --     local groups = {
-    --       '@variable.builtin.gdscript',
-    --       '@variable.gdscript',
-    --       '@property.gdscript',
-    --       '@string.special.symbol.gdscript',
-    --       '@punctuation.special.gdscript',
-    --       '@lsp.type.variable.gdscript',
-    --       '@lsp.mod.defaultLibrary.gdscript',
-    --       '@lsp.typemod.variable.defaultLibrary.gdscript',
-    --     }
+      --   local function disable_gdscript_semantic_styles()
+      --     local groups = {
+      --       '@variable.builtin.gdscript',
+      --       '@variable.gdscript',
+      --       '@property.gdscript',
+      --       '@string.special.symbol.gdscript',
+      --       '@punctuation.special.gdscript',
+      --       '@lsp.type.variable.gdscript',
+      --       '@lsp.mod.defaultLibrary.gdscript',
+      --       '@lsp.typemod.variable.defaultLibrary.gdscript',
+      --     }
 
-    --     for _, group in ipairs(groups) do
-    --       vim.api.nvim_set_hl(0, group, { italic = false, underline = false, undercurl = false })
-    --     end
-    --   end
+      --     for _, group in ipairs(groups) do
+      --       vim.api.nvim_set_hl(0, group, { italic = false, underline = false, undercurl = false })
+      --     end
+      --   end
 
-    --   vim.api.nvim_create_autocmd({ 'ColorScheme', 'FileType', 'LspAttach' }, {
-    --     group = vim.api.nvim_create_augroup('GDScriptNoItalicUnderline', { clear = true }),
-    --     callback = function(args)
-    --       if args.event == 'ColorScheme' or vim.bo[args.buf].filetype == 'gdscript' then
-    --         disable_gdscript_semantic_styles()
-    --       end
-    --     end,
-    --   })
+      --   vim.api.nvim_create_autocmd({ 'ColorScheme', 'FileType', 'LspAttach' }, {
+      --     group = vim.api.nvim_create_augroup('GDScriptNoItalicUnderline', { clear = true }),
+      --     callback = function(args)
+      --       if args.event == 'ColorScheme' or vim.bo[args.buf].filetype == 'gdscript' then
+      --         disable_gdscript_semantic_styles()
+      --       end
+      --     end,
+      --   })
 
       -- Customizacoes de GDScript (desativadas):
       -- local function apply_gdscript_highlights()
