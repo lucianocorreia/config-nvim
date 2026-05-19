@@ -64,14 +64,18 @@ vim.api.nvim_create_autocmd('LspAttach', {
       -- Godot LSP semantic tokens podem homogeneizar method/type em alguns temas.
       -- Mantemos o highlight do Treesitter, que está mais próximo do preview do picker.
       disable = true
-    elseif client.name == 'vls' and ft == 'vue' and has_treesitter_parser('vue') then
+    elseif client.name == 'intelephense' and ft == 'php' and has_treesitter_parser 'php' then
+      -- Intelephense pode sobrescrever keyword/type do PHP com semantic tokens.
+      -- Preferimos as capturas do Treesitter, que ficam mais próximas do Catppuccin em outros editores.
+      disable = false
+    elseif client.name == 'vls' and ft == 'vue' and has_treesitter_parser 'vue' then
       -- VLS costuma aplicar semantic tokens de forma tardia em alguns projetos Vue 2.
       disable = true
-    elseif (client.name == 'volar' or client.name == 'ts_ls') and ft == 'vue' and is_large_buffer(args.buf, 300 * 1024) and has_treesitter_parser('vue') then
+    elseif (client.name == 'volar' or client.name == 'ts_ls') and ft == 'vue' and is_large_buffer(args.buf, 300 * 1024) and has_treesitter_parser 'vue' then
       disable = true
     end
 
-    if ft == 'vue' and not has_treesitter_parser('vue') and not vim.g.vue_parser_missing_warned then
+    if ft == 'vue' and not has_treesitter_parser 'vue' and not vim.g.vue_parser_missing_warned then
       vim.g.vue_parser_missing_warned = true
       vim.schedule(function()
         vim.notify('Parser Treesitter de Vue ausente. Semantic tokens do LSP serão mantidos para evitar cores ruins.', vim.log.levels.WARN)
