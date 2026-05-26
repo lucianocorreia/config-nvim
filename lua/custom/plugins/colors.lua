@@ -50,26 +50,32 @@ return {
   --   end,
   -- },
   {
-    'vague-theme/vague.nvim',
-    name = 'vague',
+    'neanias/everforest-nvim',
+    name = 'everforest-nvim',
     lazy = false,
     priority = 1000,
     config = function()
-      require('vague').setup {
-        transparent = false,
-        bold = true,
-        italic = true,
-        on_highlights = function(hl, colors)
-          hl.Comment = { fg = colors.comment, italic = true }
-          hl.CursorLine = { bg = colors.line }
-          hl.FloatBorder = { fg = colors.floatBorder, bg = colors.bg }
-          hl.NormalFloat = { bg = colors.bg }
-          hl.Visual = { bg = colors.visual }
-          hl.WinSeparator = { fg = colors.floatBorder, bg = colors.bg }
+      vim.o.background = 'dark'
+
+      require('everforest').setup {
+        background = 'hard',
+        transparent_background_level = 0,
+        italics = true,
+        disable_italic_comments = false,
+        sign_column_background = 'none',
+        ui_contrast = 'low',
+        float_style = 'bright',
+        inlay_hints_background = 'dimmed',
+        on_highlights = function(hl, palette)
+          hl.CursorLine = { bg = palette.bg1 }
+          hl.FloatBorder = { fg = palette.grey1, bg = palette.bg0 }
+          hl.NormalFloat = { bg = palette.bg0 }
+          hl.Visual = { bg = palette.bg_visual }
+          hl.WinSeparator = { fg = palette.grey1, bg = palette.bg0 }
         end,
       }
 
-      vim.cmd.colorscheme 'vague'
+      vim.cmd.colorscheme 'everforest'
     end,
   },
 }
