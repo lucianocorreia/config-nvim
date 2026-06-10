@@ -44,6 +44,7 @@ return {
       xml = { 'xmllint' },
 
       -- 🌐 Web development
+      java = { 'google_java_format_local', 'google-java-format', stop_after_first = true },
       javascript = { 'prettierd', 'prettier', stop_after_first = true },
       typescript = { 'prettierd', 'prettier', stop_after_first = true },
       vue = { 'prettierd', 'prettier', stop_after_first = true },
@@ -62,6 +63,22 @@ return {
       gd = { 'gdformat' },
     },
     formatters = {
+      google_java_format_local = {
+        command = function()
+          local local_binary = vim.fs.joinpath(vim.fn.stdpath('data'), 'external', 'google-java-format', 'google-java-format')
+          if vim.fn.executable(local_binary) == 1 then
+            return local_binary
+          end
+
+          if vim.fn.executable('google-java-format') == 1 then
+            return vim.fn.exepath('google-java-format')
+          end
+
+          return vim.fs.joinpath(vim.fn.stdpath('data'), 'mason', 'bin', 'google-java-format')
+        end,
+        args = { '-' },
+        stdin = true,
+      },
       gdformat = {
         command = vim.fn.stdpath('data') .. '/mason/bin/gdformat',
         args = { '-', '--line-length', '180' },

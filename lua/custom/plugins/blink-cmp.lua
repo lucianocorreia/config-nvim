@@ -76,15 +76,15 @@ return {
     end
 
     local providers = {
-      copilot = {
-        module = 'blink-copilot',
-        name = 'copilot',
-        score_offset = 100,
-        async = true,
-        opts = {
-          max_completions = 3,
-        },
-      },
+      -- copilot = {
+      --   module = 'blink-copilot',
+      --   name = 'copilot',
+      --   score_offset = 100,
+      --   async = true,
+      --   opts = {
+      --     max_completions = 3,
+      --   },
+      -- },
     }
 
     if has_lazydev then

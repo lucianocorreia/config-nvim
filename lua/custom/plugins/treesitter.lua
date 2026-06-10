@@ -5,7 +5,7 @@ return { -- Highlight, edit, and navigate code
   -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
   opts = {
     local_max_filesize = 300 * 1024,
-    ensure_installed = { 'bash', 'c', 'diff', 'html', 'javascript', 'typescript', 'tsx', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'vue', 'php', 'c_sharp', 'razor' },
+    ensure_installed = { 'bash', 'c', 'diff', 'html', 'java', 'javascript', 'typescript', 'tsx', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'vue', 'php', 'c_sharp', 'razor' },
     -- Autoinstall languages that are not installed
     auto_install = true,
     highlight = {

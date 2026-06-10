@@ -5,6 +5,29 @@ local function map(mode, lhs, rhs, desc, opts)
   vim.keymap.set(mode, lhs, rhs, vim.tbl_extend('force', { desc = desc }, opts or {}))
 end
 
+local function toggle_wrap()
+  vim.wo.wrap = not vim.wo.wrap
+  vim.wo.linebreak = vim.wo.wrap
+  vim.notify('Word wrap ' .. (vim.wo.wrap and 'ativado' or 'desativado'), vim.log.levels.INFO)
+end
+
+local function toggle_inlay_hints()
+  local bufnr = vim.api.nvim_get_current_buf()
+  local clients = vim.lsp.get_clients({ bufnr = bufnr })
+  local supports_inlay = vim.iter(clients):any(function(client)
+    return client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint, bufnr)
+  end)
+
+  if not supports_inlay then
+    vim.notify('Nenhum LSP com suporte a inlay hints no buffer atual', vim.log.levels.WARN)
+    return
+  end
+
+  local enabled = vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr })
+  vim.lsp.inlay_hint.enable(not enabled, { bufnr = bufnr })
+  vim.notify('Inlay hints ' .. (enabled and 'desativados' or 'ativados'), vim.log.levels.INFO)
+end
+
 local core = {
   { 'n', '<Esc>', '<cmd>nohlsearch<CR>', 'Clear search highlight' },
   { 'i', 'jj', '<ESC>', 'Exit insert mode with jj' },
@@ -23,6 +46,10 @@ local core = {
   { 'n', '<C-f>', '<Cmd>foldopen<CR>', 'Open fold', { silent = true } },
   { 'n', '<leader>zr', '<cmd>edit!<cr>', 'Reload arquivo atual' },
   { 'n', '<leader>Q', '<cmd>qa!<cr>', 'Quit Neovim forcefully' },
+  { 'n', '<leader>uw', toggle_wrap, 'Toggle word wrap' },
+  { 'n', '<leader>ih', toggle_inlay_hints, 'Toggle inlay hints' },
+  { 'n', '<leader>uh', toggle_inlay_hints, 'Toggle inlay hints' },
+  { 'n', '<leader>th', toggle_inlay_hints, 'Toggle inlay hints (legacy)' },
 }
 
 local diagnostics = {

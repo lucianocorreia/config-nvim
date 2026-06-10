@@ -41,11 +41,29 @@ vim.api.nvim_create_user_command('LspClients', function()
 end, { desc = 'Listar clientes LSP detalhadamente' })
 
 vim.api.nvim_create_user_command('LspRestart', function()
-  vim.cmd('LspStop')
+  local bufnr = vim.api.nvim_get_current_buf()
+  local clients = vim.lsp.get_clients({ bufnr = bufnr })
+
+  if #clients == 0 then
+    vim.notify('❌ Nenhum cliente LSP ativo no buffer atual', vim.log.levels.WARN)
+    return
+  end
+
+  local cursor = vim.api.nvim_win_get_cursor(0)
+  for _, client in ipairs(clients) do
+    client:stop()
+  end
+
   vim.defer_fn(function()
-    vim.cmd('LspStart')
+    if not vim.api.nvim_buf_is_valid(bufnr) then
+      return
+    end
+
+    vim.cmd('edit')
+    pcall(vim.api.nvim_win_set_cursor, 0, cursor)
   end, 500)
-  print('🔄 Reiniciando LSP...')
+
+  vim.notify('🔄 Reiniciando LSP do buffer atual...', vim.log.levels.INFO)
 end, { desc = 'Reiniciar todos os clientes LSP' })
 
 vim.api.nvim_create_user_command('LspConfigs', function()
